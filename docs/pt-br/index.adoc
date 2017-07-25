@@ -1,12 +1,13 @@
-= jboss-domain-mode-scripts: Scripts para tarefas no JBoss EAP em modo domain
+= jboss-domain-mode-scripts: Scripts para a automação de tarefas no JBoss EAP (em modo domain)
 Paulo Jerônimo <pj@paulojeronimo.com>
 V1.0, {localdatetime}
 :toc: left
 :toc-title: Conteúdo
+:toclevels: 3
 :icons: font
 :setanchors:
 
-:basedir: ..
+:basedir: ../..
 include::uris.adoc[]
 include::definitions.adoc[]
 

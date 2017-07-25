@@ -21,10 +21,10 @@ then
 fi
 
 SCRIPT=$(cat << EOF
-echo "Removing $PREFIX ..." ;
-rm -rf $PREFIX ;
-echo "Extracting files (from pipe to /) ..." ;
-tar xvfPz - -C /
+echo "I'm at \$HOSTNAME ..." ;
+[ -d "$PREFIX" ] && { echo "Removing existing $PREFIX dir ..." ; rm -rf $PREFIX ; };
+echo "Extracting files from pipe to / ..." ;
+tar xvfmPz - -C /
 EOF
 )
 

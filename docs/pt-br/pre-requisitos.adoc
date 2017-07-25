@@ -1,7 +1,8 @@
 [[pre-requisitos]]
 = Pré-requisitos
 
-A execução de todos os link:{basedir}/scripts[scripts] deve ser realizada pelo usuário `root` num ambiente Linux (RHEL e/ou CentOS).
+A primeira versão deste projeto contém link:{basedir}/scripts[scripts] que podem ser executados somente pelo usuário `root`.
+O ambiente deve ser Linux (RHEL e/ou CentOS).
 
 Uma cópia do instalador do {uri-jdk}[Java Development Kit (JDK)] para Linux deve ser disponibizada no diretório link:{basedir}/installers[installers].
 O binário de instalação do JBoss (e seus patches) também devem ser copiados para esse diretório.

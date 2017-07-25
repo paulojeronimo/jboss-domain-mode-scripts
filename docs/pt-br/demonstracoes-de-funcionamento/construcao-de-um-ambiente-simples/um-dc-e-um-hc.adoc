@@ -1,7 +1,10 @@
-[[um-dc-e-um-hc]]
-= Um (1) DC e um (1) HC
+[[demo-1]]
+= Demo 1: instalação de um DC e um HC
 
-== Geração do jboss-installer.tar.gz
+Nesta demonstração são apresentados os passos necessários para a instalação de um DC (`dc1`) e de um HC (`hc1`).
+Nenhuma instância jboss (`server`) é criada.
+
+== Geração do pacote de instalação (jboss-installer.tar.gz)
 
 [source,bash]
 ----
@@ -12,28 +15,75 @@
 
 ----
 cd demos
+cp 1/Vagrantfile .
 vagrant up
 cd ..
 ----
 
-== Cópia do conteúdo de jboss-installer.tar.gz para os servidores
+[[demo-1-instalacao-dc]]
+== Instalação e inicialização do DC
+
+Cópia do conteúdo do pacote (`jboss-installer.tar.gz`) para o servidor:
 
 [source,bash]
 ----
-SERVER=dc1 SSH_PORT=2222 ./jboss-installer.install
-SERVER=hc1 SSH_PORT=2200 ./jboss-installer.install
+SSH_PORT=2222 SERVER=localhost ./jboss-installer.install
 ----
 
-== Instalação do jboss nos servidores
+Instalação do jboss:
 
 [source,bash]
 ----
-ssh -p 2222 root@dc1 /opt/rh/jboss-installer/scripts/install
-ssh -p 2200 root@hc1 /opt/rh/jboss-installer/scripts/install
+ssh -p 2222 root@localhost /opt/rh/jboss-installer/scripts/install
+----
+
+Inicialização do jboss:
+
+[source,bash]
+----
+ssh -p 2222 root@localhost service jboss-as-domain start
+----
+
+Visualização do log jboss:
+
+[source,bash]
+----
+ssh -p 2222 root@localhost tail -f /var/log/jboss-as/console.log
+----
+
+[[demo-1-instalacao-hc]]
+== Instalação e inicialização do HC
+
+Cópia do conteúdo do pacote (`jboss-installer.tar.gz`) para o servidor:
+
+[source,bash]
+----
+SSH_PORT=2200 SERVER=localhost ./jboss-installer.install
+----
+
+Instalação do jboss:
+
+[source,bash]
+----
+ssh -p 2200 root@localhost /opt/rh/jboss-installer/scripts/install
+----
+
+Inicialização do jboss:
+
+[source,bash]
+----
+ssh -p 2200 root@localhost service jboss-as-domain start
+----
+
+Visualização do log jboss:
+
+[source,bash]
+----
+ssh -p 2200 root@localhost tail -f /var/log/jboss-as/console.log
 ----
 
 == Verificação de funcionamento do ambiente
 
-Abra o teu browser em http://dc1:9990.
-Logue-se com o usuário `usuario` e a senha `senha`.
-Acesse a aba `xpto` e verifique se há o registro do `hc1` nos host controlados pelo servidor.
+Abra o browser em http://dc1:9990.
+Logue-se com o usuário `admin` e a senha `jbAdmin@123!`.
+Acesse a aba `Domain` e verifique se o `hc1` está registrado na lista de hosts.

@@ -14,7 +14,7 @@ O Vagrant, por sua vez, será utilizado para provisionamento dessas máquinas.
 
 [NOTE]
 ====
-. O uso das ferramentas acima não é necessário caso você já possua acesso a máquinas (virtuais ou reais) que possa gerenciar com o usuário `root`.
+. O uso das ferramentas acima não é necessário caso você já possua acesso a máquinas (virtuais ou reais) que possam ser gerenciadas pelo usuário `root`.
 De fato, nesse caso, o uso dessas ferramentas é totalmente dispensável.
 . Os scripts que serão executados possuem independência completa do uso dessas ferramentas.
 . Nas demonstrações, apenas um provisionamento básico será realizado nas máquinas que serão criadas.
@@ -25,9 +25,9 @@ Dessa forma, espera-se que o leitor entenda o uso dos scripts e não como eles p
 == Geração do pacote de instalação (jboss-installer.tar.gz)
 
 Para cada construção de ambiente, um pacote (arquivo `jboss-installer.tar.gz`) precisa ser gerado.
-Esse pacote contém uma cópia de todos os arquivos necessários para a instalação do JBoss em cada um dos servidores do ambiente.
+Esse pacote contém uma cópia de todos os arquivos necessários para a instalação do JBoss em cada um dos servidores desse ambiente.
 
-A geração desse pacote deve ser realizada pelo seguinte comando:
+A geração do pacote deve ser realizada pelo seguinte comando:
 
 [source,bash]
 ----
@@ -36,8 +36,9 @@ A geração desse pacote deve ser realizada pelo seguinte comando:
 
 [NOTE]
 ====
-. Versões futuras dos scripts deste projeto podem, simplesmente, deixar deixar utilizar esse arquivo.
-. De fato, versões futuras deste projeto poderiam utilizar, por exemplo, `rsync` ou `git` para distribuir os arquivos necessários para cada servidor.
+. Em versões futuras dos scripts deste projeto veremos que esse pacote pode deixar de ser útil.
+. De fato, nessas novas versões iremos utilizar, por exemplo, o `rsync` ou `git`.
+Serão esses aplicativos que farão a distribuição dos arquivos necessários para cada servidor.
 ====
 
 == Configuração do arquivo /etc/hosts (na máquina HOST)

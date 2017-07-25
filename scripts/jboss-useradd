@@ -9,7 +9,7 @@ grep -q $JBOSS_GROUP /etc/group || ./jboss-groupadd
 if ! grep -q $JBOSS_USER /etc/passwd
 then
   useradd -r $JBOSS_USER -g $JBOSS_GROUP && echo "JBOSS_USER ($JBOSS_USER) created!"
-  passwd --stdin <<< $JBOSS_USER_PASSWORD
+  passwd --stdin $JBOSS_USER <<< $JBOSS_USER_PASSWORD
 else
   echo "JBOSS_USER ($JBOSS_USER) already created!"
 fi

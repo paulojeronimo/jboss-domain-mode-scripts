@@ -1,16 +1,61 @@
-[[um-dc-e-dois-hcs]]
-= Um (1) DC e dois (2) HCs
+[[demo-2]]
+= Demo 2: instalação de um DC e dois HCs (um servidor executando em cada)
 
-== Geração do jboss-installer.tar.gz
+Nesta demonstração, um ambiente com dois HCs (`hc1` e `hc2`) será criado.
+Além disso, duas instâncias jboss serão iniciadas.
+Cada instância será executada em um HC.
+As instâncias terão o mesmo nome (`app-1`) e pertencerão ao mesmo `Server Group`: `app-1-group`.
+
+[NOTE]
+====
+Mais a frente exploraremos as limitações relativas a uma montagem de ambiente utilizando os scripts nesta versão.
+Entretanto, já neste momento, é bom saber que somente através do uso desses scripts (escritos em Bash), se não levássemos em conta a console de gerenciamento do DC (ou a execução de scripts CLI), ficaríamos extremamente limitados.
+O motivo para isso é que, basicamente, os scripts dessa versão são excelentes para a instalação de infraestruturas estáticas (DCs e HCs).
+Mas, para lidar com a dinamicidade que envolve a criação de grupos de servidores e servidores, muitas vezes em direfentes `profiles`, esses scripts não conseguem oferecer o auxílio necessário.
+Precisaria haver um mecanismo que nos possibilite executar scripts CLI de maneira mais sistematica.
+Porém, isso ainda não for adicionado a essa versão dos scripts.
+====
+
+== Geração do pacote de instalação (jboss-installer.tar.gz)
+
+A execução do script `jboss-installer.create` somada a adição do parâmetro `DEMO=2` faz com que sejam copiados, para o pacote `jboss-installer.tar.gz`, o conteúdo dos scripts e das configurações que estão disponíveis no diretório link:{basedir}/demos/2[demos/2].
 
 [source,bash]
 ----
-DEMO=demo2 ./jboss-installer.create
+DEMO=2 ./jboss-installer.create
 ----
 
-== Cópia do conteúdo de jboss-installer.tar.gz para os servidores
+== Remoção dos servidores anteriores
 
-[source,bash]
 ----
-for server in dc1 hc{1,2}; do SERVER=$server ./jboss-installer.install; done
+cd demos
+vagrant destroy
 ----
+
+== Criação/inicialização dos novos servidores
+
+----
+cp 2/Vagrantfile .
+vagrant up
+cd ..
+----
+
+== Instalação e inicialização do DC
+
+Repita os mesmos link:#demo-1-instalacao-dc[passos] que já foram executados (na Demo 1) para a instalação e inicialização do DC.
+
+== Instalação e inicialização dos HCs
+
+Repita, para cada HC, os mesmo passos link:#demo-1-instalacao-hc[passos] que já foram executados (na Demo 1) para a instalação e inicialização do `hc1`.
+
+[NOTE]
+====
+Ao serem iniciados os passos para a realização da instalação do `hc2` deve ser observado que a porta utilizada é a 2201.
+====
+
+== Verificação de funcionamento do ambiente
+
+Abra o browser em http://dc1:9990.
+Logue-se com o usuário `admin` e a senha `jbAdmin@123!`.
+Acesse a aba `Domain` e verifique que tanto o `hc1` quanto o `hc2` estão registrados na lista de hosts.
+Verifique também, pela topologia, que há duas instâncias de `app-1` sendo executadas.

@@ -71,8 +71,8 @@ JBOSS_TYPE=slave
 # Variable configurations depending on $JBOSS_HOST
 case $JBOSS_HOST in
 
-  # If host is master dc1, JBOSS_TYPE is master
-  dc1)
+  # If host is master, JBOSS_TYPE is master
+  $JBOSS_DOMAIN_MASTER_ADDRESS)
     JBOSS_TYPE=master
     ;;
 

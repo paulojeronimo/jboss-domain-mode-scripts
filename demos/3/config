@@ -1,4 +1,5 @@
 #!/bin/bash
+# config file for demo 3
 
 # The INSTALLERS_DIR must be relative to this directory
 # It have to contains binaries like jboss-eap-6.4.0.zip, jboss-eap-6.4.*.patch.zip
@@ -74,13 +75,13 @@ JBOSS_TYPE=slave
 # Variable configurations depending on $JBOSS_HOST
 case $JBOSS_HOST in
 
-  # If host is master dc1, JBOSS_TYPE is master
-  dc1)
+  # If host is master, JBOSS_TYPE is master
+  $JBOSS_DOMAIN_MASTER_ADDRESS)
     JBOSS_TYPE=master
     ;;
 
   # If host is backup dc2, JBOSS_TYPE is bakup
-  dc2)
+  $JBOSS_DOMAIN_BACKUP_ADDRESS)
     JBOSS_TYPE=backup
     ;;
 

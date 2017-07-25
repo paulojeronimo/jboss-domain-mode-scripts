@@ -2,6 +2,26 @@
 BASE_DIR=`cd "$(dirname "$0")"; pwd`
 source "$BASE_DIR"/common
 
+patch() {
+  local cmd=`which patch`
+  local f=$1
+  local f_patch=$2
+  local original=$f.original
+
+  if [ ! -f "$original" ]
+  then
+    echo "Saving $f to $original ..."
+    cp $f $original
+  fi
+  echo "Patching $f with $f_patch ..."
+  if [ -f "$f_patch" ]
+  then
+    $cmd $f < $f_patch > /dev/null
+  else
+    echo "Warning: file $f_patch not found!"
+  fi
+}
+
 d=$JBOSS_INSTALL_DIR/$JBOSS_DIR
 echo "Configuring $d files ..."
 cd "$d"
@@ -11,14 +31,15 @@ case $JBOSS_TYPE in
   master) f_patch=bin/domain.conf.master.patch;;
   backup|slave) f_patch=bin/domain.conf.slave.patch;;
 esac
-echo "  Patching $f with $f_patch ..."
-patch $f < $f_patch > /dev/null
+patch $f $f_patch
 
 echo "  Configuring JBOSS variables in $f ..."
 echo "    JBOSS_BIND_ADDRESS_MANAGEMENT=$JBOSS_BIND_ADDRESS_MANAGEMENT"
 echo "    JBOSS_BIND_ADDRESS=$JBOSS_BIND_ADDRESS"
 echo "    JBOSS_DOMAIN_MASTER_ADDRESS=$JBOSS_DOMAIN_MASTER_ADDRESS"
+[ "$JBOSS_DOMAIN_BACKUP_ADDRESS" ] && \
 echo "    JBOSS_DOMAIN_BACKUP_ADDRESS=$JBOSS_DOMAIN_BACKUP_ADDRESS"
+
 sed -i "
   s/JBOSS_BIND_ADDRESS_MANAGEMENT/$JBOSS_BIND_ADDRESS_MANAGEMENT/g ;
   s/JBOSS_BIND_ADDRESS/$JBOSS_BIND_ADDRESS/g ;
@@ -32,15 +53,10 @@ then
   f_patch=domain/configuration/$JBOSS_HOST_CONFIG.$JBOSS_SERVER_CONFIG.patch
 else
   f_patch=domain/configuration/$JBOSS_HOST_CONFIG.patch
+  [ "$JBOSS_DOMAIN_BACKUP_ADDRESS" ] || \
+    f_patch=domain/configuration/$JBOSS_HOST_CONFIG.no-backup.patch
 fi
-
-if [ -f "$f_patch" ]
-then
-  echo "  Patching $f with $f_patch ..."
-  patch $f < $f_patch > /dev/null
-else
-  echo "  Warning: file $f_patch not found!"
-fi
+patch $f $f_patch
 
 JBOSS_ADMIN_PASSWORD_BASE64=`echo -n $JBOSS_ADMIN_PASSWORD|base64`
 echo "  Configuring JBOSS variables in $f ..."

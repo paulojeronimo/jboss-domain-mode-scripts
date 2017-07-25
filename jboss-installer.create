@@ -10,15 +10,22 @@ PREFIX=${PREFIX:-/opt/rh/jboss-installer}
 
 cd "$BASE_DIR"
 
-case "$DEMO" in
-  demo*)
-    id=${DEMO#demo}
-    config=demos/$id/config
-    [ -f $config ] && \
-      cp $config ./scripts/ || \
-      { echo "File $config not found!"; exit 1; }
-  ;;    
-esac
+[ "$DEMO" ] && \
+if [[ $DEMO =~ [2-3] ]]
+then
+  config=./demos/$DEMO/config
+  if [ -f $config ]
+  then
+    echo "Copying $config to ./scripts"
+    cp $config ./scripts/
+  else
+    echo "File $config not found!"
+    exit 1
+  fi
+else
+  echo "DEMO ($DEMO) is invalid!"
+  exit 1
+fi
 
 echo "Creating $INSTALLER ..."
 find . -type f \( \
