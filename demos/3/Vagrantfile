@@ -1,0 +1,34 @@
+# -*- mode: ruby -*-
+# vim: set ft=ruby ts=2 sw=2 expandtab:
+
+required_plugins = %w( vagrant-vbguest )
+required_plugins.each do |plugin|
+  system "vagrant plugin install #{plugin}" unless Vagrant.has_plugin? plugin
+end
+
+Vagrant.configure(2) do |config|
+  ENV['VAGRANT_DEFAULT_PROVIDER'] = 'virtualbox'
+
+  config.vm.box = "boxcutter/centos73"
+  config.vbguest.auto_update = false
+
+  (1..2).each do |i|
+    config.vm.define "dc#{i}" do |dc|
+      dc.vm.hostname="dc#{i}"
+      dc.vm.network "private_network", ip: "172.17.6.8#{i}"
+      dc.vm.provision "shell", path: "scripts/instalar-vm", privileged: false
+      dc.vm.provider "virtualbox" do |v|
+        v.memory = 1024
+      end
+    end
+
+    config.vm.define "hc#{i}" do |hc|
+      hc.vm.hostname="hc#{i}"
+      hc.vm.network "private_network", ip: "172.17.6.8#{i+2}"
+      hc.vm.provision "shell", path: "scripts/instalar-vm", privileged: false
+      hc.vm.provider "virtualbox" do |v|
+        v.memory = 2048
+      end
+    end
+  end
+end

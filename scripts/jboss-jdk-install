@@ -1,0 +1,11 @@
+#!/bin/bash
+BASE_DIR=`cd "$(dirname "$0")"; pwd`
+source "$BASE_DIR"/common
+
+cd "$BASE_DIR"
+
+if ! which java &> /dev/null
+then
+  echo "Installing $INSTALLERS_DIR/$JDK_INSTALLER ..."
+  rpm -ivh "$INSTALLERS_DIR/$JDK_INSTALLER"
+fi

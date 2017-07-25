@@ -1,0 +1,13 @@
+[[motivacao]]
+= Motivação
+
+A motivação principal para a construção deste projeto foi a necessidade de seu criador, {PauloJeronimo}, de não ficar se repetindo em tarefas de instalação de um ambiente de execução {JBossEAP} utilizando o sistema operacional Linux ({RHEL}).
+
+A tarefa de instalação/manutenção do JBoss EAP precisava ser simplificada de forma tal que fosse possível, através da configuração de poucos scripts de configuração (idealmente um), parametrizar como poderia ser realizada a montagem de um ambiente, fosse esse de desenvolvimento, homologação, integração, produção ou outro.
+
+Apesar de existir uma {uri-jboss-eap-docker-image}[imagem Docker que facilita a execução do JBoss EAP], sua documentação descreve apenas como utilizá-la no modo `standalone`.
+Além disso, o uso dessa imagem Docker não é suportada pela Red Hat caso não exista uma subscrição.
+Caso ela exista, é necessário o uso da versão 7.0 (ou superior) do JBoss EAP e que seu ambiente de execução seja um RHEL 7.2 ou superior.
+
+Sendo assim, mesmo atendendo as condições necessárias para a utilização do JBoss EAP no Docker, ainda seria necessário {uri-jboss-eap-docker-image-extend}[extender a imagem] para utilizá-la em modo domain.
+Portanto este projeto pode ser, também, uma base para a realização de um trabalho como esse.

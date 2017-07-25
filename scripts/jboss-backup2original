@@ -1,0 +1,8 @@
+#!/bin/bash
+BASE_DIR=`cd "$(dirname "$0")"; pwd`
+source "$BASE_DIR"/common
+
+f=domain/configuration/host-backup.xml
+cp $INSTALLERS_DIR/$JBOSS_DIR/$f $JBOSS_INSTALL_DIR/$JBOSS_LINK/$f
+chown $JBOSS_USER: $JBOSS_INSTALL_DIR/$JBOSS_LINK/$f
+service jboss-as-domain restart

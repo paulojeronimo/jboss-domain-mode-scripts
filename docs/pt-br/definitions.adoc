@@ -1,0 +1,6 @@
+:PauloJeronimo: link:{uri-paulojeronimo}[Paulo Jerônimo]
+:PauloJeronimoNoGitHub: link:{uri-paulojeronimo-github}[Paulo Jerônimo (no GitHub)]
+:JBossEAP: link:{uri-jboss-eap}[JBoss EAP]
+:RHEL: link:{uri-rhel}[RHEL]
+:VirtualBox: link:{uri-virtualbox}[VirtualBox]
+:Vagrant: link:{uri-vagrant}[Vagrant]

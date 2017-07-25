@@ -1,0 +1,31 @@
+#!/bin/bash
+set +x
+set -e
+
+LINUX_NEEDED=${LINUX_NEEDED:-true}
+if $LINUX_NEEDED && ! [[ $OSTYPE =~ linux* ]]
+then
+  echo "This script needs to be executed on Linux!"
+  exit 1
+fi
+
+ROOT_NEEDED=${ROOT_NEEDED:-true}
+if $ROOT_NEEDED && (( `id -u` != 0 ))
+then
+  echo "You must run this script as root (or with sudo)!"
+  exit 1
+fi
+
+config="$BASE_DIR"/config
+load_configuration_warned=${load_configuration_warned:-false}
+[ -r "$config" ] || config=$config.sample
+
+source "$config"
+
+if $VERBOSE
+then
+  $load_configuration_warned || {
+    echo "Loading JBoss configurations from \"$config\" ..."
+    export load_configuration_warned=true
+  }
+fi

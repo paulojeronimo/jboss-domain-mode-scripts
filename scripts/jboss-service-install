@@ -1,0 +1,33 @@
+#!/bin/bash
+BASE_DIR=`cd "$(dirname "$0")"; pwd`
+source "$BASE_DIR"/common
+
+cd "$BASE_DIR"
+
+f=$JBOSS_INSTALL_DIR/$JBOSS_DIR/bin/init.d/jboss-as-domain.sh
+f2=/etc/init.d/jboss-as-domain
+echo "Copying $f to $f2 ..."
+[ -r $f2 ] && rm -f $f2
+cp "$f" "$f2"
+
+f=/etc/jboss-as/jboss-as.conf
+echo "Configuring $f ..."
+mkdir -p `dirname "$f"`
+cat > "$f" <<EOF
+JBOSS_USER=$JBOSS_USER
+JBOSS_CONSOLE_LOG=/var/log/jboss-as/console.log
+JBOSS_HOME=$JBOSS_HOME
+JBOSS_HOST_CONFIG=$JBOSS_HOST_CONFIG
+EOF
+
+if [ $JBOSS_TYPE = backup ]
+then
+  echo "JBOSS_SCRIPT='$JBOSS_INSTALL_DIR/$JBOSS_LINK/bin/domain.sh --backup'" >> $f
+fi
+
+if ! chkconfig --list jboss-as-domain &> /dev/null
+then
+  echo "Adding jboss-as-domain to chkconfig ..."
+  chkconfig --add jboss-as-domain
+  chkconfig jboss-as-domain on
+fi

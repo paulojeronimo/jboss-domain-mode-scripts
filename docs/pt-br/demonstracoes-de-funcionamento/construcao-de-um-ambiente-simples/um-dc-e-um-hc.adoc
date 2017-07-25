@@ -1,0 +1,39 @@
+[[um-dc-e-um-hc]]
+= Um (1) DC e um (1) HC
+
+== Geração do jboss-installer.tar.gz
+
+[source,bash]
+----
+./jboss-installer.create
+----
+
+== Criação/inicialização dos servidores
+
+----
+cd demos
+vagrant up
+cd ..
+----
+
+== Cópia do conteúdo de jboss-installer.tar.gz para os servidores
+
+[source,bash]
+----
+SERVER=dc1 SSH_PORT=2222 ./jboss-installer.install
+SERVER=hc1 SSH_PORT=2200 ./jboss-installer.install
+----
+
+== Instalação do jboss nos servidores
+
+[source,bash]
+----
+ssh -p 2222 root@dc1 /opt/rh/jboss-installer/scripts/install
+ssh -p 2200 root@hc1 /opt/rh/jboss-installer/scripts/install
+----
+
+== Verificação de funcionamento do ambiente
+
+Abra o teu browser em http://dc1:9990.
+Logue-se com o usuário `usuario` e a senha `senha`.
+Acesse a aba `xpto` e verifique se há o registro do `hc1` nos host controlados pelo servidor.

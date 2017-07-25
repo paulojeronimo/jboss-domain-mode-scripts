@@ -1,0 +1,95 @@
+#!/bin/bash
+
+# The INSTALLERS_DIR must be relative to this directory
+# It have to contains binaries like jboss-eap-6.4.0.zip, jboss-eap-6.4.*.patch.zip
+INSTALLERS_DIR=../installers
+
+# The CONFIGURATIONS_DIR must be relative to this directory
+# It have to contains patch and additional files that will be added to JBOSS_DIR
+CONFIGURATIONS_DIR=../configurations
+
+# Scripts will show warnings?
+VERBOSE=false
+
+# JDK Installer is a RPM binary file
+JDK_INSTALLER=jdk-8u131-linux-x64.rpm
+
+# Binay file to extract JBoss (PATH is relative to INSTALLERS_DIR)
+# These files are the original downloaded from https://access.redhat.com
+JBOSS_INSTALLER_ZIP=jboss-eap-6.4.0.zip
+JBOSS_PATCHES=(
+  jboss-eap-6.4.9-patch.zip
+  jboss-eap-6.4.14-patch.zip
+)
+
+# JBoss directory when extracted
+JBOSS_DIR=jboss-eap-6.4
+
+# User (operational system) that runs JBoss
+JBOSS_USER=jboss
+JBOSS_USER_PASSWORD='jb@3!2_'
+# Group (operational system) that runs JBoss
+JBOSS_GROUP=jboss
+
+# Directory that will contains $JBOSS_DIR
+JBOSS_INSTALL_DIR=/opt
+
+# Link (bellow JBOSS_INSTALL_DIR) that will points to $JBOSS_DIR
+JBOSS_LINK=jboss
+
+# Full path to JBoss
+JBOSS_HOME=$JBOSS_INSTALL_DIR/$JBOSS_LINK
+
+# JBoss console log file
+JBOSS_CONSOLE_LOG=/var/log/jboss-as/console.log
+
+# Hostname of the machine that runs JBoss
+JBOSS_HOST=`hostname -s`
+
+# JBoss bind address (ip or hostname)
+case "$OSTYPE" in
+  # In this case (linux), it is configured with IP address of the second interface
+  linux*) JBOSS_BIND_ADDRESS=`hostname -I | cut -d ' ' -f 2`;;
+  # We put a macOS alternative just to permit a jboss-copy-patches script execution
+  darwin*) JBOSS_BIND_ADDRESS=localhost;;
+esac
+
+# JBoss bind address management (ip or hostname)
+JBOSS_BIND_ADDRESS_MANAGEMENT=$JBOSS_BIND_ADDRESS
+
+# JBoss domain (master) address (ip or hostname)
+JBOSS_DOMAIN_MASTER_ADDRESS=dc1
+
+# JBoss domain (backup) address (ip or hostname)
+JBOSS_DOMAIN_BACKUP_ADDRESS=dc2
+
+# JBoss admin username (to access console)
+JBOSS_ADMIN_USER=admin
+# JBoss admin password
+JBOSS_ADMIN_PASSWORD='jbAdmin@123!'
+
+# Default JBoss type
+JBOSS_TYPE=slave
+
+# Variable configurations depending on $JBOSS_HOST
+case $JBOSS_HOST in
+
+  # If host is master dc1, JBOSS_TYPE is master
+  dc1)
+    JBOSS_TYPE=master
+    ;;
+
+  # If host is backup dc2, JBOSS_TYPE is bakup
+  dc2)
+    JBOSS_TYPE=backup
+    ;;
+
+  # We'll set JBOSS_SERVER_CONFIG to srv1 if we are in hc{2,4}
+  hc2|hc4)
+    JBOSS_SERVER_CONFIG=srv1
+    ;;
+
+esac
+
+# Host config file is JBOSS_TYPE dependant
+JBOSS_HOST_CONFIG=host-${JBOSS_TYPE}.xml

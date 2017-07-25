@@ -1,0 +1,32 @@
+#!/bin/bash
+set +x
+set -e
+
+BASE_DIR=`cd "$(dirname "$0")"; pwd`
+INSTALLER=${INSTALLER:-jboss-installer.tar.gz}
+PREFIX=${PREFIX:-/opt/rh/jboss-installer}
+SSH_USER=${SSH_USER:-root}
+SSH_PORT=${SSH_PORT:-22}
+
+if ! [ "$SERVER" ]
+then
+  echo "Usage: SERVER=<server> $0"
+  exit 1
+fi
+
+if ! [ -f "$INSTALLER" ]
+then
+  echo "INSTALLER ($INSTALLER) not found!"
+  exit 1
+fi
+
+SCRIPT=$(cat << EOF
+echo "Removing $PREFIX ..." ;
+rm -rf $PREFIX ;
+echo "Extracting files (from pipe to /) ..." ;
+tar xvfPz - -C /
+EOF
+)
+
+cd "$BASE_DIR"
+cat $INSTALLER | ssh -p $SSH_PORT $SSH_USER@$SERVER $SCRIPT

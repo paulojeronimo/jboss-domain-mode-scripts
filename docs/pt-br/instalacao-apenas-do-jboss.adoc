@@ -1,0 +1,14 @@
+[[instalacao-jboss]]
+= Instalação apenas do JBoss
+
+Essa forma de instalação deve ser utilizada apenas para a reinstalação do JBoss.
+Ela só deve ser executada, após a <<instalacao-completa,instalação completa>>, caso seja necessária a reinstalação do JBoss.
+A execução do script link:{basedir}/scripts/jboss-install[jboss-install] verificará a existência do usuário que executará o JBoss e, caso necessário, fará sua criação.
+Esse script também fará a cópia do diretório pré-configurado do JBoss (`JBOSS_INSTALLER`) para a sua localização de execução.
+Finalmente, ele ajustará os parâmetros necessários para realizar a execução do JBoss (como DC ou HC).
+
+Forma de execução:
+
+----
+./scripts/jboss-install
+----

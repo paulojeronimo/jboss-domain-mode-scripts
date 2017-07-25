@@ -1,0 +1,12 @@
+#!/bin/bash
+BASE_DIR=`cd "$(dirname "$0")"; pwd`
+source "$BASE_DIR"/common
+
+cd "$BASE_DIR"
+
+if grep -q $JBOSS_USER /etc/passwd
+then
+  userdel $JBOSS_USER && echo "JBOSS_USER ($JBOSS_USER) removed!"
+else
+  echo "JBOSS_USER ($JBOSS_USER) already removed!"
+fi

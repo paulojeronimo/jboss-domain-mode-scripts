@@ -1,0 +1,5 @@
+= jboss-domain-mode-scripts: Scripts para a instalação e uso do JBoss EAP em modo domain
+
+Este projeto pode ser utilizado para a *instalação rápida de um ambiente de execução do JBoss EAP (versão 6.4 em diante) em modo domain*.
+
+Documentação em link:docs/index.adoc[].

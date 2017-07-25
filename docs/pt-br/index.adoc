@@ -1,0 +1,37 @@
+= jboss-domain-mode-scripts: Scripts para tarefas no JBoss EAP em modo domain
+Paulo Jerônimo <pj@paulojeronimo.com>
+V1.0, {localdatetime}
+:toc: left
+:toc-title: Conteúdo
+:icons: font
+:setanchors:
+
+:basedir: ..
+include::uris.adoc[]
+include::definitions.adoc[]
+
+:leveloffset: +1
+
+:numbered!:
+include::sobre.adoc[]
+
+<<<
+:numbered:
+include::motivacao.adoc[]
+
+<<<
+include::pre-requisitos.adoc[]
+
+<<<
+include::instalacao-completa.adoc[]
+
+<<<
+include::instalacao-apenas-do-jboss.adoc[]
+
+<<<
+include::demonstracoes-de-funcionamento/index.adoc[]
+
+<<<
+include::detalhes-de-funcionamento/index.adoc[]
+
+:leveloffset: -1

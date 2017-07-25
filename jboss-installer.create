@@ -1,0 +1,29 @@
+#!/bin/bash
+set +x
+set -e
+
+BASE_DIR=`cd "$(dirname "$0")"; pwd`
+INSTALLER=${INSTALLER:-jboss-installer.tar.gz}
+PREFIX=${PREFIX:-/opt/rh/jboss-installer}
+
+[[ $OSTYPE =~ darwin.* ]] && tar=gtar || tar=tar
+
+cd "$BASE_DIR"
+
+case "$DEMO" in
+  demo*)
+    id=${DEMO#demo}
+    config=demos/$id/config
+    [ -f $config ] && \
+      cp $config ./scripts/ || \
+      { echo "File $config not found!"; exit 1; }
+  ;;    
+esac
+
+echo "Creating $INSTALLER ..."
+find . -type f \( \
+  -path './configurations/*' -o \
+  -path './installers/*' -o \
+  -path './scripts/*' \
+  \) \( ! -name README.adoc -o -name "$config" \) -print0 | \
+$tar cvfz $INSTALLER --transform "s,^\.,$PREFIX,"  --null -T -

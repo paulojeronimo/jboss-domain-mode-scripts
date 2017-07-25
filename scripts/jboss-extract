@@ -1,0 +1,31 @@
+#!/bin/bash
+# 
+# 1) Extract a fresh copy of JBoss EAP on $INSTALLER_DIR
+# 2) Apply JBoss EAP patches
+#
+# This script can be called outside Linux (ex.: macOS) and does needs to be executed by root
+#
+BASE_DIR=`cd "$(dirname "$0")"; pwd`
+LINUX_NEEDED=false ROOT_NEEDED=false source "$BASE_DIR"/common
+
+cd "$BASE_DIR/$INSTALLERS_DIR"
+echo "Creating base installation ($PWD/$JBOSS_DIR) from $JBOSS_INSTALLER_ZIP ..."
+
+if [ -d "$JBOSS_DIR" ]
+then
+  echo "Removing existing ..."
+  rm -rf "$JBOSS_DIR"
+fi
+
+echo "Extracting JBoss from $JBOSS_INSTALLER_ZIP ..."
+unzip -q $JBOSS_INSTALLER_ZIP
+
+echo "Patching JBoss ..."
+for patch in ${JBOSS_PATCHES[*]}
+do
+  echo "  Applying patch $patch ..."
+  $JBOSS_DIR/bin/jboss-cli.sh --command="patch apply --override-all $patch" > /dev/null
+done
+
+echo "Copying configurations from $CONFIGURATIONS_DIR ..."
+rsync -a "$CONFIGURATIONS_DIR/$JBOSS_DIR" .

@@ -1,0 +1,10 @@
+#!/bin/bash
+BASE_DIR=`cd "$(dirname "$0")"; pwd`
+LINUX_NEEDED=false ROOT_NEEDED=false source "$BASE_DIR"/common
+
+cd "$BASE_DIR/$INSTALLERS_DIR"
+echo "Copying $JBOSS_DIR/*.patch (recursively and with parents) to $CONFIGURATIONS_DIR ..."
+
+[ -d "$JBOSS_DIR" ] || { echo "Directory $JBOSS_DIR not found!"; exit 1; }
+
+tar cf - $(find "$JBOSS_DIR" -type f -name '*.patch') | tar xf - -C "$CONFIGURATIONS_DIR"

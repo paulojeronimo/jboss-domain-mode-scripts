@@ -1,0 +1,6 @@
+#!/bin/bash
+BASE_DIR=`cd "$(dirname "$0")"; pwd`
+source "$BASE_DIR"/common
+
+echo "Configuring JBoss owner ($JBOSS_USER:$JBOSS_GROUP) ..."
+chown -R $JBOSS_USER:$JBOSS_GROUP "$JBOSS_INSTALL_DIR/$JBOSS_DIR"

@@ -1,0 +1,11 @@
+--- jboss-eap-6.4.patched/bin/init.d/jboss-as-domain.sh	2017-07-06 18:32:42.000000000 -0300
++++ jboss-eap-6.4/bin/init.d/jboss-as-domain.sh	2017-06-08 15:52:18.000000000 -0300
+@@ -54,7 +54,7 @@
+   JBOSS_HOST_CONFIG=host.xml
+ fi
+ 
+-JBOSS_SCRIPT=$JBOSS_HOME/bin/domain.sh
++JBOSS_SCRIPT=${JBOSS_SCRIPT:-$JBOSS_HOME/bin/domain.sh}
+ 
+ JBOSS_MARKERFILE=$JBOSS_HOME/domain/tmp/startup-marker
+ 

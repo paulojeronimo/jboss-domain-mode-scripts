@@ -1,0 +1,21 @@
+#!/bin/bash
+BASE_DIR=`cd "$(dirname "$0")"; pwd`
+source "$BASE_DIR"/common
+
+cd "$BASE_DIR"
+
+./jboss-service-uninstall
+
+d=$JBOSS_INSTALL_DIR/$JBOSS_DIR
+if [ -d "$d" ]
+then
+  echo "Removing $d ..."
+  rm -rf "$d"
+fi
+
+f=$JBOSS_INSTALL_DIR/$JBOSS_LINK
+if [ -L "$f" ]
+then
+  echo "Removing link $f ..."
+  rm "$f"
+fi

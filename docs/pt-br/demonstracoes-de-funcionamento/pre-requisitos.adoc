@@ -1,0 +1,50 @@
+[[pre-requisitos]]
+= Pré-requisitos
+
+== Instalação de ferramentas
+
+O teste dos scripts através das demonstrações a seguir exige a instalação de algumas ferramentas. São elas:
+
+. {VirtualBox}
+. {Vagrant}
+
+Faça a instalação dessas ferramentas para prosseguir.
+O VirtualBox será utilizado para a criação e o gerenciamento de máquinas virtuais.
+O Vagrant, por sua vez, será utilizado para provisionamento dessas máquinas.
+
+[NOTE]
+====
+. O uso das ferramentas acima não é necessário caso você já possua acesso a máquinas (virtuais ou reais) que possa gerenciar com o usuário `root`.
+De fato, nesse caso, o uso dessas ferramentas é totalmente dispensável.
+. Os scripts que serão executados possuem independência completa do uso dessas ferramentas.
+. Nas demonstrações, apenas um provisionamento básico será realizado nas máquinas que serão criadas.
+Apesar de ser possível uma automação completa da instalação do JBoss através do provisionamento com o Vagrant, nas demonstrações a seguir, os passos que envolvem a instalação do JBoss serão realizados de maneira complemente manual.
+Dessa forma, espera-se que o leitor entenda o uso dos scripts e não como eles poderiam ser chamados através de um provisionamento automático pelo Vagrant.
+====
+
+== Geração do pacote de instalação (jboss-installer.tar.gz)
+
+Para cada construção de ambiente, um pacote (arquivo `jboss-installer.tar.gz`) precisa ser gerado.
+Esse pacote contém uma cópia de todos os arquivos necessários para a instalação do JBoss em cada um dos servidores do ambiente.
+
+A geração desse pacote deve ser realizada pelo seguinte comando:
+
+[source,bash]
+----
+./jboss-installer.create
+----
+
+[NOTE]
+====
+. Versões futuras dos scripts deste projeto podem, simplesmente, deixar deixar utilizar esse arquivo.
+. De fato, versões futuras deste projeto poderiam utilizar, por exemplo, `rsync` ou `git` para distribuir os arquivos necessários para cada servidor.
+====
+
+== Configuração do arquivo /etc/hosts (na máquina HOST)
+
+Como as demonstracões são todas realizadas localmente, a partir de uma máquina HOST que executa máquinas virtuais, o arquivo `/etc/hosts` dessa máquina precisa ser configurado com o comando a seguir:
+
+[source,bash]
+----
+./demos/scripts/configurar-hosts
+----

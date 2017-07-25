@@ -1,0 +1,16 @@
+[[um-dc-e-dois-hcs]]
+= Um (1) DC e dois (2) HCs
+
+== Geração do jboss-installer.tar.gz
+
+[source,bash]
+----
+DEMO=demo2 ./jboss-installer.create
+----
+
+== Cópia do conteúdo de jboss-installer.tar.gz para os servidores
+
+[source,bash]
+----
+for server in dc1 hc{1,2}; do SERVER=$server ./jboss-installer.install; done
+----
