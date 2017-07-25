@@ -4,8 +4,8 @@ set -e
 
 LANGUAGE_DIR=${LANGUAGE_DIR:-pt-br}
 BASE_DIR=`cd "$(dirname "$0")"; pwd`
-PROJECT_DIR=`cd "$BASE_DIR/../.."; pwd`
-RELATIVE_DIR=${BASE_DIR##$PROJECT_DIR/}
+PROJECT_DIR=`cd "$BASE_DIR/.."; pwd`
+RELATIVE_DIR=${BASE_DIR##$PROJECT_DIR/}/$LANGUAGE_DIR
 
 config=build.conf
 [ -f "$BASE_DIR"/$config ] || config=$config.sample

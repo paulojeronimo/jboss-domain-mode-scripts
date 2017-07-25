@@ -1,7 +1,7 @@
 :uri-paulojeronimo: http://paulojeronimo.com
 :uri-paulojeronimo-github: https://github.com/paulojeronimo
 :uri-jboss-domain-mode-scripts: https://github.com/paulojeronimo/jboss-domain-mode-scripts
-:uri-jboss-domain-mode-scripts-docs-pt-br: https://paulojeronimo.github.io/paulojeronimo/jboss-domain-mode-scripts/docs/pt-br
+:uri-jboss-domain-mode-scripts-docs-pt-br: https://paulojeronimo.github.io/jboss-domain-mode-scripts/docs/pt-br
 :uri-bash: https://www.gnu.org/software/bash/
 :uri-jboss-cli: https://developer.jboss.org/wiki/CommandLineInterface
 :uri-jdk: http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html
