@@ -4,6 +4,6 @@
 /installers/*
 !/installers/README.adoc
 /jboss-installer.tar.gz
-/scripts/config
+/merged/*
 /demos/Vagrantfile
 /demos/.backup/

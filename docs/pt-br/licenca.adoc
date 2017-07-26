@@ -1,0 +1,9 @@
+[[licenca]]
+= Licença
+
+Uma {uri-licenca-mit}[licença MIT] é aplicada a este projeto.
+Segue o seu conteúdo:
+
+----
+include::{basedir}/LICENSE[]
+----

@@ -1,7 +1,8 @@
 [[sobre]]
 = Sobre
 
-Este projeto pode ser utilizado para a *instalação rápida de um ambiente {JBossEAP} rodando em modo domain*.
+Esta é a documentação do projeto *jboss-domain-mode-scripts* disponível, sob uma <<licenca,licença MIT>> no {GitHub}, em {uri-jboss-domain-mode-scripts}.
+Este projeto, por sua vez, pode ser utilizado para a *instalação rápida de um ambiente {JBossEAP} rodando em modo domain*.
 Neste momento, o uso desses scripts é suportado na versão 6.4 do JBoss EAP.
 
 ifdef::backend-html5[]
@@ -18,14 +19,14 @@ Você pode visualizar uma versão online deste documento acessando o endereço {
 ====
 endif::[]
 
-A versão mais recente deste projeto é mantida no repositório {uri-jboss-domain-mode-scripts}[jboss-domain-mode-scripts].
-Ela é mantida por {PauloJeronimoNoGitHub} e é desenvolvida através de scripts codificados em {uri-bash}[Bash] e/ou {uri-jboss-cli}[CLI].
+O manutenção deste projeto é feita através do desenvolvimento de scripts codificados em {uri-bash}[Bash] e/ou {uri-jboss-cli}[CLI].
 
 O objetivo desses scripts é facilitar a construção de ambientes, sejam eles de topologia simples ou complexa.
 Esses ambientes podem ser de desenvolvimento, homologação, produção ou qualquer outro.
 
 Demonstrações de construção de ambientes são realizadas neste projeto.
-Essas demonstrações se iniciam na <<construcao-de-um-ambiente-simples,construção de um ambiente simples>> composto por um único Domain Controller (DC) e um ou dois Host Controller(s) (HC(s)).
+Essas demonstrações se iniciam na <<construcao-de-um-ambiente-simples,construção de um ambiente simples>> composto por um único *Domain Controller (DC)* e um *Host Controller (HC)*) (<<demo-1>>).
+Logo após, conceitos de uso desses scripts são ampliados numa <<demo-2,segunda demonstração>>.
 Em seguida é apresentado <<construcao-de-um-dc-de-backup,como montar um ambiente composto por mais de um DC, onde o segundo atua como backup>>.
 
-O maior benefício da utilização deste projeto é verificado quando é necessária a <<construcao-de-um-ambiente-complexo,construção de um ambiente complexo e grande, envolvendo dois DCs e vários HCs>>.
+Finalmente, o maior benefício da utilização deste projeto é verificado quando é necessária a <<construcao-de-um-ambiente-complexo,construção de um ambiente complexo e grande, envolvendo dois DCs e vários HCs>>.

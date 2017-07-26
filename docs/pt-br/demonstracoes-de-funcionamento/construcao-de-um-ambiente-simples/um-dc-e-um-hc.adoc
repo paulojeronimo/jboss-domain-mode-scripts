@@ -30,6 +30,13 @@ Cópia do conteúdo do pacote (`jboss-installer.tar.gz`) para o servidor:
 SSH_PORT=2222 SERVER=localhost ./jboss-installer.install
 ----
 
+[NOTE]
+====
+Na execução do script acima será solicitada a senha do usuário `root` (da máquina `dc1`).
+Informe: `vagrant`.
+Por padrão, as `boxes` de base criadas com o `vagrant` utilizam essa senha.
+====
+
 Instalação do jboss:
 
 [source,bash]

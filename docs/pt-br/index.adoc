@@ -17,6 +17,9 @@ include::definitions.adoc[]
 include::sobre.adoc[]
 
 <<<
+include::licenca.adoc[]
+
+<<<
 :numbered:
 include::motivacao.adoc[]
 

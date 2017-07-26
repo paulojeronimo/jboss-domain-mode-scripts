@@ -8,43 +8,101 @@ As instâncias terão o mesmo nome (`app-1`) e pertencerão ao mesmo `Server Gro
 
 [NOTE]
 ====
-Mais a frente exploraremos as limitações relativas a uma montagem de ambiente utilizando os scripts nesta versão.
-Entretanto, já neste momento, é bom saber que somente através do uso desses scripts (escritos em Bash), se não levássemos em conta a console de gerenciamento do DC (ou a execução de scripts CLI), ficaríamos extremamente limitados.
-O motivo para isso é que, basicamente, os scripts dessa versão são excelentes para a instalação de infraestruturas estáticas (DCs e HCs).
-Mas, para lidar com a dinamicidade que envolve a criação de grupos de servidores e servidores, muitas vezes em direfentes `profiles`, esses scripts não conseguem oferecer o auxílio necessário.
-Precisaria haver um mecanismo que nos possibilite executar scripts CLI de maneira mais sistematica.
-Porém, isso ainda não for adicionado a essa versão dos scripts.
+Ainda exploraremos as limitações relativas a uma montagem de ambiente utilizando os scripts nesta versão.
+Contudo, já neste momento, é bom saber que somente através do uso desses scripts, e se não levássemos em conta a possibilidade de uso do {uri-jboss-management-console}[console de gerenciamento do JBoss] ou a sua capacidade de execução de {uri-jboss-cli}[scripts CLI], estaríamos muito, muito limitados.
+O motivo disso é que, basicamente, os scripts dessa versão são excelentes para a instalação de infraestruturas estáticas (DCs e HCs).
+Porém, para lidar com a dinamicidade que envolve a criação de grupos de servidores e servidores, muitas vezes em direfentes `profiles`, esses scripts não conseguem oferecer o auxílio necessário.
+Precisaria ser inserido, nesses scripts, um mecanismo que nos possibilitasse executar scripts CLI de maneira mais sistematica e direta.
+Mais a frente, veremos como isso pode ser feito.
 ====
 
 == Geração do pacote de instalação (jboss-installer.tar.gz)
 
-A execução do script `jboss-installer.create` somada a adição do parâmetro `DEMO=2` faz com que sejam copiados, para o pacote `jboss-installer.tar.gz`, o conteúdo dos scripts e das configurações que estão disponíveis no diretório link:{basedir}/demos/2[demos/2].
+A inclusão do parâmetro `DEMO=2`, antes da execução do script `jboss-installer.create`, faz com que sejam copiados, para o pacote `jboss-installer.tar.gz`, o conteúdo dos scripts e das configurações que estão disponíveis no diretório link:{basedir}/demos/2[demos/2].
+Execute:
 
 [source,bash]
 ----
 DEMO=2 ./jboss-installer.create
 ----
 
-== Remoção dos servidores anteriores
+[NOTE]
+====
+. O resultado da execução acima é um pacote que, além de conter os link:{basedir}/scripts[scripts] e link:{basedir}/configurations[configurações] padrão, também possui o conteúdo de `demos/2/scripts` e `demos/2/configurations`.
+. Verifique isso executando o comando `tar tvf jboss-installer.tar.gz`.
+====
 
+== Adição do segundo HC (hc2) - (utilizando patch e diff)
+
+Vamos utilizar o comando {patch}.
+Ele modificará o conteúdo do arquivo `Vagrantfile`:
+
+[source,bash]
 ----
 cd demos
-vagrant destroy
+patch Vagrantfile < 2/Vagrantfile.patch
 ----
 
-== Criação/inicialização dos novos servidores
+Em relação a primeira demonstração, o `Vagrantfile` que acabamos de alterar faz, apenas, a adição do HC `hc2`.
+Por curiosidade, você poderia ver isso com o comando o comando {diff}:
 
+[source,bash]
 ----
-cp 2/Vagrantfile .
+diff -uNr 1/Vagrantfile Vagrantfile
+----
+
+Em seguida, para termos certeza de que, realmente, o conteúdo do `patch` é o que está no arquivo `2/Vagrantfile.patch`, poderíamos utilizar o {Vim}, como no seguinte comando:
+
+[source,bash]
+----
+vim -d <(!!) 2/Vagrantfile.patch
+----
+
+[NOTE]
+====
+. A saída do comando `diff` tem, aproximadamente (mudando-se um `timestamp`), o mesmo conteúdo do arquivo link:{basedir}/demos/2/Vagrantfile.patch[demos/2/Vagrantfile.patch].
+Dessa forma, se você ainda não sabia como gerar um `patch` (e aplicá-lo), este tópico acaba de lhe ensinar como fazer isso (com o comando `diff`).
+. O que os scripts deste projeto executam `"under the hood"`, desde a primeira demonstração, é uma aplicação sistemática de patches, de forma a fazer os ajustes necessários para colocar o JBoss em execução de acordo com certos parâmetros.
+====
+
+Após a aplicação do `patch`, vamos solicitar ao Vagrant que inicie as máquinas:
+
+[source,bash]
+----
 vagrant up
+----
+
+Quando na execução do comando acima, o Vagrant verificará que as máquinas `dc1` e `hc1` já estão em execução e foram provisionadas.
+Portanto, para elas, nada será realizado.
+Mas, seguindo em frente, o Vagrant verificará que a máquina `hc2` precisará ser criada.
+E fará sua criação e provisionamento.
+Encerrando esse tópico, volte ao diretório anterior:
+
+[source,bash]
+----
 cd ..
 ----
 
-== Instalação e inicialização do DC
+== Finalização e substituição do instalador do JBoss em dc1 e hc1
+
+Para parar as instâncias JBoss já em execução em `dc1` e em `hc1`, execute o seguinte comando:
+
+[source,bash]
+----
+for p in 22{00,22}; do ssh -p $p root@localhost /opt/rh/jboss-installer/scripts/jboss-stop; done
+----
+
+[NOTE]
+====
+. No conjunto de scripts deste projeto, além do scritp {jboss-stop}, há também os seguintes que podem ser utilizados para as tarefas de inciliação e otenção de estado de execução do jboss: {jboss-start}, {jboss-status}.
+. De forma semelhante, ao invés de executarmos um `tailf /var/log/jboss-as/console.log`, poderiámos executar o script {jboss-status}.
+====
+
+== Reinstalação e inicialização do DC (dc1)
 
 Repita os mesmos link:#demo-1-instalacao-dc[passos] que já foram executados (na Demo 1) para a instalação e inicialização do DC.
 
-== Instalação e inicialização dos HCs
+== Reinstalação do hc1 a instalação do hc2
 
 Repita, para cada HC, os mesmo passos link:#demo-1-instalacao-hc[passos] que já foram executados (na Demo 1) para a instalação e inicialização do `hc1`.
 
@@ -58,4 +116,4 @@ Ao serem iniciados os passos para a realização da instalação do `hc2` deve s
 Abra o browser em http://dc1:9990.
 Logue-se com o usuário `admin` e a senha `jbAdmin@123!`.
 Acesse a aba `Domain` e verifique que tanto o `hc1` quanto o `hc2` estão registrados na lista de hosts.
-Verifique também, pela topologia, que há duas instâncias de `app-1` sendo executadas.
+Verifique também, na aba http://dc1:9990/console/App.html#topology[topologia], que há duas instâncias de `app-1` sendo executadas.

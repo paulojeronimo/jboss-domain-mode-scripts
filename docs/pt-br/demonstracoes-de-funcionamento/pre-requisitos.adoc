@@ -25,27 +25,29 @@ Dessa forma, espera-se que o leitor entenda o uso dos scripts e não como eles p
 == Geração do pacote de instalação (jboss-installer.tar.gz)
 
 Para cada construção de ambiente, um pacote (arquivo `jboss-installer.tar.gz`) precisa ser gerado.
-Esse pacote contém uma cópia de todos os arquivos necessários para a instalação do JBoss em cada um dos servidores desse ambiente.
+Esse pacote contém uma cópia de todos os arquivos necessários para a instalação do JBoss, em cada um dos servidores desse ambiente.
 
-A geração do pacote deve ser realizada pelo seguinte comando:
-
-[source,bash]
-----
-./jboss-installer.create
-----
+A geração do pacote deve ser realizada pelo seguinte comando `jboss-installer.create`.
+Esse comando está disponível na raiz dos arquivos do projeto.
 
 [NOTE]
 ====
-. Em versões futuras dos scripts deste projeto veremos que esse pacote pode deixar de ser útil.
+. Veremos, em versões futuras dos scripts deste projeto, que esse pacote pode deixar de ser útil.
 . De fato, nessas novas versões iremos utilizar, por exemplo, o `rsync` ou `git`.
-Serão esses aplicativos que farão a distribuição dos arquivos necessários para cada servidor.
+Serão esses aplicativos que farão a distribuição dos arquivos necessários, para cada servidor.
 ====
 
 == Configuração do arquivo /etc/hosts (na máquina HOST)
 
-Como as demonstracões são todas realizadas localmente, a partir de uma máquina HOST que executa máquinas virtuais, o arquivo `/etc/hosts` dessa máquina precisa ser configurado com o comando a seguir:
+Como as demonstracões são todas realizadas localmente, a partir de uma máquina HOST que executa máquinas virtuais, o arquivo `/etc/hosts` dessa máquina precisa ser configurado com o comando a seguir.
 
 [source,bash]
 ----
 ./demos/scripts/configurar-hosts
 ----
+
+[WARNING]
+====
+O comando acima deve ser executado na raiz dos arquivos do projeto.
+Da mesma forma, os próximos comandos, que serão realizados em demonstrações a partir do tópico seguinte, terão sempre a sua execução iniciada nesse diretório. Haverá um aviso quando a regra não for essa.
+====

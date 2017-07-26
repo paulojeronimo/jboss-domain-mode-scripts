@@ -4,9 +4,15 @@
 :uri-jboss-domain-mode-scripts-docs-pt-br: https://paulojeronimo.github.io/jboss-domain-mode-scripts/docs/pt-br
 :uri-bash: https://www.gnu.org/software/bash/
 :uri-jboss-cli: https://developer.jboss.org/wiki/CommandLineInterface
+:uri-jboss-management-console: https://access.redhat.com/documentation/en-US/JBoss_Enterprise_Application_Platform/6.4/html/Administration_and_Configuration_Guide/sect-The_Management_Console.html
 :uri-jdk: http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html
 :uri-jboss-eap: https://www.redhat.com/en/technologies/jboss-middleware/application-platform
 :uri-jboss-eap-docker-image: https://access.redhat.com/documentation/en-us/red_hat_jboss_enterprise_application_platform/7.0/html-single/using_the_red_hat_jboss_enterprise_application_platform_docker_image/
 :uri-jboss-eap-docker-image-extend: {uri-jboss-eap-docker-image}/#extending-the-image
 :uri-virtualbox: https://www.virtualbox.org
 :uri-vagrant: https://www.vagrantup.com/
+:uri-vim: http://www.vim.org/
+:uri-patch: https://en.wikipedia.org/wiki/Patch_(Unix)
+:uri-diff: https://en.wikipedia.org/wiki/Diff_utility
+:uri-licenca-mit: https://pt.wikipedia.org/wiki/Licen%C3%A7a_MIT
+:uri-github: https://github.com

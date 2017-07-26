@@ -5,7 +5,7 @@ source "$BASE_DIR"/common
 patch() {
   local cmd=`which patch`
   local f=$1
-  local f_patch=$2
+  local f_patch=$2.patch
   local original=$f.original
 
   if [ ! -f "$original" ]
@@ -27,9 +27,9 @@ echo "Configuring $d files ..."
 cd "$d"
 
 f=bin/domain.conf
-case $JBOSS_TYPE in
-  master) f_patch=bin/domain.conf.master.patch;;
-  backup|slave) f_patch=bin/domain.conf.slave.patch;;
+case "$JBOSS_TYPE" in
+  master) f_patch=$f.master;;
+  backup|slave) f_patch=$f.slave;;
 esac
 patch $f $f_patch
 
@@ -47,15 +47,19 @@ sed -i "
   s/JBOSS_DOMAIN_BACKUP_ADDRESS/$JBOSS_DOMAIN_BACKUP_ADDRESS/g
 " $f
 
-f=domain/configuration/$JBOSS_HOST_CONFIG
-if [ "$JBOSS_SERVER_CONFIG" ]
+if [ "$JBOSS_TYPE" = master ]
 then
-  f_patch=domain/configuration/$JBOSS_HOST_CONFIG.$JBOSS_SERVER_CONFIG.patch
-else
-  f_patch=domain/configuration/$JBOSS_HOST_CONFIG.patch
-  [ "$JBOSS_DOMAIN_BACKUP_ADDRESS" ] || \
-    f_patch=domain/configuration/$JBOSS_HOST_CONFIG.no-backup.patch
+  f=domain/configuration/domain.xml
+  patch $f $f
 fi
+
+f=domain/configuration/$JBOSS_HOST_CONFIG
+f_patch=$f
+if [ "$JBOSS_HOST_CONFIG" = "host-slave.xml" ]
+then
+  [ "$JBOSS_DOMAIN_BACKUP_ADDRESS" ] || f_patch=$f_patch.no-backup
+fi
+[ "$JBOSS_SERVER_CONFIG" ] && f_patch=$f_patch.$JBOSS_SERVER_CONFIG
 patch $f $f_patch
 
 JBOSS_ADMIN_PASSWORD_BASE64=`echo -n $JBOSS_ADMIN_PASSWORD|base64`
