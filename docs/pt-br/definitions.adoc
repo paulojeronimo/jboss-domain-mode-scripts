@@ -1,5 +1,6 @@
 :PauloJeronimo: link:{uri-paulojeronimo}[Paulo Jerônimo]
 :PauloJeronimoNoGitHub: link:{uri-paulojeronimo-github}[Paulo Jerônimo (no GitHub)]
+:RedHat: link:{uri-redhat}[Red Hat]
 :JBossEAP: link:{uri-jboss-eap}[JBoss EAP]
 :RHEL: link:{uri-rhel}[RHEL]
 :VirtualBox: link:{uri-virtualbox}[VirtualBox]
@@ -10,7 +11,6 @@
 :GitHub: link:{uri-github}[GitHub]
 
 // scripts
-:install: 
 :install: link:{basedir}/scripts/install[install]
 :jboss-installer-create: link:{basedir}/jboss-installer.create[jboss-installer.create]
 :jboss-installer-install: link:{basedir}/jboss-installer.install[jboss-installer.install]
@@ -19,3 +19,12 @@
 :jboss-start: link:{basedir}/scripts/jboss-start[jboss-start]
 :jboss-status: link:{basedir}/scripts/jboss-status[jboss-status]
 :jboss-tailf: link:{basedir}/scripts/jboss-tailf[jboss-tailf]
+
+ifdef::backend-html5[]
+:docs-pt-br: link:{basedir}/docs/pt-br[docs/pt-br]
+endif::[]
+ifndef::backend-html5[]
+:docs-pt-br: link:{uri-jboss-domain-mode-scripts}/tree/master/docs/pt-br[docs/pt-br]
+endif::[]
+
+:triatlo: link:{uri-triatlo}[Triatlo]

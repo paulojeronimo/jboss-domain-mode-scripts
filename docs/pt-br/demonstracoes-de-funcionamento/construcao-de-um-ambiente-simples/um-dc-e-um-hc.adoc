@@ -99,7 +99,7 @@ Cópia do conteúdo do pacote (`jboss-installer.tar.gz`) para o servidor:
 SSH_PORT=2200 SERVER=localhost ./jboss-installer.install
 ----
 
-[[minimizacao-de-dedadas]]Minimização de dedadas no teclado ( icon:smile-o[] ):
+[[minimizacao-de-dedadas]]"Minimização de dedadas" (no teclado icon:smile-o[2x]):
 
 [source,bash]
 ----

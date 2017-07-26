@@ -9,6 +9,4 @@ include::construcao-de-um-ambiente-simples/index.adoc[]
 
 include::construcao-de-um-dc-de-backup.adoc[]
 
-include::construcao-de-um-ambiente-complexo.adoc[]
-
 :leveloffset: -1

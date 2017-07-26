@@ -1,5 +1,9 @@
 :uri-paulojeronimo: http://paulojeronimo.com
+:uri-redhat: https://redhat.com
 :uri-paulojeronimo-github: https://github.com/paulojeronimo
+:uri-paulojeronimo-github-jboss-scripts: {uri-paulojeronimo-github}/jboss-scripts
+:uri-jboss-eap-6-4: https://access.redhat.com/documentation/en/red-hat-jboss-enterprise-application-platform?version=6.4
+:uri-jboss-eap-7-0: https://access.redhat.com/documentation/en/red-hat-jboss-enterprise-application-platform?version=7.0
 :uri-jboss-domain-mode-scripts: https://github.com/paulojeronimo/jboss-domain-mode-scripts
 :uri-jboss-domain-mode-scripts-site: https://paulojeronimo.github.io/jboss-domain-mode-scripts
 :uri-jboss-domain-mode-scripts-site-docs-pt-br: {uri-jboss-domain-mode-scripts-site}/docs/pt-br
@@ -17,3 +21,7 @@
 :uri-diff: https://en.wikipedia.org/wiki/Diff_utility
 :uri-licenca-mit: https://pt.wikipedia.org/wiki/Licen%C3%A7a_MIT
 :uri-github: https://github.com
+:uri-asciidoctor: http://asciidoctor.org
+:uri-asciidoc-e-asciidoctor: https://paulojeronimo.github.io/asciidoc-e-asciidoctor/
+:uri-triatlo: https://pt.wikipedia.org/wiki/Triatlo
+:uri-lml: https://en.wikipedia.org/wiki/Lightweight_markup_language

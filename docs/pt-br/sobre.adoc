@@ -1,27 +1,20 @@
 [[sobre]]
 = Sobre
 
-Esta é a documentação do projeto *jboss-domain-mode-scripts* disponível, sob uma <<licenca,licença MIT>> no {GitHub}, em {uri-jboss-domain-mode-scripts}.
-Este projeto, por sua vez, pode ser utilizado para a *instalação rápida de um ambiente {JBossEAP} rodando em modo domain*.
-Neste momento, o uso desses scripts é suportado na versão 6.4 do JBoss EAP.
+[[sobre-o-projeto]]
+== O projeto
 
-ifdef::backend-html5[]
-[NOTE]
-====
-Você pode {uri-jboss-domain-mode-scripts-site-docs-pt-br}/jboss-domain-mode-scripts.pdf[baixar e ler este documento em formato PDF].
-====
-endif::[]
+Esta é a documentação do projeto *jboss-domain-mode-scripts* disponível, sob uma <<licenca,licença MIT>>, no {GitHub} (em {uri-jboss-domain-mode-scripts}).
+Este projeto, da autoria de <<paulojeronimo>>, pode ser utilizado para a *instalação rápida de um ambiente {JBossEAP} rodando em modo domain*.
 
-ifndef::backend-html5[]
-[NOTE]
-====
-Você pode visualizar uma versão online deste documento acessando o endereço {uri-jboss-domain-mode-scripts-site-docs-pt-br}.
-====
-endif::[]
+Neste momento, o uso desses scripts é suportado na {uri-jboss-eap-6-4}[versão 6.4] do JBoss EAP.
+Em breve, este projeto poderá ser extendido para a {uri-jboss-eap-7-0}[versão 7.0].
+Scripts similares a estes, também escritos por <<paulojeronimo>>, já trazem o suporte a versão 7.0 no projeto {uri-paulojeronimo-github-jboss-scripts}[jboss-scripts].
+Diferente deste projeto, entretanto, o projeto *jboss-scritps* é voltado a utilização do JBoss EAP em ambiente de desenvolvimento, rodando em modo standalone.
 
 O manutenção deste projeto é feita através do desenvolvimento de scripts codificados em {uri-bash}[Bash] e/ou {uri-jboss-cli}[CLI].
 
-O objetivo desses scripts é facilitar a construção de ambientes, sejam eles de topologia simples ou complexa.
+O objetivo primário desses scripts é *facilitar a construção de ambientes de execução do JBoss EAP*, sejam eles de topologia simples ou complexa.
 Esses ambientes podem ser de desenvolvimento, homologação, produção ou qualquer outro.
 
 Demonstrações de construção de ambientes são realizadas neste projeto.
@@ -29,4 +22,42 @@ Essas demonstrações se iniciam na <<construcao-de-um-ambiente-simples,constru�
 Logo após, conceitos de uso desses scripts são ampliados numa <<demo-2,segunda demonstração>>.
 Em seguida é apresentado <<construcao-de-um-dc-de-backup,como montar um ambiente composto por mais de um DC, onde o segundo atua como backup>>.
 
-Finalmente, o maior benefício da utilização deste projeto é verificado quando é necessária a <<construcao-de-um-ambiente-complexo,construção de um ambiente complexo e grande, envolvendo dois DCs e vários HCs>>.
+Concluindo, o maior benefício no uso deste projeto pode ser verificado quando é necessária a _construção de um ambiente grande, complexo, que envolve o uso de dois DCs e muitos HCs_.
+
+<<<
+[[sobre-esta-documentacao]]
+== Esta documentação
+
+Criada pela uso da ferramenta {uri-asciidoctor}[Asciidoctor] (muito utilizada em vários projetos da {RedHat}), esta documentação evolui da mesma maneira que o código deste projeto.
+
+ifdef::backend-html5[]
+[NOTE]
+====
+Ela também pode ser {uri-jboss-domain-mode-scripts-site-docs-pt-br}/jboss-domain-mode-scripts.pdf[baixada e lida em formato PDF].
+====
+endif::[]
+
+ifndef::backend-html5[]
+[NOTE]
+====
+Ela também pode visualizada online, através de um acesso ao endereço {uri-jboss-domain-mode-scripts-site-docs-pt-br}.
+====
+endif::[]
+
+Os fontes em desenvolvimento deste documento estão no mesmo {uri-jboss-domain-mode-scripts}[repositório] que o projeto, no diretório {docs-pt-br}.
+Dessa forma, eles também são tratados como código e podem ter sua evolução visualizada através do {GitHub}.
+Assim como realizado no desenvolvimento de qualquer software gerenciado por esta ferramenta.
+
+[[paulojeronimo]]
+== Paulo Jerônimo
+
+{PauloJeronimo} é desenvolvedor de software.
+Também é consultor e instrutor de cursos na {RedHat}.
+No site {uri-paulojeronimo} podem ser encontradas mais informações sobre ele.
+
+<<paulojeronimo>> também adora escrever documentos.
+Gosta de {uri-lml}[linguagens de marcação leves].
+Mas, se recusa, *veementemente*, a editar textos com quaisquer ferramentas da classe "Office".
+Seu editor de textos preferido, tanto na edição de códigos em linguagens de programação, quanto em textos em geral, é o {Vim}.
+Utilizando-se o Vim e o Asciidoctor podem ser enscritos documentos que vão de apresentações simples a grandes livros.
+Leia mais sobre isso no artigo {uri-asciidoc-e-asciidoctor}["Asciidoc e Asciidoctor"].

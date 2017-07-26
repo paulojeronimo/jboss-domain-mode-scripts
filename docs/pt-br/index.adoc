@@ -20,7 +20,6 @@ endif::[]
 
 include::definitions.adoc[]
 
-
 :leveloffset: +1
 
 :numbered!:
