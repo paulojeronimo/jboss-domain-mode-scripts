@@ -8,6 +8,12 @@ V1.0, {localdatetime}
 :setanchors:
 
 :basedir: ../..
+:srcdir: ../..
+
+ifndef::backend-html5[]
+:basedir: {uri-jboss-domain-mode-scripts-docs-pt-br}
+endif::[]
+
 include::uris.adoc[]
 include::definitions.adoc[]
 
