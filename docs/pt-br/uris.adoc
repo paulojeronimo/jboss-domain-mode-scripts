@@ -1,7 +1,8 @@
 :uri-paulojeronimo: http://paulojeronimo.com
 :uri-paulojeronimo-github: https://github.com/paulojeronimo
 :uri-jboss-domain-mode-scripts: https://github.com/paulojeronimo/jboss-domain-mode-scripts
-:uri-jboss-domain-mode-scripts-docs-pt-br: https://paulojeronimo.github.io/jboss-domain-mode-scripts/docs/pt-br
+:uri-jboss-domain-mode-scripts-site: https://paulojeronimo.github.io/jboss-domain-mode-scripts
+:uri-jboss-domain-mode-scripts-site-docs-pt-br: {uri-jboss-domain-mode-scripts-site}/docs/pt-br
 :uri-bash: https://www.gnu.org/software/bash/
 :uri-jboss-cli: https://developer.jboss.org/wiki/CommandLineInterface
 :uri-jboss-management-console: https://access.redhat.com/documentation/en-US/JBoss_Enterprise_Application_Platform/6.4/html/Administration_and_Configuration_Guide/sect-The_Management_Console.html

@@ -8,14 +8,14 @@ Neste momento, o uso desses scripts é suportado na versão 6.4 do JBoss EAP.
 ifdef::backend-html5[]
 [NOTE]
 ====
-Você pode {uri-jboss-domain-mode-scripts-docs-pt-br}/jboss-domain-mode-scripts.pdf[baixar e ler este documento em formato PDF].
+Você pode {uri-jboss-domain-mode-scripts-site-docs-pt-br}/jboss-domain-mode-scripts.pdf[baixar e ler este documento em formato PDF].
 ====
 endif::[]
 
 ifndef::backend-html5[]
 [NOTE]
 ====
-Você pode visualizar uma versão online deste documento acessando o endereço {uri-jboss-domain-mode-scripts-docs-pt-br}.
+Você pode visualizar uma versão online deste documento acessando o endereço {uri-jboss-domain-mode-scripts-site-docs-pt-br}.
 ====
 endif::[]
 

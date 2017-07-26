@@ -27,7 +27,7 @@ Dessa forma, espera-se que o leitor entenda o uso dos scripts e não como eles p
 Para cada construção de ambiente, um pacote (arquivo `jboss-installer.tar.gz`) precisa ser gerado.
 Esse pacote contém uma cópia de todos os arquivos necessários para a instalação do JBoss, em cada um dos servidores desse ambiente.
 
-A geração do pacote deve ser realizada pelo seguinte comando `jboss-installer.create`.
+A geração do pacote deve ser realizada pelo script {jboss-installer-create}.
 Esse comando está disponível na raiz dos arquivos do projeto.
 
 [NOTE]

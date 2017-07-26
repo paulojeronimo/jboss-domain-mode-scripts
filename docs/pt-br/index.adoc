@@ -7,15 +7,19 @@ V1.0, {localdatetime}
 :icons: font
 :setanchors:
 
-:basedir: ../..
+include::uris.adoc[]
+
 :srcdir: ../..
 
+ifdef::backend-html5[]
+:basedir: ../..
+endif::[]
 ifndef::backend-html5[]
-:basedir: {uri-jboss-domain-mode-scripts-docs-pt-br}
+:basedir: {uri-jboss-domain-mode-scripts-site}
 endif::[]
 
-include::uris.adoc[]
 include::definitions.adoc[]
+
 
 :leveloffset: +1
 

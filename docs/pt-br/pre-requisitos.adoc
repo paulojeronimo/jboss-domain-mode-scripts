@@ -1,19 +1,19 @@
 [[pre-requisitos]]
 = Pré-requisitos
 
-A primeira versão deste projeto contém link:{basedir}/scripts[scripts] que podem ser executados somente pelo usuário `root`.
+A primeira versão deste projeto contém scripts que podem ser executados somente pelo usuário `root`.
 O ambiente deve ser Linux (RHEL e/ou CentOS).
 
-Uma cópia do instalador do {uri-jdk}[Java Development Kit (JDK)] para Linux deve ser disponibizada no diretório link:{basedir}/installers[installers].
+Uma cópia do instalador do {uri-jdk}[Java Development Kit (JDK)] para Linux deve ser disponibizada no diretório `installers`.
 O binário de instalação do JBoss (e seus patches) também devem ser copiados para esse diretório.
-Para mais informações, leia o link:{basedir}/installers/README.adoc[installers/README.adoc].
+Para mais informações, leia o `installers/README.adoc`.
 
-Os arquivos que você deseja que sejam adicionados ao JBoss devem ser inseridos no diretório link:{basedir}/configurations[configurations].
+Os arquivos que você deseja que sejam adicionados ao JBoss devem ser inseridos no diretório `configurations`.
 Esses arquivos incluem, por exemplo, binários de módulos (como drivers JDBC) e arquivos de relativos a segurança (`\*.pem`, `*.keystore`, etc).
 Também poderão ser incluídos patches que você deseja que sejam aplicados aos arquivos de configuração existentes no JBoss.
-Para mais informações, leia o link:{basedir}/configurations/README.adoc[configurations/README.adoc].
+Para mais informações, leia o `configurations/README.adoc`.
 
-No diretório link:{basedir}/scripts[scripts], copie o arquivo link:{basedir}/scripts/config.sample[config.sample] para `config`.
+No diretório `scripts`, copie o arquivo link:{basedir}/scripts/config.sample[config.sample] para `config`.
 Em seguida, edite esse arquivo conforme tuas necessidades.
 
 [WARNING]

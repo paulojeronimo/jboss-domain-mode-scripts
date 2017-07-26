@@ -8,6 +8,13 @@
 :patch: link:{uri-patch}[patch]
 :diff: link:{uri-diff}[diff]
 :GitHub: link:{uri-github}[GitHub]
+
+// scripts
+:install: 
+:install: link:{basedir}/scripts/install[install]
+:jboss-installer-create: link:{basedir}/jboss-installer.create[jboss-installer.create]
+:jboss-installer-install: link:{basedir}/jboss-installer.install[jboss-installer.install]
+:jboss-install: link:{basedir}/scripts/jboss-install[jboss-install]
 :jboss-stop: link:{basedir}/scripts/jboss-stop[jboss-stop]
 :jboss-start: link:{basedir}/scripts/jboss-start[jboss-start]
 :jboss-status: link:{basedir}/scripts/jboss-status[jboss-status]

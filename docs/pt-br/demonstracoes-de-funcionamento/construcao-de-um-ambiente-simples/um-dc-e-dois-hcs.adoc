@@ -18,7 +18,7 @@ Mais a frente, veremos como isso pode ser feito.
 
 == Geração do pacote de instalação (jboss-installer.tar.gz)
 
-A inclusão do parâmetro `DEMO=2`, antes da execução do script `jboss-installer.create`, faz com que sejam copiados, para o pacote `jboss-installer.tar.gz`, o conteúdo dos scripts e das configurações que estão disponíveis no diretório link:{basedir}/demos/2[demos/2].
+A inclusão do parâmetro `DEMO=2`, antes da execução do script `jboss-installer.create`, faz com que sejam copiados, para o pacote `jboss-installer.tar.gz`, o conteúdo dos scripts e das configurações que estão disponíveis no diretório `demos/2`.
 Execute:
 
 [source,bash]
@@ -28,7 +28,7 @@ DEMO=2 ./jboss-installer.create
 
 [NOTE]
 ====
-. O resultado da execução acima é um pacote que, além de conter os link:{basedir}/scripts[scripts] e link:{basedir}/configurations[configurações] padrão, também possui o conteúdo de `demos/2/scripts` e `demos/2/configurations`.
+. O resultado da execução acima é um pacote que, além de conter os script e configurações padrão, também possui o conteúdo de `demos/2/scripts` e `demos/2/configurations`.
 . Verifique isso executando o comando `tar tvf jboss-installer.tar.gz`.
 ====
 
@@ -100,13 +100,18 @@ for p in 22{00,22}; do ssh -p $p root@localhost /opt/rh/jboss-installer/scripts/
 
 == Reinstalação e inicialização do DC (dc1)
 
-Repita os mesmos link:#demo-1-instalacao-dc[passos] que já foram executados (na Demo 1) para a instalação e inicialização do DC.
+Repita os mesmos link:#demo-1-instalacao-dc[passos] que já foram executados (na <<demo-1,demo-1>>) para a instalação e inicialização do DC.
+
+[TIP]
+====
+Ao invés de gastar os dedos da forma como realizado em "<<demo-1-instalacao-dc>>", seja `smart` e utilize o mecanismo de "<<minimizacao-de-dedadas,minimização de dedadas>>" apresentado em "<<demo-1-instalacao-hc>>".
+====
 
 == Reinstalação do hc1 a instalação do hc2
 
 Repita, para cada HC, os mesmo passos link:#demo-1-instalacao-hc[passos] que já foram executados (na Demo 1) para a instalação e inicialização do `hc1`.
 
-[NOTE]
+[CAUTION]
 ====
 Ao serem iniciados os passos para a realização da instalação do `hc2` deve ser observado que a porta utilizada é a 2201.
 ====
