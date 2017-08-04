@@ -7,3 +7,5 @@ include::{projdir}/scripts/jboss-copy-patches[]
 ----
 
 * Download: {jboss-copy-patches}
+* Dependências:
+** <<common>>

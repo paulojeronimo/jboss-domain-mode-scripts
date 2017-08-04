@@ -8,6 +8,7 @@ include::{projdir}/scripts/jboss-install[]
 
 * Download: {jboss-install}
 * Dependências:
+** <<common>>
 ** <<jboss-useradd>>
 ** <<jboss-uninstall>>
 ** <<jboss-configure>>

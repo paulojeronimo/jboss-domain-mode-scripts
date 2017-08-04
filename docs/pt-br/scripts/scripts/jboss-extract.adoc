@@ -7,3 +7,5 @@ include::{projdir}/scripts/jboss-extract[]
 ----
 
 * Download: {jboss-extract}
+* Dependências:
+** <<common>>

@@ -1,0 +1,30 @@
+#!/bin/bash
+#
+# sshpass Refs:
+# https://stackoverflow.com/questions/32255660/how-to-install-sshpass-on-mac
+
+BASE_DIR=`cd "$(dirname "$0")/.."; pwd`
+cd "$BASE_DIR"
+
+# scripts/config
+mkdir -p 2/scripts
+cp ../scripts/config.sample 2/scripts/config
+(cd 2/scripts; patch config < ../config.patch)
+
+# configurations/jboss-eap-6.4/domain/configurations/domain.xml.patch
+b=2/configurations
+o=/opt/rh/jboss-installer/installers
+d=jboss-eap-6.4/domain/configuration
+mkdir -p $b/$d && cd $_
+sshpass -p vagrant scp -P 2200 root@localhost:$o/$d/domain.xml .
+cp domain.xml{,.original}
+vim -c "source ../../../../domain.xml.vim" domain.xml
+diff -uNr domain.xml{.original,} > domain.xml.patch
+rm -f domain.xml{.original,}
+
+# configurations/jboss-eap-6.4/domain/configuration/host-slave.xml.no-backup.patch
+sshpass -p vagrant scp -P 2200 root@localhost:$o/$d/host-slave.xml .
+cp host-slave.xml{,.original}
+vim -c "source ../../../../host-slave.xml.vim" host-slave.xml
+diff -uNr host-slave.xml{.original,} > host-slave.xml.no-backup.srv1.patch
+rm -f host-slave.xml{.original,}

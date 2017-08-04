@@ -7,3 +7,5 @@ include::{projdir}/scripts/jboss-userdel[]
 ----
 
 * Download: {jboss-userdel}
+* Dependências:
+** <<common>>

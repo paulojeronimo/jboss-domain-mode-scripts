@@ -7,3 +7,5 @@ include::{projdir}/scripts/jboss-useradd[]
 ----
 
 * Download: {jboss-useradd}
+* Dependências:
+** <<common>>

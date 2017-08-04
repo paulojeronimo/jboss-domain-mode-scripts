@@ -7,3 +7,5 @@ include::{projdir}/scripts/jboss-add-user[]
 ----
 
 * Download: {jboss-add-user}
+* Dependências:
+** <<common>>

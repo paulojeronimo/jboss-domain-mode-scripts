@@ -7,3 +7,5 @@ include::{projdir}/scripts/jboss-start[]
 ----
 
 * Download: {jboss-start}
+* Dependências:
+** <<common>>

@@ -33,6 +33,7 @@ then
   patch $f $f
 fi
 
+# tag::host-slave[]
 f=domain/configuration/$JBOSS_HOST_CONFIG
 f_patch=$f
 if [ "$JBOSS_HOST_CONFIG" = "host-slave.xml" ]
@@ -41,6 +42,7 @@ then
 fi
 [ "$JBOSS_SERVER_CONFIG" ] && f_patch=$f_patch.$JBOSS_SERVER_CONFIG
 patch $f $f_patch
+# end::host-slave[]
 
 JBOSS_ADMIN_PASSWORD_BASE64=`echo -n $JBOSS_ADMIN_PASSWORD|base64`
 echo "  Configuring JBOSS variables in $f ..."

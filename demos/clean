@@ -11,5 +11,5 @@ then
   git clean -f -X -d
 else
   # Remove all generated files. But skip .backup and .vagrant dirs
-  rm -f .DS_Store Vagrantfile {2,3}/{scripts,configurations}
+  rm -rf .DS_Store Vagrantfile {2,3}/{scripts,configurations}
 fi

@@ -2,7 +2,7 @@
 = Paulo Jerônimo
 
 {PauloJeronimo} é desenvolvedor de software.
-Também é consultor e instrutor de cursos na {RedHat}.
+Também é consultor, e instrutor de treinamentos oficiais, na {RedHat}.
 Em seu site, {PauloJeronimoSite}, podem ser encontradas mais informações sobre suas atividades atuais.
 
 <<paulojeronimo>> também gosta de escrever documentos.

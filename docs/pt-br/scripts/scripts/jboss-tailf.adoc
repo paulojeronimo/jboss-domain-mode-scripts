@@ -7,3 +7,5 @@ include::{projdir}/scripts/jboss-tailf[]
 ----
 
 * Download: {jboss-tailf}
+* Dependências:
+** <<common>>

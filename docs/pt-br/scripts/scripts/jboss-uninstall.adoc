@@ -7,3 +7,5 @@ include::{projdir}/scripts/jboss-uninstall[]
 ----
 
 * Download: {jboss-uninstall}
+* Dependências:
+** <<common>>

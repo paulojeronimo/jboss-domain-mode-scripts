@@ -77,25 +77,25 @@ E fará a sua criação e provisionamento.
 == Criação de arquivos de configuração
 
 Para esta demonstração precisamos, em relação a <<demo-1,demo 1>>, de três (3) arquivos adicionais.
-Eles são apresentados na saída do comando a seguir:
+Eles são apresentados na saída do comando a seguir (executado no diretório `demos`):
 
 [[demo-2-tree]]
 ----
-$ tree configurations/ scripts/
-configurations/
+$ tree 2/{configurations,scripts}
+2/configurations
 `-- jboss-eap-6.4
     `-- domain
         `-- configuration
             |-- domain.xml.patch
             `-- host-slave.xml.no-backup.srv1.patch
-scripts/
+2/scripts
 `-- config
 
 3 directories, 3 files
 ----
 
-WARNING: Só poderemos executar esse comando quando terminarmos os passos que devemos seguir a partir de agora.
-Portanto, voltaremos a ele ao final desse tópico.
+WARNING: Só poderemos executar esse comando quando terminarmos os passos que precisamos seguir a partir de agora.
+Portanto, voltaremos a ele ao <<demo-2-tree-verificacao,final desse tópico>>.
 
 Esses arquivos serão utilizados pelos scripts deste projeto, no processo de instalação do JBoss.
 Mas, eles ainda não existem.
@@ -200,25 +200,28 @@ Agora, podemos editar o arquivo com as alterações que desejamos.
 No caso, desejamos eliminar os `server-groups` `default`: `main-server-group` e `other-server-group`. Além disso, queremos criar o `server-group` `app1-server-group`, utilizando o profile `default`.
 
 Utilizando o {Vim}, vamos editar o arquivo `domain.xml`, alterá-lo de acordo com as mudanças que desejamos, e salvá-lo.
-Mas, ao invés de fazer isso de maneira interativa (entrando comandos no editor), vamos executar um link:{basedir}/demos/2/vimscript[vimscript] para fazer as mudança que queremos:
+Mas, ao invés de fazer isso de maneira interativa (entrando comandos no editor), vamos executar o script link:{basedir}/demos/2/domain.xml.vim[2/domain.xml.vim] para fazer as mudança que queremos:
 
 [source,bash]
 ----
-vim -c "source ../../../../vimscript" domain.xml
+vim -c "source ../../../../domain.xml.vim" domain.xml
 ----
 
-[NOTE]
-====
-O conteúdo desse `vimscript` é extremamente simples, e didático, para quem já tem conhecimentos básicos no {Vim}.
+O conteúdo desse `domain.xml.vim` é extremamente simples, e didático, para quem já tem conhecimentos básicos no {Vim}.
 Veja:
 
 [source,vim]
 ----
-include::{projdir}/demos/2/vimscript[]
+include::{projdir}/demos/2/domain.xml.vim[]
 ----
-====
 
-Finalmente, façamos a criação do `domain.xml.patch` com o seguinte comando:
+Pela sua leitura, observamos o seguinte:
+
+. 13 linhas serão excluídas (da linha 1400 a 1412).
+. Será inserido, na linha 1400, o conteúdo apresentado.
+. O arquivo será salvo e a execução do Vim será encerrada.
+
+Faremos a criação do `domain.xml.patch` executando:
 
 [source,bash]
 ----
@@ -234,12 +237,82 @@ rm -f domain.xml{.original,}
 
 === configurations/jboss-eap-6.4/domain/configuration/host-slave.xml.no-backup.patch
 
-TODO
+Voltaremos ao diretório anterior (`demos`) para, agora, buscar outro arquivo de configuração para o qual precisaremos criar um `patch`.
+Estamos falando do arquivo `host-slave.xml`.
+Executemos:
 
-== Verificação dos arquivos de configuração criados
+[source,bash]
+----
+cd -
+cd $b/$d && scp -P 2200 root@localhost:$o/$d/host-slave.xml .
+----
 
-Conforme citado no início deste tópico, para ter certeza que tudo está no seu devido lugar, executemos o comando `"tree configurations/ scripts/"`.
-Verifiquemos se ele produzirá o <<demo-2-tree,resultado esperado>>.
+Antes de editar esse arquivo, vamos salvar o seu conteúdo original:
+
+[source,bash]
+----
+cp host-slave.xml{,.original}
+----
+
+Para que o <<jboss-configure>> consiga fazer o seu trabalho, configurar o `hc2` da forma necessária, precisamos editar esse arquivo.
+Faremos isso, através do script `2/host-slave.xml.vim`, executando o seguinte comando:
+
+[source,bash]
+----
+vim -c "source ../../../../host-slave.xml.vim" host-slave.xml
+----
+
+O conteúdo do arquivo `host-slave.xml.vim`, da mesma forma que o `domain.xml.vim`, também é muito simples.
+Ele indica, como vimos, as mudanças que devem ser realizadas.
+Seu conteúdo (com a apresentação de um número de linha) é o seguinte:
+
+[source,vim,numbered]
+----
+include::{projdir}/demos/2/host-slave.xml.vim[]
+----
+
+Pela sua leitura, observamos o seguinte:
+
+. A linha 10 é alterada de forma que, para o atributo `value` do elemento `secret`, agora temos o valor `JBOSS_ADMIN_PASSWORD_BASE64`.
+. A linha 58 é alterada adicionando-se o atributo `username`, cujo valor é `JBOSS_ADMIN_USER`.
+. A definição dos grupos `default`, entre as linhas 86 e 91 é removida.
+Em seu lugar é feita a configuração do servidor `app-1`.
+
+<<sobre-esta-documentacao-objetivo,Como citado no objetivo deste documento>>, está fora de seu escopo explicar como é realizada a configuração para que um HC se conecte a um DC.
+Administradores experientes em {JBossEAP} aprendem isso num curso básico.
+Contudo, é necessário saber que os valores para as variáveis `JBOSS_ADMIN_PASSWORD_BASE64` e `JBOSS_ADMIN_USER` serão ajustados logo após a execução do <<jboss-configure>>. Dessa forma, os valores dessas variáveis precisam estar cofigurados no arquivo `config`.
+
+Para encerrar a construção dos arquivos de configurações que precisamos, no intuito de dar continuidade a esta demonstração, vamos gerar o `patch` (e excluir os arquivos desnecessários após isso) executando os comandos a seguir:
+
+[source,bash]
+----
+diff -uNr host-slave.xml{.original,} > host-slave.xml.no-backup.srv1.patch
+rm -f host-slave.{.original,}
+----
+
+Um detalhe importante de ser explicado é o nome que demos a esse `patch`: `host-slave.xml.no-backup.srv1.patch`.
+É necessário que ele tenha esse nome.
+Isso porque o <<jboss-configure>> executará a seguinte lógica:
+
+[source,bash]
+----
+include::{projdir}/scripts/jboss-configure[tag=host-slave]
+----
+
+Como configuramos (<<ajuste-para-gerar-demos-2-scripts-config,no config>>) que `JBOSS_SERVER_CONFIG` terá o valor `srv1` e, como ainda não especificamos um valor para `JBOSS_DOMAIN_BACKUP_ADDRESS` (veremos isso no próximo tópico), então o nome do arquivo precisará seguir o padrão estipulado (acima) e deverá ser o que informamos.
+
+[[demo-2-tree-verificacao]]
+=== Verificação
+
+Para ter certeza que tudo está em seu devido lugar, executemos os seguintes comandos:
+
+[source,bash]
+----
+cd -
+tree 2/{configurations,scripts}
+----
+
+Esperamos que o resultado desse último comando seja <<demo-2-tree,apresentado no início deste tópico>>.
 
 == Geração do pacote de instalação (jboss-installer.tar.gz)
 

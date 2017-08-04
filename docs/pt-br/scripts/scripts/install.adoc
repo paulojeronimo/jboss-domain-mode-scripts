@@ -8,6 +8,7 @@ include::{projdir}/scripts/install[]
 
 * Download: {install}
 * Dependências:
+** <<common>>
 ** <<jboss-dependencies-install>>
 ** <<jboss-jdk-install>>
 ** <<jboss-install>>

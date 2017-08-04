@@ -7,3 +7,5 @@ include::{projdir}/scripts/jboss-firewall-configure[]
 ----
 
 * Download: {jboss-firewall-configure}
+* Dependências:
+** <<common>>

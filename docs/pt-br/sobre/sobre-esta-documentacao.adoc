@@ -1,6 +1,20 @@
 [[sobre-esta-documentacao]]
 = Esta documentação
 
+[[sobre-esta-documentacao-objetivo]]
+== Objetivo
+
+Esta documentação tem o objetivo de demonstrar o uso dos scripts do projeto.
+E, ela restringe-se a esse objetivo.
+Sendo assim, com relação ao público esperado na leitura deste documento, assume-se que:
+
+. Ele já tenha experiência no uso de comandos executados num shell {Bash}, em nível intermediário.
+. Ele já possua conhecimentos e experiência em {JBossEAP}, particularmente em ambiente {RHEL}, em nível intermediário.
+
+Para adquirir o conhecimento e a experiência necesssárias para um melhor entendimento deste documento, nos assuntos apontados acima apontados, é recomendada a participação em {uri-rh-training}[treinamentos oficiais da Red Hat] ou equivalentes.
+
+== Formato
+
 Criada através da ferramenta {uri-asciidoctor}[Asciidoctor] (muito utilizada em vários projetos da {RedHat}), esta documentação evolui da mesma maneira que o código deste projeto.
 
 ifdef::backend-html5[]

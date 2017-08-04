@@ -7,3 +7,5 @@ include::{projdir}/scripts/jboss-status[]
 ----
 
 * Download: {jboss-status}
+* Dependências:
+** <<common>>

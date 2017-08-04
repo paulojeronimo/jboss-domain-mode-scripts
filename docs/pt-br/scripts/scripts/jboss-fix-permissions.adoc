@@ -7,3 +7,5 @@ include::{projdir}/scripts/jboss-fix-permissions[]
 ----
 
 * Download: {jboss-fix-permissions}
+* Dependências:
+** <<common>>

@@ -6,6 +6,7 @@
 :RHEL: link:{uri-rhel}[RHEL]
 :VirtualBox: link:{uri-virtualbox}[VirtualBox]
 :Vagrant: link:{uri-vagrant}[Vagrant]
+:Bash: link:{uri-bash}[Bash]
 :Vim: link:{uri-vim}[Vim]
 :patch: link:{uri-patch}[patch]
 :diff: link:{uri-diff}[diff]

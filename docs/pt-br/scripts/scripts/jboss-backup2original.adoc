@@ -7,3 +7,5 @@ include::{projdir}/scripts/jboss-backup2original[]
 ----
 
 * Download: {jboss-backup2original}
+* Dependências:
+** <<common>>

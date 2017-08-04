@@ -33,6 +33,7 @@
 :uri-jboss-eap-docker-image: {uri-jboss-eap-7-0-doc}/using_the_red_hat_jboss_enterprise_application_platform_docker_image/
 :uri-jboss-eap-docker-image-extend: {uri-jboss-eap-docker-image}/#extending-the-image
 // Soluções da Red Hat
+:uri-rh-training: https://www.redhat.com/pt-br/services/training
 :uri-rh-solutions: https://access.redhat.com/solutions/
 :uri-rh-solutions-255963: {uri-rh-solutions}/255963
 // Projetos extras, no GitHub

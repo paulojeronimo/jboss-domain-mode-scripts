@@ -7,3 +7,5 @@ include::{projdir}/scripts/jboss-stop[]
 ----
 
 * Download: {jboss-stop}
+* Dependências:
+** <<common>>

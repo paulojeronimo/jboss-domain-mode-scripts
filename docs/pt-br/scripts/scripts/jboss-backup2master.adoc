@@ -7,3 +7,5 @@ include::{projdir}/scripts/jboss-backup2master[]
 ----
 
 * Download: {jboss-backup2master}
+* Dependências:
+** <<common>>

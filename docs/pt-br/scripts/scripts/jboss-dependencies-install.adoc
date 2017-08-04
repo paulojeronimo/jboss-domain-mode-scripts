@@ -7,3 +7,5 @@ include::{projdir}/scripts/jboss-dependencies-install[]
 ----
 
 * Download: {jboss-dependencies-install}
+* Dependências:
+** <<common>>
