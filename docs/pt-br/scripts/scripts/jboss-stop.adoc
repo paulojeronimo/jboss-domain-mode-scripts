@@ -1,0 +1,9 @@
+[[jboss-stop]]
+= scripts/jboss-stop
+
+[source,bash]
+----
+include::{projdir}/scripts/jboss-stop[]
+----
+
+* Download: {jboss-stop}

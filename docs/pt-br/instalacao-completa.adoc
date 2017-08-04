@@ -1,7 +1,7 @@
 [[instalacao-completa]]
 = Instalação completa (Pacotes, JDK, JBoss)
 
-Essa forma de instalação, executada pelo script {install}, deve ser utilizada ao ser configurada uma nova máquina.
+Essa forma de instalação, executada pelo script <<install>>, deve ser utilizada ao ser configurada uma nova máquina.
 Através dela, todos os pacotes necessários para o bom funcionamento do JBoss serão instalados.
 Além de pacotes necessários (por exemplo o JDK), pacotes opcionais podem ser instalados (exemplos: `tmux`, `lsof`, `vim`, etc).
 Verifique que pacotes que serão instalados editando o teu script de configuração (`config`).

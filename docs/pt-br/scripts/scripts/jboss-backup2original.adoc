@@ -1,0 +1,9 @@
+[[jboss-backup2original]]
+= scripts/jboss-backup2original
+
+[source,bash]
+----
+include::{projdir}/scripts/jboss-backup2original[]
+----
+
+* Download: {jboss-backup2original}

@@ -1,0 +1,13 @@
+[[paulojeronimo]]
+= Paulo Jerônimo
+
+{PauloJeronimo} é desenvolvedor de software.
+Também é consultor e instrutor de cursos na {RedHat}.
+Em seu site, {PauloJeronimoSite}, podem ser encontradas mais informações sobre suas atividades atuais.
+
+<<paulojeronimo>> também gosta de escrever documentos.
+Mas, utilizando {uri-lml}[linguagens de marcação leves].
+Ele se recusa, *veementemente*, a editar textos com quaisquer ferramentas da classe "Office".
+Seu editor de textos preferido, tanto na edição de códigos em linguagens de programação, quanto em textos em geral, é o {Vim}.
+Utilizando-se o Vim e o Asciidoctor podem ser enscritos documentos que vão de apresentações simples a grandes livros.
+Leia mais sobre isso no artigo {uri-asciidoc-e-asciidoctor}["Asciidoc e Asciidoctor"] (também escrito por {PauloJeronimo}).

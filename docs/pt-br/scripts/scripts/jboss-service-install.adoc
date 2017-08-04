@@ -1,0 +1,9 @@
+[[jboss-service-install]]
+= scripts/jboss-service-install
+
+[source,bash]
+----
+include::{projdir}/scripts/jboss-service-install[]
+----
+
+* Download: {jboss-service-install}

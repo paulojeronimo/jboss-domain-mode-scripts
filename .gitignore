@@ -1,9 +1,5 @@
-*.html
-*.pdf
-.vagrant
+/*.html
+/*.pdf
 /installers/*
 !/installers/README.adoc
 /jboss-installer.tar.gz
-/merged/*
-/demos/Vagrantfile
-/demos/.backup/

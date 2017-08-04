@@ -1,0 +1,21 @@
+--- ../2/scripts/config	2017-08-03 10:56:40.000000000 -0300
++++ scripts/config	2017-08-03 11:14:15.000000000 -0300
+@@ -60,6 +60,9 @@
+ # JBoss domain (master) address (ip or hostname)
+ JBOSS_DOMAIN_MASTER_ADDRESS=dc1
+ 
++# JBoss domain (backup) address (ip or hostname)
++JBOSS_DOMAIN_BACKUP_ADDRESS=dc2
++
+ # JBoss admin username (to access console)
+ JBOSS_ADMIN_USER=admin
+ # JBoss admin password
+@@ -72,7 +75,7 @@
+ case $JBOSS_HOST in
+ 
+   # If host is master, JBOSS_TYPE is master
+-  $JBOSS_DOMAIN_MASTER_ADDRESS)
++  $JBOSS_DOMAIN_MASTER_ADDRESS|$JBOSS_DOMAIN_BACKUP_ADDRESS)
+     JBOSS_TYPE=master
+     ;;
+ 

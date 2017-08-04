@@ -2,6 +2,8 @@
 set +x
 set -e
 
+source "$BASE_DIR"/functions
+
 LINUX_NEEDED=${LINUX_NEEDED:-true}
 if $LINUX_NEEDED && ! [[ $OSTYPE =~ linux* ]]
 then

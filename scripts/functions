@@ -1,0 +1,21 @@
+#!/bin/bash
+
+patch() {
+  local cmd=`which patch`
+  local f=$1
+  local f_patch=$2.patch
+  local original=$f.original
+
+  if [ ! -f "$original" ]
+  then
+    echo "Saving $f to $original ..."
+    cp $f $original
+  fi
+  echo "Patching $f with $f_patch ..."
+  if [ -f "$f_patch" ]
+  then
+    $cmd $f < $f_patch > /dev/null
+  else
+    echo "Warning: file $f_patch not found!"
+  fi
+}

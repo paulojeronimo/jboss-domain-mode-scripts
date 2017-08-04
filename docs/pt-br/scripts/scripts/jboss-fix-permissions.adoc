@@ -1,0 +1,9 @@
+[[jboss-fix-permissions]]
+= scripts/jboss-fix-permissions
+
+[source,bash]
+----
+include::{projdir}/scripts/jboss-fix-permissions[]
+----
+
+* Download: {jboss-fix-permissions}

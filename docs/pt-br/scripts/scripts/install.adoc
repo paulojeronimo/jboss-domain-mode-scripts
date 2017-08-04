@@ -1,0 +1,14 @@
+[[install]]
+= scripts/install
+
+[source,bash]
+----
+include::{projdir}/scripts/install[]
+----
+
+* Download: {install}
+* Dependências:
+** <<jboss-dependencies-install>>
+** <<jboss-jdk-install>>
+** <<jboss-install>>
+** <<jboss-firewall-configure>>

@@ -1,0 +1,9 @@
+[[jboss-backup2master]]
+= scripts/jboss-backup2master
+
+[source,bash]
+----
+include::{projdir}/scripts/jboss-backup2master[]
+----
+
+* Download: {jboss-backup2master}

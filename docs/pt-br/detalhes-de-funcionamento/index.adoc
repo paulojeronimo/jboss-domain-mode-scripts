@@ -1,4 +1,0 @@
-[[detalhes-de-funcionamento]]
-= Detalhes de funcionamento dos scripts
-
-TODO

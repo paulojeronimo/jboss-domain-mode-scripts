@@ -1,0 +1,19 @@
+#!/bin/bash
+set +x
+set -e
+
+BASE_DIR=`cd "$(dirname "$0")"; pwd`
+cd "$BASE_DIR"
+
+op=$1
+
+find . -mindepth 2 -type f -name clean -exec '{}' $op \;
+
+if [ "$op" = "all" ]
+then
+  # remove all files
+  git clean -f -X -d
+else
+  # remove all generated files (skip installers dir)
+  rm -f jboss-installer.tar.gz README.{html,pdf}
+fi

@@ -1,0 +1,25 @@
+[[sobre-o-projeto]]
+= O projeto
+
+Este projeto, *jboss-domain-mode-scripts*, está disponível sob uma <<licenca,licença MIT>> no {GitHub} (em {uri-jboss-domain-mode-scripts}).
+É da autoria de <<paulojeronimo>>.
+
+Seu intuito é ser utilizado para a *instalação rápida de um ambiente {JBossEAP} rodando em modo domain*.
+
+Neste momento, o uso desses scripts é suportado na {uri-jboss-eap-6-4}[versão 6.4] do JBoss EAP.
+Em breve, este projeto poderá ser extendido para a {uri-jboss-eap-7-0}[versão 7.0].
+Scripts similares a estes, também escritos por <<paulojeronimo>>, já trazem o suporte a essa versão em outro projeto: {uri-paulojeronimo-github-jboss-scripts}[jboss-scripts].
+
+Diferente deste projeto, entretanto, o projeto *jboss-scritps* é voltado a utilização do JBoss EAP em ambiente de desenvolvimento, rodando em modo `standalone`.
+
+A manutenção deste projeto é feita através do desenvolvimento de scripts codificados em {uri-bash}[Bash] e/ou {uri-jboss-cli}[CLI].
+
+O objetivo primário desses scripts é *facilitar a construção de ambientes de execução do JBoss EAP*, sejam eles de topologia simples ou complexa.
+Esses ambientes podem ser de desenvolvimento, homologação, produção ou qualquer outro.
+
+<<demonstracoes-de-funcionamento>> dos scripts são realizadas neste projeto.
+Essas demonstrações se iniciam na construção de um ambiente simples, composto por um único *Domain Controller (DC)* e um *Host Controller (HC)*) (<<demo-1>>).
+A seguir, conceitos de uso desses scripts são ampliados numa <<demo-2,segunda demonstração>>, onde um um novo HC é adicionado.
+Por fim, a última demonstração apresenta como pode ser realizada a <<demo-3,instalação de um DC adicional, atuando como backup do primeiro>>.
+
+Concluindo, o maior benefício no uso deste projeto pode ser verificado quando é necessária a _construção de um ambiente grande, complexo, que envolve o uso de dois DCs e muitos HCs_.

@@ -1,0 +1,182 @@
+[[demo-1]]
+= Demo 1: instalação de um DC e um HC
+
+Nesta demonstração executaremos os passos necessários para a instalação de um DC (`dc1`) e de um HC (`hc1`).
+Nenhuma instância jboss (`server`) será criada.
+Mas, ao final desta demonstração, o `hc1` estará pronto e preparado para ser gerenciado pelo `dc1`.
+
+[[demo-1-geracao-do-pacote-de-instalacao]]
+== Geração do pacote de instalação (jboss-installer.tar.gz)
+
+Nosso primeiro passo, <<demo-geracao-do-pacote-de-instalacao,conforme explicado>>, será a construção do pacote `jboss-installer.tar.gz`.
+Para gerá-lo, executemos:
+
+[source,bash]
+----
+./jboss-installer.create
+----
+
+[[demo-1-criacao-inicializacao-dos-servidores]]
+== Criação/inicialização dos servidores
+
+O Vagrant lerá o conteúdo de um arquivo `Vagrantfile` para criar e provisionar as duas máquinas desta demonstração.
+Dentro do diretório `demos`, vamos copiar o arquivo `1/Vagrantfile`:
+
+[source,bash]
+----
+cd demos
+cp 1/Vagrantfile .
+----
+
+Esse é o conteúdo do arquivo `Vagrantfile` copiado nas linhas acima:
+
+[source,ruby]
+----
+include::{projdir}/demos/1/Vagrantfile[]
+----
+
+NOTE: A linguagem utilizada para configurar um `Vagrantfile` é o {Ruby}.
+Sendo assim, um conhecimento mínimo nessa linguagem é o suficiente para a compreensão dos arquivos de configuração do {Vagrant}.
+Superpoderes (icon:money[]), entretanto, vão aparecendo conforme ampliamos o conhecimento (icon:book[]) nesta linguagem!
+
+Agora vamos iniciar o Vagrant e aguardar que ele faça a criação dessas máquinas.
+
+----
+vagrant up
+----
+
+NOTE: Podemos ir tomar um café icon:coffee[]! icon:smile-o[].
+Esse comando poderá demorar um pouquinho, dependendo da nossa velocidade de Internet.
+
+[[demo-1-instalacao-dc]]
+== Instalação e inicialização do DC
+
+Voltemos ao diretório anterior (raiz do projeto):
+
+[source,bash]
+----
+cd ..
+----
+
+Vamos copiar o conteúdo do pacote (`jboss-installer.tar.gz`) para o servidor.
+Realizaremos isso chamando o <<jboss-installer-install>> da seguinte forma:
+
+[source,bash]
+----
+SSH_PORT=2222 SERVER=localhost ./jboss-installer.install
+----
+
+WARNING: Na execução do script acima será solicitada a senha do usuário `root` (da máquina `dc1`).
+Informe: `vagrant`.
+Por padrão, as `boxes` de base criadas com o `vagrant` utilizam essa senha.
+
+NOTE: Normalmente, para acessar o shell da máquina `dc1`, utilizaríamos o comando `vagrant ssh dc1`.
+Entretanto, o que desejamos é executar comandos remotos com o usuário `root`.
+Aprofunde-se na leitura do <<jboss-installer-install>>.
+Você entenderá que o papel desse script é, simplesmente, copiar e extrair o conteúdo de `jboss-installer.tar.gz` num local padronizado (pela variável `PREFIX`).
+
+Vamos instalar o JBoss:
+
+[source,bash]
+----
+ssh -p 2222 root@localhost /opt/rh/jboss-installer/scripts/install
+----
+
+NOTE: A execução do comando acima demonstra como o <<install>> é executado.
+Esse script é responsável, <<instalacao-completa,como já citado>>, pela instalação completa do ambiente de execução do JBoss.
+
+Façamos a inicialização do JBoss:
+
+[source,bash]
+----
+ssh -p 2222 root@localhost service jboss-as-domain start
+----
+
+[NOTE]
+====
+O comando acima também poderia ser substituído pela execução do <<jboss-start>>.
+Este seria o comando equivalente:
+
+[source,bash]
+----
+ssh -p 2222 root@localhost /opt/rh/jboss-installers/scripts/jboss-start
+----
+====
+
+Vejamos o log do JBoss:
+
+[source,bash]
+----
+ssh -p 2222 root@localhost tail -f /var/log/jboss-as/console.log
+----
+
+[NOTE]
+====
+O comando acima também poderia ser substituído pela execução do <<jboss-tailf>>.
+Este seria o comando equivalente:
+
+[source,bash]
+----
+ssh -p 2222 root@localhost /opt/rh/jboss-installers/scripts/jboss-tailf
+----
+====
+
+[[demo-1-instalacao-hc]]
+== Instalação e inicialização do HC
+
+Vamos abrir um outro terminal (shell Bash) para, agora, fazer a instalação do JBoss no `hc1`.
+
+[NOTE]
+====
+. Um bom utilitário para multiplexar terminais é o {tmux}.
+Um material simples e rápido para aprender sua utilização é artigo {uri-a-tmux-crash-course}["A tmux Crash Course"].
+. Devemos nos lembrar que, ao abrir um novo terminal, precisaremos executar o próximo comando a partir da raiz do projeto.
+====
+
+Vamos fazer a cópia do conteúdo do pacote (`jboss-installer.tar.gz`) para esse servidor:
+
+[source,bash]
+----
+SSH_PORT=2200 SERVER=localhost ./jboss-installer.install
+----
+
+NOTE: Observe que uma das diferenças entre a máquina `dc1` e a máquina `hc1` é o acesso.
+No caso, o `hc1` é acessado pela porta 2200 enquanto que a `dc1` é acessada pela porta 2222.
+
+[[minimizacao-de-dedadas]]Vamos utilizar uma "técnica" para a "Minimização de dedadas" (no teclado icon:smile-o[]):
+
+[source,bash]
+----
+scripts=/opt/rh/jboss-installer/scripts
+alias hc1ssh='ssh -p 2200 root@localhost'
+----
+
+Instalemos o JBoss:
+
+[source,bash]
+----
+hc1ssh $scripts/install
+----
+
+Façamos sua inicialização:
+
+[source,bash]
+----
+hc1ssh $scripts/jboss-start
+----
+
+TIP: Podemos verificar, no terminal aberto para a visualização do log do JBoss no `dc1`, que o `hc1` deverá ter sido registrado.
+
+E vejamos o seu log:
+
+[source,bash]
+----
+hc1ssh $scripts/jboss-tailf
+----
+
+== Verificação de funcionamento do ambiente
+
+Vamos abrir o browser em {uri-dc1-9990}.
+Façamos o login com o usuário `admin` e a senha `jbAdmin@123!`.
+Precisamos acessar a aba `Domain` e verificar se o `hc1` está registrado na lista de hosts.
+Em caso positivo, concluímos com sucesso esta demonstração.

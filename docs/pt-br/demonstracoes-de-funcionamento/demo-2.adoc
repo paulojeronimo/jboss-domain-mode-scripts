@@ -1,0 +1,293 @@
+[[demo-2]]
+= Demo 2: adição de um segundo HC e dois servers
+
+Nesta demonstração, alteraremos o ambiente para a adição de um novo HC (`hc2`).
+Além disso, nesse ambiente, duas instâncias jboss serão iniciadas.
+Cada instância será executada em seu próprio HC.
+Essas instâncias terão o mesmo nome (`app-1`) e pertencerão ao mesmo `Server Group`: `app-1-group`.
+
+[NOTE]
+====
+Ainda exploraremos as limitações relativas a uma montagem de ambiente utilizando os scripts nesta versão.
+Contudo, já neste momento, é bom saber que somente através do uso desses scripts, e se não levássemos em conta a possibilidade de uso do {uri-jboss-management-console}[console de gerenciamento do JBoss], ou a sua capacidade de execução de {uri-jboss-cli}[scripts CLI], estaríamos muito, muito limitados.
+
+O motivo disso é que, basicamente, os scripts dessa versão são excelentes para a instalação de infraestruturas estáticas (DCs e HCs).
+Porém, para lidar com a dinamicidade que envolve a criação de grupos de servidores e servidores, muitas vezes em direfentes `profiles`, esses scripts não conseguem oferecer o auxílio necessário.
+Precisaria ser inserido, nesses scripts, um mecanismo que nos possibilitasse executar scripts CLI de maneira mais direta e sistematica.
+Mais a frente, veremos como isso pode ser feito.
+====
+
+== Adição do segundo HC (hc2) - (utilizando patch e diff)
+
+Vamos utilizar o comando {patch}.
+Ele recebe como entrada, um arquivo com a extensão `.patch`.
+Um arquivo `patch` mostra alterações entre duas versões de um mesmo arquivo.
+Ele informa que linhas devem ser adicionadas (`+`) ou removidas (`-`) no arquivo em que o `patch` será aplicado.
+
+Este é o conteúdo do arquivo link:{basedir}/demos/2/Vagrantfile.patch[Vagrantfile.patch]:
+
+[source,diff]
+----
+include::{projdir}/demos/2/Vagrantfile.patch[]
+----
+
+Fazendo sua leitura identificamos que as linhas de configuração do `hc1` foram removidas e, no lugar delas, um "loop" (com duas iterações) entrou.
+Esse "loop" (`(1..2).each |v|`) fará, então, a criação do `hc2`.
+
+Para aplicar esse `patch`, modificando o conteúdo do arquivo `Vagrantfile`, basta executar o comando abaixo:
+
+[source,bash]
+----
+cd demos
+patch Vagrantfile < 2/Vagrantfile.patch
+----
+
+Em relação a <<demo-1,demo 1>>, o `Vagrantfile` que acabamos de modificar com o `patch` faz, conforme explicado, a adição do `hc2`.
+
+Por curiosidade, você poderia ver como gerar um `patch` através do comando comando {diff}:
+
+[source,bash]
+----
+diff -uNr 1/Vagrantfile Vagrantfile
+----
+
+Em seguida, para termos certeza de que, realmente, o conteúdo deste `patch` é o que está no arquivo `2/Vagrantfile.patch`, poderíamos utilizar o {Vim}, através deste comando:
+
+[source,bash]
+----
+vim -d <(!!) 2/Vagrantfile.patch
+----
+
+NOTE: A saída do comando `diff` tem, aproximadamente (mudando-se um `timestamp`), o mesmo conteúdo do arquivo link:{basedir}/demos/2/Vagrantfile.patch[demos/2/Vagrantfile.patch].
+Dessa forma, se você ainda não sabia como gerar um `patch` (e aplicá-lo), este tópico acaba de lhe ensinar como fazer isso (através do `diff`).
+O que os scripts deste projeto executam _{under-the-hood}_, desde a primeira demonstração, é uma aplicação sistemática de `patches`, de forma a fazer os ajustes necessários para colocar o JBoss em execução, de acordo com certos parâmetros.
+
+Após a aplicação do `patch`, vamos solicitar ao Vagrant que inicie as máquinas:
+
+[source,bash]
+----
+vagrant up
+----
+
+Quando na execução do comando acima, o Vagrant verificará que as máquinas `dc1` e `hc1` já estão em execução e foram provisionadas.
+Portanto, para elas, nada será realizado.
+Mas, seguindo em frente, o Vagrant verificará que a máquina `hc2` precisará ser criada.
+E fará a sua criação e provisionamento.
+
+== Criação de arquivos de configuração
+
+Para esta demonstração precisamos, em relação a <<demo-1,demo 1>>, de três (3) arquivos adicionais.
+Eles são apresentados na saída do comando a seguir:
+
+[[demo-2-tree]]
+----
+$ tree configurations/ scripts/
+configurations/
+`-- jboss-eap-6.4
+    `-- domain
+        `-- configuration
+            |-- domain.xml.patch
+            `-- host-slave.xml.no-backup.srv1.patch
+scripts/
+`-- config
+
+3 directories, 3 files
+----
+
+WARNING: Só poderemos executar esse comando quando terminarmos os passos que devemos seguir a partir de agora.
+Portanto, voltaremos a ele ao final desse tópico.
+
+Esses arquivos serão utilizados pelos scripts deste projeto, no processo de instalação do JBoss.
+Mas, eles ainda não existem.
+Então, vamos criá-los.
+
+=== scripts/config
+
+O arquivo `scripts/config` nós já conhecemos.
+Quer dizer, ainda não tão detalhadamente.
+Mas, podemos ler mais a respeito dele vendo o conteúdo do <<config-sample>>.
+
+O `config` é o arquivo citado no tópico "<<pre-requisitos>>".
+É importante saber que, na demo 1, não fizemos nenhuma configuração.
+Não criamos o arquivo `config`.
+Mesmo assim, as coisas funcionaram: o `hc1` conseguiu se conectar ao `dc1`.
+Isso quer dizer, <<pre-requisitos,como explicado>>, que foi utilizado o <<config-sample>>.
+
+Nesta demonstração, entretanto, queremos ir um pouco além.
+Queremos configurar um novo `Server Group` e, também, duas instâncias executando em dois HCs diferentes.
+Para isso, precisamos criar o nosso arquivo `config`.
+Nele, configuraremos que tanto `hc1` quanto `hc2` ajustarão o valor `srv1` para a variável `JBOSS_SERVER_CONFIG`.
+Fazendo essa configuração, quando o <<jboss-configure>> for chamado (pelo <<jboss-install>>), ele tentará aplicar um `patch` chamado `host-slave.xml.no-backup.srv1.patch` ao arquivo `host-config.xml`.
+
+Como podemos criar o arquivo `config`? Simples!
+A maneira mais fácil seria copiar o <<config-sample>> para `scripts/config` e utilizá-lo como base na nossa edição.
+Nele, dentro do `case` da linha 72, as seguintes linhas poderiam ser inseridas:
+
+[[ajuste-para-gerar-demos-2-scripts-config]]
+[source,bash]
+.demos/2/scripts/config
+----
+  # If host is hc1 or hc2, JBOSS_SERVER_CONFIG will be srv1
+  hc[1,2])
+    JBOSS_SERVER_CONFIG=srv1
+    ;;
+----
+
+Contudo, já sabemos como funciona um `patch`!
+Então, ao invés de editarmos o arquivo `config`, faremos a sua cópia a partir do <<config-sample>>, e aplicaremos o `patch` link:{basedir}/demos/2/scripts/config.patch[config.patch].
+Para isso, executemos os seguintes comandos:
+
+[source,bash]
+----
+mkdir -p 2/scripts
+cp ../scripts/config.sample 2/scripts/config
+(cd 2/scripts; patch config < ../config.patch)
+----
+
+A aplicação desse `patch` fará o ajuste informado nas <<ajuste-para-gerar-demos-2-scripts-config,linhas acima>>. Obviamente, o conteúdo deste `patch` apresenta contém essas linhas.
+Esse é o conteúdo do `config.patch`:
+
+[source,diff]
+----
+include::{projdir}/demos/2/config.patch[]
+----
+
+NOTE: Poderíamos ser redundantes (mas seguros) fazendo uma dupa checagem do conteúdo do arquivo arquivo gerado (`2/scripts/config`).
+Se guiséssemos fazer isso, poderíamos executar o seguinte comando: `grep JBOSS_SERVER_CONFIG -A 4 2/scripts/config`.
+
+=== configurations/jboss-eap-6.4/domain/configurations/domain.xml.patch
+
+Para criar um `patch`, como já vimos, precisamos do arquivo original.
+No processo de instalação do JBoss, executado por este projeto, a versão que será instalada é uma em que os `patches` do JBoss já estão aplicados.
+"Patches do JBoss" são os arquivos binários, configurados no arquivo `config`, como nas linhas apresentadas pela saída do comando `"grep -A 4 JBOSS_PATCHES 2/scripts/config"`:
+
+[source,bash]
+----
+JBOSS_PATCHES=(
+  jboss-eap-6.4.9-patch.zip
+  jboss-eap-6.4.16-patch.zip
+)
+----
+
+A versão do JBoss que será instalada, após seus `patches` serem aplicados, estará disponível em
+`/opt/rh/jboss-installer/installers/jboss-eap-6.4`.
+
+CAUTION: O diretório `/opt/rh/jboss-installer/installers/jboss-eap-6.4` não é o diretório em que o JBoss final será executado!
+Esse diretório é criado pelo <<jboss-extract>>, caso ele não exista.
+Essa criação é realizada pela extração do `zip` de instalação do JBoss.
+Em seguida, nesse diretório, são aplicados os `patches` de atualização do JBoss.
+Após a aplicação dos `patches`, o <<jboss-extract>> também mescla o conteúdo disponível no diretório `configurations`, com o conteúdo extraído.
+
+Dessa forma, podemos copiar o arquivo original que desejamos configurar (`domain.xml`), com os seguintes comandos:
+
+[source,bash]
+----
+b=2/configurations
+o=/opt/rh/jboss-installer/installers
+d=jboss-eap-6.4/domain/configuration
+mkdir -p $b/$d && cd $_
+scp -P 2200 root@localhost:$o/$d/domain.xml .
+----
+
+Antes de editar o `domain.xml` com as alterações que queremos, façamos uma cópia dele para `domain.xml.original`:
+
+[source,bash]
+----
+cp domain.xml{,.original}
+----
+
+Agora, podemos editar o arquivo com as alterações que desejamos.
+No caso, desejamos eliminar os `server-groups` `default`: `main-server-group` e `other-server-group`. Além disso, queremos criar o `server-group` `app1-server-group`, utilizando o profile `default`.
+
+Utilizando o {Vim}, vamos editar o arquivo `domain.xml`, alterá-lo de acordo com as mudanças que desejamos, e salvá-lo.
+Mas, ao invés de fazer isso de maneira interativa (entrando comandos no editor), vamos executar um link:{basedir}/demos/2/vimscript[vimscript] para fazer as mudança que queremos:
+
+[source,bash]
+----
+vim -c "source ../../../../vimscript" domain.xml
+----
+
+[NOTE]
+====
+O conteúdo desse `vimscript` é extremamente simples, e didático, para quem já tem conhecimentos básicos no {Vim}.
+Veja:
+
+[source,vim]
+----
+include::{projdir}/demos/2/vimscript[]
+----
+====
+
+Finalmente, façamos a criação do `domain.xml.patch` com o seguinte comando:
+
+[source,bash]
+----
+diff -uNr domain.xml{.original,} > domain.xml.patch
+----
+
+Finalmente, removeremos os arquivos `domain.xml` e `domain.xml.original` pois eles não são utilizados pelos scripts deste projeto:
+
+[source,bash]
+----
+rm -f domain.xml{.original,}
+----
+
+=== configurations/jboss-eap-6.4/domain/configuration/host-slave.xml.no-backup.patch
+
+TODO
+
+== Verificação dos arquivos de configuração criados
+
+Conforme citado no início deste tópico, para ter certeza que tudo está no seu devido lugar, executemos o comando `"tree configurations/ scripts/"`.
+Verifiquemos se ele produzirá o <<demo-2-tree,resultado esperado>>.
+
+== Geração do pacote de instalação (jboss-installer.tar.gz)
+
+Voltemos a raiz do projeto:
+
+[source,bash]
+----
+cd ..
+----
+
+A inclusão do parâmetro `DEMO=2`, antes da execução do script `jboss-installer.create`, faz com que sejam copiados, para o pacote `jboss-installer.tar.gz`, o conteúdo dos scripts e das configurações que estão disponíveis no diretório `demos/2`.
+Executemos:
+
+[source,bash]
+----
+DEMO=2 ./jboss-installer.create
+----
+
+NOTE: O resultado da execução acima é um pacote que, além de conter os script e configurações padrão, também possuirá o conteúdo de `demos/2/scripts` e `demos/2/configurations`.
+Verifiquemos isso executando o comando `tar tvf jboss-installer.tar.gz`.
+
+== Finalização e substituição do instalador do JBoss em dc1 e hc1
+
+Vamos parar as instâncias JBoss já em execução em `dc1` e em `hc1`.
+Executemos o seguinte comando:
+
+[source,bash]
+----
+for p in 22{00,22}; do ssh -p $p root@localhost /opt/rh/jboss-installer/scripts/jboss-stop; done
+----
+
+NOTE: Recordando o que vimos no final da <<demo-1,demo 1>>: no decorrer destas demonstrações, além do <<jboss-stop>>, também já executamos comandos para as tarefas de inicialização, otenção do estado de execução, e visualização do log do JBoss: <<jboss-start>>, <<jboss-status>>, <<jboss-tailf>>.
+
+== Reinstalação e inicialização do DC (dc1)
+
+Repita os mesmos link:#demo-1-instalacao-dc[passos] que já foram executados (na <<demo-1,demo-1>>) para a instalação e inicialização do DC.
+
+TIP: Ao invés de gastar os dedos da forma como realizado em "<<demo-1-instalacao-dc>>", seja `smart` e utilize o mecanismo de "<<minimizacao-de-dedadas,minimização de dedadas>>" apresentado em "<<demo-1-instalacao-hc>>".
+
+== Reinstalação do hc1 a instalação do hc2
+
+Repita, para cada HC, os mesmo passos link:#demo-1-instalacao-hc[passos] que já foram executados (na Demo 1) para a instalação e inicialização do `hc1`.
+
+CAUTION: Ao serem iniciados os passos para a realização da instalação do `hc2` deve ser observado que a porta utilizada é a 2201.
+
+== Verificação de funcionamento do ambiente
+
+Abra o browser em {uri-dc1-9990}.
+Logue-se com o usuário `admin` e a senha `jbAdmin@123!`.
+Acesse a aba `Domain` e verifique que tanto o `hc1` quanto o `hc2` estão registrados na lista de hosts.
+Verifique também, na aba {uri-dc1-9990}/console/App.html#topology[topologia], que há duas instâncias de `app-1` sendo executadas.

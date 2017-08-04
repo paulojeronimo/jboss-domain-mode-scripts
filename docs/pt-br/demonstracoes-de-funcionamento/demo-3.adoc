@@ -1,0 +1,90 @@
+[[demo-3]]
+= Demo 3: Instalação de um DC adicional (backup)
+
+[[o-que-e-um-dc-de-backup]]
+== O que é um DC de backup?
+
+Um DC tem o papel primário de fazer o gerenciamento de um HC (ou vários).
+Quando ele fica indisponível, o funcionamento das aplicações do domínio não é impactado.
+Entretanto, o administrador do domínio fica incapacitado de gerenciar instâncias.
+Tarefas de administração e configurações dos servidores são impactadas na ausência do DC.
+Sendo assim, é importante que exista um mecanismo de alta disponibilidade para um DC.
+
+O JBoss EAP provê a possibilidade de se instalar e gerenciar um DC de backup.
+Criando-se um DC de backup, é eliminada a impossibilidade de se administrar o domínio na ausência do DC primário (master).
+Na documentação do JBoss EAP, o tópico {uri-jboss-eap-6-4-doc-adcf}["About Domain Controller Discovery and Failover"] trata da configuração de um DC de backup.
+Nos próximos tópicos desta documentação, é apresentado, passo a passo, como configurar um DC de backup.
+Também, é simulada uma indisponbilidade do DC primário e o que deve ser feito para colocar um DC de backup em ação.
+
+== Configuração
+
+A configuração do `Vagrantfile` para a adição do `dc2` pode ser realizada pela aplicação do `patch` link:{basedir}/demos/3/Vagrantfile.patch[demos/3/Vagrantfile].
+
+Este é o seu conteúdo:
+
+[source,diff]
+----
+include::{projdir}/demos/3/Vagrantfile.patch[]
+----
+
+Façamos a aplicação deste `patch`:
+
+[source,bash]
+----
+cd demos
+patch Vagrantfile < 3/Vagrantfile.patch
+----
+
+Precisamos, também, gerar o `scripts/config` dessa demo, baseando-nos na configuração realizada para a <<demo-2,demo anterior>>.
+O `patch` link:{basedir}/demos/3/config.patch[3/config.patch] pode ser utilizado para isso.
+Seu conteúdo é o seguinte:
+
+[source,diff]
+----
+include::{projdir}/demos/3/config.patch[]
+----
+
+A geração do arquivo `3/scripts/config` pode ser realizada da seguinte forma:
+
+[source,bash]
+----
+cp 2/scripts/config 3/scripts/
+(cd 3/scripts; patch config < config.patch)
+----
+
+Podemos executar o comando abaixo para visualizar, através do {Vim}, que diferenças há entre o `config` da <<demo-2,demonstração 2>> e o `config` que acabamos de criar:
+
+[source,bash]
+----
+vim -d {2,3}/scripts/config
+----
+
+Pela visualização das diferenças, apresentadas pelo Vim, notamos que foram adicionadas informações específicas para o `dc2`.
+Mais a frente, nas explicações sobre o arquivo de configuração, obteremos detalhes a respeito disso.
+Nossa preocupação, até o final desse tópico sobre demonstrações, será apenas a de saber como executar os scripts.
+
+== Geração do pacote de instalação (jboss-installer.tar.gz)
+
+Agora que já temos o arquivo `scripts/config`, assim como outros arquivos no diretório `configurations`, podemos gerar o pacote de instalação:
+
+[source,bash]
+----
+DEMO=3 ./jboss-installer.create
+----
+
+== Inicialização do segundo DC (dc2)
+
+== Instalação do dc2
+
+[source,bash]
+----
+cd ..
+alias dc2ssh='ssh -p 2202 root@localhost'
+dc2ssh $scripts/install
+----
+
+[[refs-dc-de-backup]]
+== Referências extras
+
+* {uri-rh-solutions-255963}[High Availability of the Domain Controller in JBoss EAP 6]
+* {uri-github-eap-dc-failover-demo}[JBoss EAP 6.3 Domain controller failover demo]

@@ -1,0 +1,9 @@
+[[jboss-start]]
+= scripts/jboss-start
+
+[source,bash]
+----
+include::{projdir}/scripts/jboss-start[]
+----
+
+* Download: {jboss-start}

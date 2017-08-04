@@ -1,0 +1,9 @@
+[[jboss-status]]
+= scripts/jboss-status
+
+[source,bash]
+----
+include::{projdir}/scripts/jboss-status[]
+----
+
+* Download: {jboss-status}

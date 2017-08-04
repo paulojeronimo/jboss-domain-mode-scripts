@@ -1,0 +1,9 @@
+[[jboss-add-user]]
+= scripts/jboss-add-user
+
+[source,bash]
+----
+include::{projdir}/scripts/jboss-add-user[]
+----
+
+* Download: {jboss-add-user}

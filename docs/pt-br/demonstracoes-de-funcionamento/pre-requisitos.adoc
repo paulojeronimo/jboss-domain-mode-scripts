@@ -1,6 +1,7 @@
-[[pre-requisitos]]
+[[demo-pre-requisitos]]
 = Pré-requisitos
 
+[[demo-instalacao-de-ferramentas]]
 == Instalação de ferramentas
 
 O teste dos scripts através das demonstrações a seguir exige a instalação de algumas ferramentas. São elas:
@@ -8,13 +9,13 @@ O teste dos scripts através das demonstrações a seguir exige a instalação d
 . {VirtualBox}
 . {Vagrant}
 
-Faça a instalação dessas ferramentas para prosseguir.
+Façamos a instalação dessas ferramentas antes de prosseguir.
 O VirtualBox será utilizado para a criação e o gerenciamento de máquinas virtuais.
 O Vagrant, por sua vez, será utilizado para provisionamento dessas máquinas.
 
 [NOTE]
 ====
-. O uso das ferramentas acima não é necessário caso você já possua acesso a máquinas (virtuais ou reais) que possam ser gerenciadas pelo usuário `root`.
+. O uso das ferramentas acima não é necessário caso já tenhamos acesso a máquinas (virtuais ou reais) que possam ser gerenciadas pelo usuário `root`.
 De fato, nesse caso, o uso dessas ferramentas é totalmente dispensável.
 . Os scripts que serão executados possuem independência completa do uso dessas ferramentas.
 . Nas demonstrações, apenas um provisionamento básico será realizado nas máquinas que serão criadas.
@@ -22,32 +23,32 @@ Apesar de ser possível uma automação completa da instalação do JBoss atrav�
 Dessa forma, espera-se que o leitor entenda o uso dos scripts e não como eles poderiam ser chamados através de um provisionamento automático pelo Vagrant.
 ====
 
+[[demo-geracao-do-pacote-de-instalacao]]
 == Geração do pacote de instalação (jboss-installer.tar.gz)
 
-Para cada construção de ambiente, um pacote (arquivo `jboss-installer.tar.gz`) precisa ser gerado.
+Para cada construção de ambiente, um pacote (arquivo `jboss-installer.tar.gz`) precisará ser gerado.
 Esse pacote contém uma cópia de todos os arquivos necessários para a instalação do JBoss, em cada um dos servidores desse ambiente.
 
-A geração do pacote deve ser realizada pelo script {jboss-installer-create}.
-Esse comando está disponível na raiz dos arquivos do projeto.
+A geração do pacote deverá ser realizada pelo script <<jboss-installer-create>>.
+Esse script está disponível na raiz dos arquivos do projeto.
 
 [NOTE]
 ====
 . Veremos, em versões futuras dos scripts deste projeto, que esse pacote pode deixar de ser útil.
-. De fato, nessas novas versões iremos utilizar, por exemplo, o `rsync` ou `git`.
+. De fato, nessas novas versões, poderemos utilizar, por exemplo, o `rsync` ou `git` (preferencialmente).
 Serão esses aplicativos que farão a distribuição dos arquivos necessários, para cada servidor.
 ====
 
+[[demo-configuracao-do-arquivo-hosts]]
 == Configuração do arquivo /etc/hosts (na máquina HOST)
 
-Como as demonstracões são todas realizadas localmente, a partir de uma máquina HOST que executa máquinas virtuais, o arquivo `/etc/hosts` dessa máquina precisa ser configurado com o comando a seguir.
+Como as demonstracões serão todas realizadas localmente, a partir de uma máquina HOST que executa máquinas virtuais, o arquivo `/etc/hosts` dessa máquina precisará ser configurado pelo script <<configurar-hosts>>. Façamos isso, agora:
 
 [source,bash]
 ----
 ./demos/scripts/configurar-hosts
 ----
 
-[WARNING]
-====
-O comando acima deve ser executado na raiz dos arquivos do projeto.
-Da mesma forma, os próximos comandos, que serão realizados em demonstrações a partir do tópico seguinte, terão sempre a sua execução iniciada nesse diretório. Haverá um aviso quando a regra não for essa.
-====
+WARNING: O comando acima deve ser executado na raiz dos arquivos do projeto.
+Da mesma forma, os próximos comandos, que serão realizados em demonstrações a partir do tópico seguinte, terão sempre a sua execução iniciada nesse diretório.
+Haverá um aviso quando essa não for a regra.

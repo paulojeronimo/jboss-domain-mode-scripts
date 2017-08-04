@@ -1,0 +1,9 @@
+[[configurar-hosts]]
+= demos/scripts/configurar-hosts
+
+[source,bash]
+----
+include::{projdir}/demos/scripts/configurar-hosts[]
+----
+
+* Download: {configurar-hosts}

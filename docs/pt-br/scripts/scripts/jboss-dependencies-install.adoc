@@ -1,0 +1,9 @@
+[[jboss-dependencies-install]]
+= scripts/jboss-dependencies-install
+
+[source,bash]
+----
+include::{projdir}/scripts/jboss-dependencies-install[]
+----
+
+* Download: {jboss-dependencies-install}

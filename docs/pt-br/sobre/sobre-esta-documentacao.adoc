@@ -1,0 +1,22 @@
+[[sobre-esta-documentacao]]
+= Esta documentação
+
+Criada através da ferramenta {uri-asciidoctor}[Asciidoctor] (muito utilizada em vários projetos da {RedHat}), esta documentação evolui da mesma maneira que o código deste projeto.
+
+ifdef::backend-html5[]
+[NOTE]
+====
+Ela também pode ser {uri-jboss-domain-mode-scripts-site-docs-pt-br}/jboss-domain-mode-scripts.pdf[baixada e lida em formato PDF].
+====
+endif::[]
+
+ifndef::backend-html5[]
+[NOTE]
+====
+Ela também pode visualizada online, através de um acesso ao endereço {uri-jboss-domain-mode-scripts-site-docs-pt-br}.
+====
+endif::[]
+
+Os fontes em desenvolvimento deste documento estão no mesmo {uri-jboss-domain-mode-scripts}[repositório] que o projeto, no diretório {docs-pt-br}.
+Dessa forma, eles também são tratados como código e podem ter sua evolução visualizada através do {GitHub}.
+Assim como realizado no desenvolvimento de qualquer software gerenciado por esta ferramenta.

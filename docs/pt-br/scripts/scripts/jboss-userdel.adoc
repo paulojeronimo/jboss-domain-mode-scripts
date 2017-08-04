@@ -1,0 +1,9 @@
+[[jboss-userdel]]
+= scripts/jboss-userdel
+
+[source,bash]
+----
+include::{projdir}/scripts/jboss-userdel[]
+----
+
+* Download: {jboss-userdel}

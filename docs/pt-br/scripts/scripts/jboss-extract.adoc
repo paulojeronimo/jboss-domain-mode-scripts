@@ -1,0 +1,9 @@
+[[jboss-extract]]
+= scripts/jboss-extract
+
+[source,bash]
+----
+include::{projdir}/scripts/jboss-extract[]
+----
+
+* Download: {jboss-extract}

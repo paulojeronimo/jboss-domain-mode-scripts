@@ -1,0 +1,27 @@
+--- Vagrantfile	2017-07-26 08:51:18.000000000 -0300
++++ 3/Vagrantfile	2017-07-25 10:39:30.000000000 -0300
+@@ -12,16 +12,16 @@
+   config.vm.box = "boxcutter/centos73"
+   config.vbguest.auto_update = false
+ 
+-  config.vm.define "dc1" do |dc1|
+-    dc1.vm.hostname="dc1"
+-    dc1.vm.network "private_network", ip: "172.17.6.81"
+-    dc1.vm.provision "shell", path: "scripts/instalar-vm", privileged: false
+-    dc1.vm.provider "virtualbox" do |v|
+-      v.memory = 1024
++  (1..2).each do |i|
++    config.vm.define "dc#{i}" do |dc|
++      dc.vm.hostname="dc#{i}"
++      dc.vm.network "private_network", ip: "172.17.6.8#{i}"
++      dc.vm.provision "shell", path: "scripts/instalar-vm", privileged: false
++      dc.vm.provider "virtualbox" do |v|
++        v.memory = 1024
++      end
+     end
+-  end
+ 
+-  (1..2).each do |i|
+     config.vm.define "hc#{i}" do |hc|
+       hc.vm.hostname="hc#{i}"
+       hc.vm.network "private_network", ip: "172.17.6.8#{i+2}"

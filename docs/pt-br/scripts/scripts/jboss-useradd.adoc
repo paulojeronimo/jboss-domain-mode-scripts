@@ -1,0 +1,9 @@
+[[jboss-useradd]]
+= scripts/jboss-useradd
+
+[source,bash]
+----
+include::{projdir}/scripts/jboss-useradd[]
+----
+
+* Download: {jboss-useradd}

@@ -1,0 +1,9 @@
+[[jboss-installer-create]]
+= jboss-installer.create
+
+[source,bash]
+----
+include::{projdir}/jboss-installer.create[]
+----
+
+* Download: {jboss-installer-create}

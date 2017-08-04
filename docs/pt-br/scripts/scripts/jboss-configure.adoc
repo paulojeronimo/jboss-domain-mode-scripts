@@ -1,0 +1,9 @@
+[[jboss-configure]]
+= scripts/jboss-configure
+
+[source,bash]
+----
+include::{projdir}/scripts/jboss-configure[]
+----
+
+* Download: {jboss-configure}

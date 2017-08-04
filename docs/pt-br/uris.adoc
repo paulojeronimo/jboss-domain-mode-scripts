@@ -9,11 +9,8 @@
 :uri-jboss-domain-mode-scripts-site-docs-pt-br: {uri-jboss-domain-mode-scripts-site}/docs/pt-br
 :uri-bash: https://www.gnu.org/software/bash/
 :uri-jboss-cli: https://developer.jboss.org/wiki/CommandLineInterface
-:uri-jboss-management-console: https://access.redhat.com/documentation/en-US/JBoss_Enterprise_Application_Platform/6.4/html/Administration_and_Configuration_Guide/sect-The_Management_Console.html
 :uri-jdk: http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html
 :uri-jboss-eap: https://www.redhat.com/en/technologies/jboss-middleware/application-platform
-:uri-jboss-eap-docker-image: https://access.redhat.com/documentation/en-us/red_hat_jboss_enterprise_application_platform/7.0/html-single/using_the_red_hat_jboss_enterprise_application_platform_docker_image/
-:uri-jboss-eap-docker-image-extend: {uri-jboss-eap-docker-image}/#extending-the-image
 :uri-virtualbox: https://www.virtualbox.org
 :uri-vagrant: https://www.vagrantup.com/
 :uri-vim: http://www.vim.org/
@@ -25,3 +22,21 @@
 :uri-asciidoc-e-asciidoctor: https://paulojeronimo.github.io/asciidoc-e-asciidoctor/
 :uri-triatlo: https://pt.wikipedia.org/wiki/Triatlo
 :uri-lml: https://en.wikipedia.org/wiki/Lightweight_markup_language
+:uri-dc1-9990: http://dc1:9990
+:uri-tmux: https://github.com/tmux/tmux
+:uri-a-tmux-crash-course: https://robots.thoughtbot.com/a-tmux-crash-course
+// Documentação JBoss
+:uri-jboss-eap-6-4-doc: https://access.redhat.com/documentation/en-US/JBoss_Enterprise_Application_Platform/6.4/html
+:uri-jboss-eap-7-0-doc: https://access.redhat.com/documentation/en-US/JBoss_Enterprise_Application_Platform/7.0/html
+:uri-jboss-eap-6-4-doc-adcf: {uri-jboss-eap-6-4-doc}/Administration_and_Configuration_Guide/About_Domain_Controller_Failover.html
+:uri-jboss-management-console: {uri-jboss-eap-6-4-doc}/Administration_and_Configuration_Guide/sect-The_Management_Console.html
+:uri-jboss-eap-docker-image: {uri-jboss-eap-7-0-doc}/using_the_red_hat_jboss_enterprise_application_platform_docker_image/
+:uri-jboss-eap-docker-image-extend: {uri-jboss-eap-docker-image}/#extending-the-image
+// Soluções da Red Hat
+:uri-rh-solutions: https://access.redhat.com/solutions/
+:uri-rh-solutions-255963: {uri-rh-solutions}/255963
+// Projetos extras, no GitHub
+:uri-github-eap-dc-failover-demo: {uri-github}/tqvarnst/eap-dc-failover-demo
+// Diversos
+:uri-ruby: https://www.ruby-lang.org/en/
+:uri-under-the-hood: http://onlineslangdictionary.com/meaning-definition-of/under-the-hood

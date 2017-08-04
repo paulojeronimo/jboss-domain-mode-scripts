@@ -1,12 +1,19 @@
 [[demonstracoes-de-funcionamento]]
 = Demonstrações de funcionamento
 
+:projdir: ../../..
+
 :leveloffset: +1
 
 include::pre-requisitos.adoc[]
 
-include::construcao-de-um-ambiente-simples/index.adoc[]
+<<<
+include::demo-1.adoc[]
 
-include::construcao-de-um-dc-de-backup.adoc[]
+<<<
+include::demo-2.adoc[]
+
+<<<
+include::demo-3.adoc[]
 
 :leveloffset: -1

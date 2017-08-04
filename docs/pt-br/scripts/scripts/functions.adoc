@@ -1,0 +1,9 @@
+[[functions]]
+= scripts/functions
+
+[source,bash]
+----
+include::{projdir}/scripts/functions[]
+----
+
+* Download: {functions}

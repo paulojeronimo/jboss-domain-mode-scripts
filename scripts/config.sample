@@ -12,14 +12,14 @@ CONFIGURATIONS_DIR=../configurations
 VERBOSE=false
 
 # JDK Installer is a RPM binary file
-JDK_INSTALLER=jdk-8u131-linux-x64.rpm
+JDK_INSTALLER=jdk-8u144-linux-x64.rpm
 
 # Binay file to extract JBoss (PATH is relative to INSTALLERS_DIR)
 # These files are the original downloaded from https://access.redhat.com
 JBOSS_INSTALLER_ZIP=jboss-eap-6.4.0.zip
 JBOSS_PATCHES=(
   jboss-eap-6.4.9-patch.zip
-  jboss-eap-6.4.14-patch.zip
+  jboss-eap-6.4.16-patch.zip
 )
 
 # JBoss directory when extracted

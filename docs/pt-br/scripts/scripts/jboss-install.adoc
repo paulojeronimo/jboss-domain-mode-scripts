@@ -1,0 +1,16 @@
+[[jboss-install]]
+= scripts/jboss-install
+
+[source,bash]
+----
+include::{projdir}/scripts/jboss-install[]
+----
+
+* Download: {jboss-install}
+* Dependências:
+** <<jboss-useradd>>
+** <<jboss-uninstall>>
+** <<jboss-configure>>
+** <<jboss-add-user>>
+** <<jboss-fix-permissions>>
+** <<jboss-service-install>>

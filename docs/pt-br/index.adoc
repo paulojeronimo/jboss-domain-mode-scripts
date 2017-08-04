@@ -3,13 +3,15 @@ Paulo Jerônimo <pj@paulojeronimo.com>
 V1.0, {localdatetime}
 :toc: left
 :toc-title: Conteúdo
-:toclevels: 3
+:toclevels: 4
 :icons: font
 :setanchors:
+:source-highlighter: pygments
 
 include::uris.adoc[]
 
 :srcdir: ../..
+:projdir: {srcdir}/../..
 
 ifdef::backend-html5[]
 :basedir: ../..
@@ -17,13 +19,16 @@ endif::[]
 ifndef::backend-html5[]
 :basedir: {uri-jboss-domain-mode-scripts-site}
 endif::[]
+ifdef::backend-pdf[]
+:source-highlighter: rouge
+endif::[]
 
 include::definitions.adoc[]
 
 :leveloffset: +1
 
 :numbered!:
-include::sobre.adoc[]
+include::sobre/index.adoc[]
 
 <<<
 include::licenca.adoc[]
@@ -45,6 +50,6 @@ include::instalacao-apenas-do-jboss.adoc[]
 include::demonstracoes-de-funcionamento/index.adoc[]
 
 <<<
-include::detalhes-de-funcionamento/index.adoc[]
+include::scripts/index.adoc[]
 
 :leveloffset: -1

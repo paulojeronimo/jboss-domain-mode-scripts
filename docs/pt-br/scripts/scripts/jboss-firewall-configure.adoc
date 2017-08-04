@@ -1,0 +1,9 @@
+[[jboss-firewall-configure]]
+= scripts/jboss-firewall-configure
+
+[source,bash]
+----
+include::{projdir}/scripts/jboss-firewall-configure[]
+----
+
+* Download: {jboss-firewall-configure}

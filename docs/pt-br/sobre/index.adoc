@@ -1,0 +1,14 @@
+[[sobre]]
+= Sobre
+
+:leveloffset: +1
+
+include::sobre-o-projeto.adoc[]
+
+<<<
+include::sobre-esta-documentacao.adoc[]
+
+<<<
+include::paulojeronimo.adoc[]
+
+:leveloffset: -1

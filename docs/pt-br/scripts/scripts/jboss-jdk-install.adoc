@@ -1,0 +1,9 @@
+[[jboss-jdk-install]]
+= scripts/jboss-jdk-install
+
+[source,bash]
+----
+include::{projdir}/scripts/jboss-jdk-install[]
+----
+
+* Download: {jboss-jdk-install}

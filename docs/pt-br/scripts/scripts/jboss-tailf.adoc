@@ -1,0 +1,9 @@
+[[jboss-tailf]]
+= scripts/jboss-tailf
+
+[source,bash]
+----
+include::{projdir}/scripts/jboss-tailf[]
+----
+
+* Download: {jboss-tailf}

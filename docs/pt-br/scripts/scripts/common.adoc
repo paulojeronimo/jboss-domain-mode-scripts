@@ -1,0 +1,11 @@
+[[common]]
+= scripts/common
+
+[source,bash]
+----
+include::{projdir}/scripts/common[]
+----
+
+* Download: {common}
+* Dependências:
+** <<functions>>

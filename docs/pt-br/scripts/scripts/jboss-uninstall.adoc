@@ -1,0 +1,9 @@
+[[jboss-uninstall]]
+= scripts/jboss-uninstall
+
+[source,bash]
+----
+include::{projdir}/scripts/jboss-uninstall[]
+----
+
+* Download: {jboss-uninstall}

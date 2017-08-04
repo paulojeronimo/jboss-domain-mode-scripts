@@ -1,0 +1,9 @@
+[[config-sample]]
+= scripts/config-sample
+
+[source,bash]
+----
+include::{projdir}/scripts/config.sample[]
+----
+
+* Download: {config-sample}

@@ -1,5 +1,4 @@
 #!/bin/bash
-# config file for demo 2
 
 # The INSTALLERS_DIR must be relative to this directory
 # It have to contains binaries like jboss-eap-6.4.0.zip, jboss-eap-6.4.*.patch.zip
@@ -77,11 +76,10 @@ case $JBOSS_HOST in
     JBOSS_TYPE=master
     ;;
 
-  # We'll set JBOSS_SERVER_CONFIG to srv1 if we are in hc{2,4}
-  hc1|hc2)
+  # If host is hc1 or hc2, JBOSS_SERVER_CONFIG will be srv1
+  hc[1,2])
     JBOSS_SERVER_CONFIG=srv1
     ;;
-
 esac
 
 # Host config file is JBOSS_TYPE dependant
