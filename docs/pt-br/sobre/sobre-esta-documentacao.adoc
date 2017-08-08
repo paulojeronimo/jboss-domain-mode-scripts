@@ -11,11 +11,13 @@ Sendo assim, com relação ao público esperado na leitura deste documento, assu
 . Ele já tenha experiência no uso de comandos executados num shell {Bash}, em nível intermediário.
 . Ele já possua conhecimentos e experiência em {JBossEAP}, particularmente em ambiente {RHEL}, em nível intermediário.
 
-Para adquirir o conhecimento e a experiência necesssárias para um melhor entendimento deste documento, nos assuntos apontados acima apontados, é recomendada a participação em {uri-rh-training}[treinamentos oficiais da Red Hat] ou equivalentes.
+Para adquirir o conhecimento e a experiência necesssárias para um melhor entendimento deste documento, nos assuntos apontados acima, é recomendada a participação em {uri-rh-training}[treinamentos oficiais da Red Hat] ou equivalentes.
 
 == Formato
 
-Esta documento é produzido na forma de um tutorial onde executamos, juntos, <<demonstracoes-de-funcionamento,demonstrações que explicam o funcionamento dos scripts deste projeto>>. Em algumas demonstrações, exercícios são propostos para fixar conteúdo já apresentado em momentos anteriores. As <<solucoes-de-exercicios,soluções>> para eles também estão disponíveis (ao final desta documentação).
+Este documento é produzido na forma de um tutorial. Nele executamos <<demonstracoes-de-funcionamento,demonstrações que explicam o funcionamento dos scripts deste projeto>>.
+Em algumas demonstrações, exercícios são propostos para fixar conteúdo já apresentado em momentos anteriores.
+As <<solucoes-de-exercicios,soluções>> para esses exercícios estão disponíveis ao final deste documento.
 
 Criada através da ferramenta {uri-asciidoctor}[Asciidoctor] (muito utilizada em vários projetos da {RedHat}), esta documentação evolui da mesma maneira que o código deste projeto.
 
