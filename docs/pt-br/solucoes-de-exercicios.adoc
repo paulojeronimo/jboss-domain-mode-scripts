@@ -1,0 +1,56 @@
+[[solucoes-de-exercicios]]
+= Soluções de exercícios
+
+[[solucao-demo-2-exercicio-1]]
+== Demo 2, exercício 1
+
+Possível solução para "<<demo-2-exercicio-1>>":
+
+[source,bash]
+----
+alias dc1ssh='sshpass -p vagrant ssh -p 2222 root@$SERVER' # <1>
+
+# <2>
+export SERVER=localhost
+
+# <3>
+SSH_PORT=2222 ./jboss-installer.install
+
+# <4>
+dc1ssh $scripts/jboss-install # <5>
+dc1ssh $scripts/jboss-start
+----
+<1> Diferenças desse `alias` para o apresentado na "<<demo-1,Demo 1>>": 1) Estamos utilizando o `sshpass` para não sermos solicitados a entrar a senha do usuário `root`. 2) Estamos utilizando a variável `SERVER`.
+<2> Criamos e exportamos a variável `SERVER` para não precisarmos mais ficar digitando-a na frente dos scripts.
+<3> Não precisamos mais passar `SERVER` como parâmetro.
+<4> Para ser utilizada a partir desse ponto, a variável `scripts` já precisaria estar definida.
+<5> Observe que não precisamos fazer a instalação completa (via <<install>>) pois o `dc1` já estava instalado.
+<<demo-1-scripts-assign,Fizemos isso>> na "Demo 1".
+
+<<<
+[[solucao-demo-2-exercicio-2]]
+== Demo 2, exercício 2
+
+*Solução 1* para "<<demo-2-exercicio-2>>" (execute-a num shell Bash escrevendo-a linha a linha):
+
+[source,bash]
+----
+export SSHPASS=vagrant <1>
+
+alias hc1ssh='sshpass -e ssh -p 2200 root@$SERVER'
+alias hc2ssh='sshpass -e ssh -p 2201 root@$SERVER'
+
+for p in 220{0,1}; do SSH_PORT=$p ./jboss-installer.install; done <2>
+
+hc1ssh $scripts/jboss-install
+hc1ssh $scripts/jboss-start
+hc1ssh $scripts/jboss-tailf &> /tmp/hc1ssh.log & # <3>
+
+hc2ssh $scripts/install <4>
+hc2ssh $scripts/jboss-start
+hc2ssh $scripts/jboss-tailf &> /tmp/hc2ssh.log &
+----
+<1> A variável `SSHPASS` pode ser utilizada no lugar de passarmos uma senha via linha de comando. Ela também está sendo utilizada pelo <<jboss-installer-install>>.
+<2> Esse `loop` é executado de forma serializada (performance ruim).
+<3> Esse comando redirecionará os últimos logs de `hc1` para um arquivo temporário.
+<4> No `hc2`, de forma contrária ao `hc1`, precisamos fazer a instalação completa (é a sua primeira instalação).

@@ -6,6 +6,5 @@ cd "$BASE_DIR"
 
 ./jboss-dependencies-install
 ./jboss-jdk-install
-[ -d "$INSTALLERS_DIR/$JBOSS_DIR" ] || ./jboss-extract
 ./jboss-install
 ./jboss-firewall-configure

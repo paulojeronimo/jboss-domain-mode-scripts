@@ -8,6 +8,13 @@ PREFIX=${PREFIX:-/opt/rh/jboss-installer}
 SSH_USER=${SSH_USER:-root}
 SSH_PORT=${SSH_PORT:-22}
 
+ssh() {
+  local ssh=`which ssh`
+  local params="-p $SSH_PORT $SSH_USER@$SERVER $@"
+
+  [ "$SSHPASS" ] && sshpass -e $ssh $params || $ssh $params
+}
+
 if ! [ "$SERVER" ]
 then
   echo "Usage: SERVER=<server> $0"
@@ -29,4 +36,4 @@ EOF
 )
 
 cd "$BASE_DIR"
-cat $INSTALLER | ssh -p $SSH_PORT $SSH_USER@$SERVER $SCRIPT
+cat $INSTALLER | ssh $SCRIPT

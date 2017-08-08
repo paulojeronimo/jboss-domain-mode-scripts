@@ -145,6 +145,7 @@ No caso, o `hc1` é acessado pela porta 2200 enquanto que a `dc1` é acessada pe
 
 [[minimizacao-de-dedadas]]Vamos utilizar uma "técnica" para a "Minimização de dedadas" (no teclado icon:smile-o[]):
 
+[[demo-1-scripts-assign]]
 [source,bash]
 ----
 scripts=/opt/rh/jboss-installer/scripts

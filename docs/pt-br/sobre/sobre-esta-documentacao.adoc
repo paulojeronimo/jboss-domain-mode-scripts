@@ -15,6 +15,8 @@ Para adquirir o conhecimento e a experiência necesssárias para um melhor enten
 
 == Formato
 
+Esta documento é produzido na forma de um tutorial onde executamos, juntos, <<demonstracoes-de-funcionamento,demonstrações que explicam o funcionamento dos scripts deste projeto>>. Em algumas demonstrações, exercícios são propostos para fixar conteúdo já apresentado em momentos anteriores. As <<solucoes-de-exercicios,soluções>> para eles também estão disponíveis (ao final desta documentação).
+
 Criada através da ferramenta {uri-asciidoctor}[Asciidoctor] (muito utilizada em vários projetos da {RedHat}), esta documentação evolui da mesma maneira que o código deste projeto.
 
 ifdef::backend-html5[]

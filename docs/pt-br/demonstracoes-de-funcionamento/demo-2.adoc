@@ -331,10 +331,14 @@ Executemos:
 DEMO=2 ./jboss-installer.create
 ----
 
-NOTE: O resultado da execução acima é um pacote que, além de conter os script e configurações padrão, também possuirá o conteúdo de `demos/2/scripts` e `demos/2/configurations`.
-Verifiquemos isso executando o comando `tar tvf jboss-installer.tar.gz`.
+O resultado da execução acima é um pacote que, além de conter os script e configurações padrão, também possuirá o conteúdo de `demos/2/scripts` e `demos/2/configurations`. Verifiquemos isso executando o comando abaixo:
 
-== Finalização e substituição do instalador do JBoss em dc1 e hc1
+[source,bash]
+----
+tar tvf jboss-installer.tar.gz
+----
+
+== Finalização do JBoss em dc1 e hc1
 
 Vamos parar as instâncias JBoss já em execução em `dc1` e em `hc1`.
 Executemos o seguinte comando:
@@ -344,19 +348,34 @@ Executemos o seguinte comando:
 for p in 22{00,22}; do ssh -p $p root@localhost /opt/rh/jboss-installer/scripts/jboss-stop; done
 ----
 
-NOTE: Recordando o que vimos no final da <<demo-1,demo 1>>: no decorrer destas demonstrações, além do <<jboss-stop>>, também já executamos comandos para as tarefas de inicialização, otenção do estado de execução, e visualização do log do JBoss: <<jboss-start>>, <<jboss-status>>, <<jboss-tailf>>.
+NOTE: Recordando o que aprendemos ao final da <<demo-1,demo 1>>: além do <<jboss-stop>>, também há comandos para as tarefas de inicialização, otenção do estado de execução, e visualização do log do JBoss: <<jboss-start>>, <<jboss-status>>, <<jboss-tailf>>.
 
-== Reinstalação e inicialização do DC (dc1)
+[[demo-2-exercicio-1]]
+== Exercício 1: substituição do instalador, reinstalação e inicialização do DC (dc1)
 
-Repita os mesmos link:#demo-1-instalacao-dc[passos] que já foram executados (na <<demo-1,demo-1>>) para a instalação e inicialização do DC.
+Repita os mesmos <<demo-1-instalacao-dc,passos>> que já foram executados (na <<demo-1,demo-1>>) para a instalação e inicialização do DC.
 
-TIP: Ao invés de gastar os dedos da forma como realizado em "<<demo-1-instalacao-dc>>", seja `smart` e utilize o mecanismo de "<<minimizacao-de-dedadas,minimização de dedadas>>" apresentado em "<<demo-1-instalacao-hc>>".
+[IMPORTANT]
+.Requisitos:
+====
+. Ao invés de gastar os dedos da forma como realizado em "<<demo-1-instalacao-dc>>", seja `smart` e utilize o mecanismo de "<<minimizacao-de-dedadas,minimização de dedadas>>" apresentado em "<<demo-1-instalacao-hc>>".
+. Utilize o comando `sshpass` (se não souber o que ele faz, busque no Google!).
+====
 
-== Reinstalação do hc1 a instalação do hc2
+NOTE: Veja a solução no tópico "<<solucoes-de-exercicios>>" em "<<solucao-demo-2-exercicio-1>>".
 
-Repita, para cada HC, os mesmo passos link:#demo-1-instalacao-hc[passos] que já foram executados (na Demo 1) para a instalação e inicialização do `hc1`.
+[[demo-2-exercicio-2]]
+== Exercício 2: reinstalação do hc1 e instalação do hc2
 
-CAUTION: Ao serem iniciados os passos para a realização da instalação do `hc2` deve ser observado que a porta utilizada é a 2201.
+Repita, para cada HC, os mesmo <<demo-1-instalacao-hc,passos>> que já foram executados (na Demo 1) para a instalação e inicialização do `hc1`.
+
+[CAUTION]
+====
+. Da mesma forma que realizado no exercício anterior, você precisará substituir o instalador do `hc1`.
+. Ao serem iniciados os passos para a realização da instalação do `hc2` deve ser observado que a porta utilizada é a 2201.
+====
+
+NOTE: Veja a solução no tópico "<<solucoes-de-exercicios>>" em "<<solucao-demo-2-exercicio-2>>".
 
 == Verificação de funcionamento do ambiente
 

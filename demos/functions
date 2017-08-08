@@ -1,0 +1,10 @@
+#!/bin/bash
+
+isRunning() {
+  local status=/tmp/vagrant-status.$$
+
+  [ -f $status ] || {
+    vagrant status > $status
+  }
+  grep -q "^$1.*running" $status
+}

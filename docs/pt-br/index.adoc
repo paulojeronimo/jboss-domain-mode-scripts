@@ -52,4 +52,7 @@ include::demonstracoes-de-funcionamento/index.adoc[]
 <<<
 include::scripts/index.adoc[]
 
+<<<
+include::solucoes-de-exercicios.adoc[]
+
 :leveloffset: -1
