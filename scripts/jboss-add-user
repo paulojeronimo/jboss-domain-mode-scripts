@@ -1,0 +1,6 @@
+#!/bin/bash
+BASE_DIR=`cd "$(dirname "$0")"; pwd`
+source "$BASE_DIR"/common
+
+echo "Adding JBoss admin user ($JBOSS_ADMIN_USER) ..."
+$JBOSS_HOME/bin/add-user.sh -s -u "$JBOSS_ADMIN_USER" -p "$JBOSS_ADMIN_PASSWORD"

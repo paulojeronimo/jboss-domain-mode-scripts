@@ -1,0 +1,34 @@
+#!/bin/bash
+set +x
+set -e
+
+BASE_DIR=`cd "$(dirname "$0")"; pwd`
+INSTALLER=${INSTALLER:-jboss-installer.tar.gz}
+PREFIX=${PREFIX:-/opt/rh/jboss-installer}
+DEMO=${DEMO:-1}
+
+trap "{ rm -rf merged; }" EXIT
+trap "{ rm -f "$INSTALLER"; }" INT
+
+[[ $OSTYPE =~ darwin.* ]] && tar=gtar || tar=tar
+
+cd "$BASE_DIR"
+
+[ -d "demos/$DEMO" ] || {
+  echo "DEMO directory (demos/$DEMO) does not exists!"
+  exit 1
+}
+
+rsync -a scripts configurations merged
+[ -d "demos/$DEMO/scripts" ] && \
+  rsync -qa demos/$DEMO/{scripts,configurations} merged/
+
+echo "Creating $INSTALLER ..."
+find . -type f \( \
+  -path './installers/*' -o \
+  -path './merged/*' \
+  \) \( ! -name README.adoc -o -name "$config" \) -print0 | \
+$tar cvfz $INSTALLER \
+--transform "s,^\./merged,.," \
+--transform "s,^\.,$PREFIX," \
+--null -T -

@@ -1,0 +1,22 @@
+--- domain.conf.original	2017-07-08 09:27:23.000000000 -0300
++++ domain.conf	2017-07-08 09:30:00.000000000 -0300
+@@ -42,13 +42,18 @@
+ # Specify options to pass to the Java VM.
+ #
+ if [ "x$JAVA_OPTS" = "x" ]; then
+-   JAVA_OPTS="-Xms64m -Xmx512m -XX:MaxPermSize=256m -Djava.net.preferIPv4Stack=true"
++   JAVA_OPTS="-Xms64m -Xmx512m -Djava.net.preferIPv4Stack=true"
+    JAVA_OPTS="$JAVA_OPTS -Djboss.modules.system.pkgs=$JBOSS_MODULES_SYSTEM_PKGS -Djava.awt.headless=true"
+    JAVA_OPTS="$JAVA_OPTS -Djboss.modules.policy-permissions=true"
+ else
+    echo "JAVA_OPTS already set in environment; overriding default settings with values: $JAVA_OPTS"
+ fi
+ 
++JAVA_OPTS="$JAVA_OPTS -Djboss.bind.address=JBOSS_BIND_ADDRESS"
++JAVA_OPTS="$JAVA_OPTS -Djboss.bind.address.management=JBOSS_BIND_ADDRESS_MANAGEMENT"
++JAVA_OPTS="$JAVA_OPTS -Djboss.domain.master.address=JBOSS_DOMAIN_MASTER_ADDRESS"
++JAVA_OPTS="$JAVA_OPTS -Djboss.domain.backup.address=JBOSS_DOMAIN_BACKUP_ADDRESS"
++
+ # Use JBoss Modules lockless mode
+ #JAVA_OPTS="$JAVA_OPTS -Djboss.modules.lockless=true"
+ 

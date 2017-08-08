@@ -1,0 +1,22 @@
+#!/bin/bash
+BASE_DIR=`cd "$(dirname "$0")"; pwd`
+source "$BASE_DIR"/common
+
+rmf() {
+  local f=$1
+
+  if [ -f "$f" ]
+  then
+    echo "Removing $f ..."
+    rm -f "$f"
+  fi
+}
+
+rmf /etc/init.d/jboss-as-domain
+rmf /etc/jboss-as/jboss-as.conf
+
+if chkconfig --list jboss-as-domain &> /dev/null
+then
+  echo "Removing jboss-as-domain from chkconfig ..."
+  chkconfig --del jboss-as-domain
+fi

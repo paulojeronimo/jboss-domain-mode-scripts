@@ -1,0 +1,7 @@
+#!/bin/bash
+BASE_DIR=`cd "$(dirname "$0")"; pwd`
+source "$BASE_DIR"/common
+
+$JBOSS_INSTALL_DIR/$JBOSS_LINK/bin/jboss-cli.sh -c \
+--controller=$JBOSS_DOMAIN_MASTER_ADDRESS \
+--commands="/host=backup:write-local-domain-controller,reload --host=backup"

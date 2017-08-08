@@ -1,0 +1,3359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.5">
+<meta name="author" content="Paulo Jerônimo">
+<title>jboss-domain-mode-scripts: Scripts para a automação de tarefas no JBoss EAP (em modo domain)</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<style>
+/* Asciidoctor default stylesheet | MIT License | http://asciidoctor.org */
+/* Remove comment around @import statement below when using as a custom stylesheet */
+/*@import "https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700";*/
+article,aside,details,figcaption,figure,footer,header,hgroup,main,nav,section,summary{display:block}
+audio,canvas,video{display:inline-block}
+audio:not([controls]){display:none;height:0}
+[hidden],template{display:none}
+script{display:none!important}
+html{font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}
+a{background:transparent}
+a:focus{outline:thin dotted}
+a:active,a:hover{outline:0}
+h1{font-size:2em;margin:.67em 0}
+abbr[title]{border-bottom:1px dotted}
+b,strong{font-weight:bold}
+dfn{font-style:italic}
+hr{-moz-box-sizing:content-box;box-sizing:content-box;height:0}
+mark{background:#ff0;color:#000}
+code,kbd,pre,samp{font-family:monospace;font-size:1em}
+pre{white-space:pre-wrap}
+q{quotes:"\201C" "\201D" "\2018" "\2019"}
+small{font-size:80%}
+sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}
+sup{top:-.5em}
+sub{bottom:-.25em}
+img{border:0}
+svg:not(:root){overflow:hidden}
+figure{margin:0}
+fieldset{border:1px solid silver;margin:0 2px;padding:.35em .625em .75em}
+legend{border:0;padding:0}
+button,input,select,textarea{font-family:inherit;font-size:100%;margin:0}
+button,input{line-height:normal}
+button,select{text-transform:none}
+button,html input[type="button"],input[type="reset"],input[type="submit"]{-webkit-appearance:button;cursor:pointer}
+button[disabled],html input[disabled]{cursor:default}
+input[type="checkbox"],input[type="radio"]{box-sizing:border-box;padding:0}
+input[type="search"]{-webkit-appearance:textfield;-moz-box-sizing:content-box;-webkit-box-sizing:content-box;box-sizing:content-box}
+input[type="search"]::-webkit-search-cancel-button,input[type="search"]::-webkit-search-decoration{-webkit-appearance:none}
+button::-moz-focus-inner,input::-moz-focus-inner{border:0;padding:0}
+textarea{overflow:auto;vertical-align:top}
+table{border-collapse:collapse;border-spacing:0}
+*,*:before,*:after{-moz-box-sizing:border-box;-webkit-box-sizing:border-box;box-sizing:border-box}
+html,body{font-size:100%}
+body{background:#fff;color:rgba(0,0,0,.8);padding:0;margin:0;font-family:"Noto Serif","DejaVu Serif",serif;font-weight:400;font-style:normal;line-height:1;position:relative;cursor:auto;tab-size:4;-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased}
+a:hover{cursor:pointer}
+img,object,embed{max-width:100%;height:auto}
+object,embed{height:100%}
+img{-ms-interpolation-mode:bicubic}
+.left{float:left!important}
+.right{float:right!important}
+.text-left{text-align:left!important}
+.text-right{text-align:right!important}
+.text-center{text-align:center!important}
+.text-justify{text-align:justify!important}
+.hide{display:none}
+img,object,svg{display:inline-block;vertical-align:middle}
+textarea{height:auto;min-height:50px}
+select{width:100%}
+.center{margin-left:auto;margin-right:auto}
+.spread{width:100%}
+p.lead,.paragraph.lead>p,#preamble>.sectionbody>.paragraph:first-of-type p{font-size:1.21875em;line-height:1.6}
+.subheader,.admonitionblock td.content>.title,.audioblock>.title,.exampleblock>.title,.imageblock>.title,.listingblock>.title,.literalblock>.title,.stemblock>.title,.openblock>.title,.paragraph>.title,.quoteblock>.title,table.tableblock>.title,.verseblock>.title,.videoblock>.title,.dlist>.title,.olist>.title,.ulist>.title,.qlist>.title,.hdlist>.title{line-height:1.45;color:#7a2518;font-weight:400;margin-top:0;margin-bottom:.25em}
+div,dl,dt,dd,ul,ol,li,h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6,pre,form,p,blockquote,th,td{margin:0;padding:0;direction:ltr}
+a{color:#2156a5;text-decoration:underline;line-height:inherit}
+a:hover,a:focus{color:#1d4b8f}
+a img{border:none}
+p{font-family:inherit;font-weight:400;font-size:1em;line-height:1.6;margin-bottom:1.25em;text-rendering:optimizeLegibility}
+p aside{font-size:.875em;line-height:1.35;font-style:italic}
+h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6{font-family:"Open Sans","DejaVu Sans",sans-serif;font-weight:300;font-style:normal;color:#ba3925;text-rendering:optimizeLegibility;margin-top:1em;margin-bottom:.5em;line-height:1.0125em}
+h1 small,h2 small,h3 small,#toctitle small,.sidebarblock>.content>.title small,h4 small,h5 small,h6 small{font-size:60%;color:#e99b8f;line-height:0}
+h1{font-size:2.125em}
+h2{font-size:1.6875em}
+h3,#toctitle,.sidebarblock>.content>.title{font-size:1.375em}
+h4,h5{font-size:1.125em}
+h6{font-size:1em}
+hr{border:solid #ddddd8;border-width:1px 0 0;clear:both;margin:1.25em 0 1.1875em;height:0}
+em,i{font-style:italic;line-height:inherit}
+strong,b{font-weight:bold;line-height:inherit}
+small{font-size:60%;line-height:inherit}
+code{font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;font-weight:400;color:rgba(0,0,0,.9)}
+ul,ol,dl{font-size:1em;line-height:1.6;margin-bottom:1.25em;list-style-position:outside;font-family:inherit}
+ul,ol,ul.no-bullet,ol.no-bullet{margin-left:1.5em}
+ul li ul,ul li ol{margin-left:1.25em;margin-bottom:0;font-size:1em}
+ul.square li ul,ul.circle li ul,ul.disc li ul{list-style:inherit}
+ul.square{list-style-type:square}
+ul.circle{list-style-type:circle}
+ul.disc{list-style-type:disc}
+ul.no-bullet{list-style:none}
+ol li ul,ol li ol{margin-left:1.25em;margin-bottom:0}
+dl dt{margin-bottom:.3125em;font-weight:bold}
+dl dd{margin-bottom:1.25em}
+abbr,acronym{text-transform:uppercase;font-size:90%;color:rgba(0,0,0,.8);border-bottom:1px dotted #ddd;cursor:help}
+abbr{text-transform:none}
+blockquote{margin:0 0 1.25em;padding:.5625em 1.25em 0 1.1875em;border-left:1px solid #ddd}
+blockquote cite{display:block;font-size:.9375em;color:rgba(0,0,0,.6)}
+blockquote cite:before{content:"\2014 \0020"}
+blockquote cite a,blockquote cite a:visited{color:rgba(0,0,0,.6)}
+blockquote,blockquote p{line-height:1.6;color:rgba(0,0,0,.85)}
+@media only screen and (min-width:768px){h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6{line-height:1.2}
+h1{font-size:2.75em}
+h2{font-size:2.3125em}
+h3,#toctitle,.sidebarblock>.content>.title{font-size:1.6875em}
+h4{font-size:1.4375em}}
+table{background:#fff;margin-bottom:1.25em;border:solid 1px #dedede}
+table thead,table tfoot{background:#f7f8f7;font-weight:bold}
+table thead tr th,table thead tr td,table tfoot tr th,table tfoot tr td{padding:.5em .625em .625em;font-size:inherit;color:rgba(0,0,0,.8);text-align:left}
+table tr th,table tr td{padding:.5625em .625em;font-size:inherit;color:rgba(0,0,0,.8)}
+table tr.even,table tr.alt,table tr:nth-of-type(even){background:#f8f8f7}
+table thead tr th,table tfoot tr th,table tbody tr td,table tr td,table tfoot tr td{display:table-cell;line-height:1.6}
+h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6{line-height:1.2;word-spacing:-.05em}
+h1 strong,h2 strong,h3 strong,#toctitle strong,.sidebarblock>.content>.title strong,h4 strong,h5 strong,h6 strong{font-weight:400}
+.clearfix:before,.clearfix:after,.float-group:before,.float-group:after{content:" ";display:table}
+.clearfix:after,.float-group:after{clear:both}
+*:not(pre)>code{font-size:.9375em;font-style:normal!important;letter-spacing:0;padding:.1em .5ex;word-spacing:-.15em;background-color:#f7f7f8;-webkit-border-radius:4px;border-radius:4px;line-height:1.45;text-rendering:optimizeSpeed;word-wrap:break-word}
+*:not(pre)>code.nobreak{word-wrap:normal}
+*:not(pre)>code.nowrap{white-space:nowrap}
+pre,pre>code{line-height:1.45;color:rgba(0,0,0,.9);font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;font-weight:400;text-rendering:optimizeSpeed}
+em em{font-style:normal}
+strong strong{font-weight:400}
+.keyseq{color:rgba(51,51,51,.8)}
+kbd{font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;display:inline-block;color:rgba(0,0,0,.8);font-size:.65em;line-height:1.45;background-color:#f7f7f7;border:1px solid #ccc;-webkit-border-radius:3px;border-radius:3px;-webkit-box-shadow:0 1px 0 rgba(0,0,0,.2),0 0 0 .1em white inset;box-shadow:0 1px 0 rgba(0,0,0,.2),0 0 0 .1em #fff inset;margin:0 .15em;padding:.2em .5em;vertical-align:middle;position:relative;top:-.1em;white-space:nowrap}
+.keyseq kbd:first-child{margin-left:0}
+.keyseq kbd:last-child{margin-right:0}
+.menuseq,.menu{color:rgba(0,0,0,.8)}
+b.button:before,b.button:after{position:relative;top:-1px;font-weight:400}
+b.button:before{content:"[";padding:0 3px 0 2px}
+b.button:after{content:"]";padding:0 2px 0 3px}
+p a>code:hover{color:rgba(0,0,0,.9)}
+#header,#content,#footnotes,#footer{width:100%;margin-left:auto;margin-right:auto;margin-top:0;margin-bottom:0;max-width:62.5em;*zoom:1;position:relative;padding-left:.9375em;padding-right:.9375em}
+#header:before,#header:after,#content:before,#content:after,#footnotes:before,#footnotes:after,#footer:before,#footer:after{content:" ";display:table}
+#header:after,#content:after,#footnotes:after,#footer:after{clear:both}
+#content{margin-top:1.25em}
+#content:before{content:none}
+#header>h1:first-child{color:rgba(0,0,0,.85);margin-top:2.25rem;margin-bottom:0}
+#header>h1:first-child+#toc{margin-top:8px;border-top:1px solid #ddddd8}
+#header>h1:only-child,body.toc2 #header>h1:nth-last-child(2){border-bottom:1px solid #ddddd8;padding-bottom:8px}
+#header .details{border-bottom:1px solid #ddddd8;line-height:1.45;padding-top:.25em;padding-bottom:.25em;padding-left:.25em;color:rgba(0,0,0,.6);display:-ms-flexbox;display:-webkit-flex;display:flex;-ms-flex-flow:row wrap;-webkit-flex-flow:row wrap;flex-flow:row wrap}
+#header .details span:first-child{margin-left:-.125em}
+#header .details span.email a{color:rgba(0,0,0,.85)}
+#header .details br{display:none}
+#header .details br+span:before{content:"\00a0\2013\00a0"}
+#header .details br+span.author:before{content:"\00a0\22c5\00a0";color:rgba(0,0,0,.85)}
+#header .details br+span#revremark:before{content:"\00a0|\00a0"}
+#header #revnumber{text-transform:capitalize}
+#header #revnumber:after{content:"\00a0"}
+#content>h1:first-child:not([class]){color:rgba(0,0,0,.85);border-bottom:1px solid #ddddd8;padding-bottom:8px;margin-top:0;padding-top:1rem;margin-bottom:1.25rem}
+#toc{border-bottom:1px solid #efefed;padding-bottom:.5em}
+#toc>ul{margin-left:.125em}
+#toc ul.sectlevel0>li>a{font-style:italic}
+#toc ul.sectlevel0 ul.sectlevel1{margin:.5em 0}
+#toc ul{font-family:"Open Sans","DejaVu Sans",sans-serif;list-style-type:none}
+#toc li{line-height:1.3334;margin-top:.3334em}
+#toc a{text-decoration:none}
+#toc a:active{text-decoration:underline}
+#toctitle{color:#7a2518;font-size:1.2em}
+@media only screen and (min-width:768px){#toctitle{font-size:1.375em}
+body.toc2{padding-left:15em;padding-right:0}
+#toc.toc2{margin-top:0!important;background-color:#f8f8f7;position:fixed;width:15em;left:0;top:0;border-right:1px solid #efefed;border-top-width:0!important;border-bottom-width:0!important;z-index:1000;padding:1.25em 1em;height:100%;overflow:auto}
+#toc.toc2 #toctitle{margin-top:0;margin-bottom:.8rem;font-size:1.2em}
+#toc.toc2>ul{font-size:.9em;margin-bottom:0}
+#toc.toc2 ul ul{margin-left:0;padding-left:1em}
+#toc.toc2 ul.sectlevel0 ul.sectlevel1{padding-left:0;margin-top:.5em;margin-bottom:.5em}
+body.toc2.toc-right{padding-left:0;padding-right:15em}
+body.toc2.toc-right #toc.toc2{border-right-width:0;border-left:1px solid #efefed;left:auto;right:0}}
+@media only screen and (min-width:1280px){body.toc2{padding-left:20em;padding-right:0}
+#toc.toc2{width:20em}
+#toc.toc2 #toctitle{font-size:1.375em}
+#toc.toc2>ul{font-size:.95em}
+#toc.toc2 ul ul{padding-left:1.25em}
+body.toc2.toc-right{padding-left:0;padding-right:20em}}
+#content #toc{border-style:solid;border-width:1px;border-color:#e0e0dc;margin-bottom:1.25em;padding:1.25em;background:#f8f8f7;-webkit-border-radius:4px;border-radius:4px}
+#content #toc>:first-child{margin-top:0}
+#content #toc>:last-child{margin-bottom:0}
+#footer{max-width:100%;background-color:rgba(0,0,0,.8);padding:1.25em}
+#footer-text{color:rgba(255,255,255,.8);line-height:1.44}
+.sect1{padding-bottom:.625em}
+@media only screen and (min-width:768px){.sect1{padding-bottom:1.25em}}
+.sect1+.sect1{border-top:1px solid #efefed}
+#content h1>a.anchor,h2>a.anchor,h3>a.anchor,#toctitle>a.anchor,.sidebarblock>.content>.title>a.anchor,h4>a.anchor,h5>a.anchor,h6>a.anchor{position:absolute;z-index:1001;width:1.5ex;margin-left:-1.5ex;display:block;text-decoration:none!important;visibility:hidden;text-align:center;font-weight:400}
+#content h1>a.anchor:before,h2>a.anchor:before,h3>a.anchor:before,#toctitle>a.anchor:before,.sidebarblock>.content>.title>a.anchor:before,h4>a.anchor:before,h5>a.anchor:before,h6>a.anchor:before{content:"\00A7";font-size:.85em;display:block;padding-top:.1em}
+#content h1:hover>a.anchor,#content h1>a.anchor:hover,h2:hover>a.anchor,h2>a.anchor:hover,h3:hover>a.anchor,#toctitle:hover>a.anchor,.sidebarblock>.content>.title:hover>a.anchor,h3>a.anchor:hover,#toctitle>a.anchor:hover,.sidebarblock>.content>.title>a.anchor:hover,h4:hover>a.anchor,h4>a.anchor:hover,h5:hover>a.anchor,h5>a.anchor:hover,h6:hover>a.anchor,h6>a.anchor:hover{visibility:visible}
+#content h1>a.link,h2>a.link,h3>a.link,#toctitle>a.link,.sidebarblock>.content>.title>a.link,h4>a.link,h5>a.link,h6>a.link{color:#ba3925;text-decoration:none}
+#content h1>a.link:hover,h2>a.link:hover,h3>a.link:hover,#toctitle>a.link:hover,.sidebarblock>.content>.title>a.link:hover,h4>a.link:hover,h5>a.link:hover,h6>a.link:hover{color:#a53221}
+.audioblock,.imageblock,.literalblock,.listingblock,.stemblock,.videoblock{margin-bottom:1.25em}
+.admonitionblock td.content>.title,.audioblock>.title,.exampleblock>.title,.imageblock>.title,.listingblock>.title,.literalblock>.title,.stemblock>.title,.openblock>.title,.paragraph>.title,.quoteblock>.title,table.tableblock>.title,.verseblock>.title,.videoblock>.title,.dlist>.title,.olist>.title,.ulist>.title,.qlist>.title,.hdlist>.title{text-rendering:optimizeLegibility;text-align:left;font-family:"Noto Serif","DejaVu Serif",serif;font-size:1rem;font-style:italic}
+table.tableblock>caption.title{white-space:nowrap;overflow:visible;max-width:0}
+.paragraph.lead>p,#preamble>.sectionbody>.paragraph:first-of-type p{color:rgba(0,0,0,.85)}
+table.tableblock #preamble>.sectionbody>.paragraph:first-of-type p{font-size:inherit}
+.admonitionblock>table{border-collapse:separate;border:0;background:none;width:100%}
+.admonitionblock>table td.icon{text-align:center;width:80px}
+.admonitionblock>table td.icon img{max-width:none}
+.admonitionblock>table td.icon .title{font-weight:bold;font-family:"Open Sans","DejaVu Sans",sans-serif;text-transform:uppercase}
+.admonitionblock>table td.content{padding-left:1.125em;padding-right:1.25em;border-left:1px solid #ddddd8;color:rgba(0,0,0,.6)}
+.admonitionblock>table td.content>:last-child>:last-child{margin-bottom:0}
+.exampleblock>.content{border-style:solid;border-width:1px;border-color:#e6e6e6;margin-bottom:1.25em;padding:1.25em;background:#fff;-webkit-border-radius:4px;border-radius:4px}
+.exampleblock>.content>:first-child{margin-top:0}
+.exampleblock>.content>:last-child{margin-bottom:0}
+.sidebarblock{border-style:solid;border-width:1px;border-color:#e0e0dc;margin-bottom:1.25em;padding:1.25em;background:#f8f8f7;-webkit-border-radius:4px;border-radius:4px}
+.sidebarblock>:first-child{margin-top:0}
+.sidebarblock>:last-child{margin-bottom:0}
+.sidebarblock>.content>.title{color:#7a2518;margin-top:0;text-align:center}
+.exampleblock>.content>:last-child>:last-child,.exampleblock>.content .olist>ol>li:last-child>:last-child,.exampleblock>.content .ulist>ul>li:last-child>:last-child,.exampleblock>.content .qlist>ol>li:last-child>:last-child,.sidebarblock>.content>:last-child>:last-child,.sidebarblock>.content .olist>ol>li:last-child>:last-child,.sidebarblock>.content .ulist>ul>li:last-child>:last-child,.sidebarblock>.content .qlist>ol>li:last-child>:last-child{margin-bottom:0}
+.literalblock pre,.listingblock pre:not(.highlight),.listingblock pre[class="highlight"],.listingblock pre[class^="highlight "],.listingblock pre.CodeRay,.listingblock pre.prettyprint{background:#f7f7f8}
+.sidebarblock .literalblock pre,.sidebarblock .listingblock pre:not(.highlight),.sidebarblock .listingblock pre[class="highlight"],.sidebarblock .listingblock pre[class^="highlight "],.sidebarblock .listingblock pre.CodeRay,.sidebarblock .listingblock pre.prettyprint{background:#f2f1f1}
+.literalblock pre,.literalblock pre[class],.listingblock pre,.listingblock pre[class]{-webkit-border-radius:4px;border-radius:4px;word-wrap:break-word;padding:1em;font-size:.8125em}
+.literalblock pre.nowrap,.literalblock pre[class].nowrap,.listingblock pre.nowrap,.listingblock pre[class].nowrap{overflow-x:auto;white-space:pre;word-wrap:normal}
+@media only screen and (min-width:768px){.literalblock pre,.literalblock pre[class],.listingblock pre,.listingblock pre[class]{font-size:.90625em}}
+@media only screen and (min-width:1280px){.literalblock pre,.literalblock pre[class],.listingblock pre,.listingblock pre[class]{font-size:1em}}
+.literalblock.output pre{color:#f7f7f8;background-color:rgba(0,0,0,.9)}
+.listingblock pre.highlightjs{padding:0}
+.listingblock pre.highlightjs>code{padding:1em;-webkit-border-radius:4px;border-radius:4px}
+.listingblock pre.prettyprint{border-width:0}
+.listingblock>.content{position:relative}
+.listingblock code[data-lang]:before{display:none;content:attr(data-lang);position:absolute;font-size:.75em;top:.425rem;right:.5rem;line-height:1;text-transform:uppercase;color:#999}
+.listingblock:hover code[data-lang]:before{display:block}
+.listingblock.terminal pre .command:before{content:attr(data-prompt);padding-right:.5em;color:#999}
+.listingblock.terminal pre .command:not([data-prompt]):before{content:"$"}
+table.pyhltable{border-collapse:separate;border:0;margin-bottom:0;background:none}
+table.pyhltable td{vertical-align:top;padding-top:0;padding-bottom:0;line-height:1.45}
+table.pyhltable td.code{padding-left:.75em;padding-right:0}
+pre.pygments .lineno,table.pyhltable td:not(.code){color:#999;padding-left:0;padding-right:.5em;border-right:1px solid #ddddd8}
+pre.pygments .lineno{display:inline-block;margin-right:.25em}
+table.pyhltable .linenodiv{background:none!important;padding-right:0!important}
+.quoteblock{margin:0 1em 1.25em 1.5em;display:table}
+.quoteblock>.title{margin-left:-1.5em;margin-bottom:.75em}
+.quoteblock blockquote,.quoteblock blockquote p{color:rgba(0,0,0,.85);font-size:1.15rem;line-height:1.75;word-spacing:.1em;letter-spacing:0;font-style:italic;text-align:justify}
+.quoteblock blockquote{margin:0;padding:0;border:0}
+.quoteblock blockquote:before{content:"\201c";float:left;font-size:2.75em;font-weight:bold;line-height:.6em;margin-left:-.6em;color:#7a2518;text-shadow:0 1px 2px rgba(0,0,0,.1)}
+.quoteblock blockquote>.paragraph:last-child p{margin-bottom:0}
+.quoteblock .attribution{margin-top:.5em;margin-right:.5ex;text-align:right}
+.quoteblock .quoteblock{margin-left:0;margin-right:0;padding:.5em 0;border-left:3px solid rgba(0,0,0,.6)}
+.quoteblock .quoteblock blockquote{padding:0 0 0 .75em}
+.quoteblock .quoteblock blockquote:before{display:none}
+.verseblock{margin:0 1em 1.25em 1em}
+.verseblock pre{font-family:"Open Sans","DejaVu Sans",sans;font-size:1.15rem;color:rgba(0,0,0,.85);font-weight:300;text-rendering:optimizeLegibility}
+.verseblock pre strong{font-weight:400}
+.verseblock .attribution{margin-top:1.25rem;margin-left:.5ex}
+.quoteblock .attribution,.verseblock .attribution{font-size:.9375em;line-height:1.45;font-style:italic}
+.quoteblock .attribution br,.verseblock .attribution br{display:none}
+.quoteblock .attribution cite,.verseblock .attribution cite{display:block;letter-spacing:-.025em;color:rgba(0,0,0,.6)}
+.quoteblock.abstract{margin:0 0 1.25em 0;display:block}
+.quoteblock.abstract blockquote,.quoteblock.abstract blockquote p{text-align:left;word-spacing:0}
+.quoteblock.abstract blockquote:before,.quoteblock.abstract blockquote p:first-of-type:before{display:none}
+table.tableblock{max-width:100%;border-collapse:separate}
+table.tableblock td>.paragraph:last-child p>p:last-child,table.tableblock th>p:last-child,table.tableblock td>p:last-child{margin-bottom:0}
+table.tableblock,th.tableblock,td.tableblock{border:0 solid #dedede}
+table.grid-all th.tableblock,table.grid-all td.tableblock{border-width:0 1px 1px 0}
+table.grid-all tfoot>tr>th.tableblock,table.grid-all tfoot>tr>td.tableblock{border-width:1px 1px 0 0}
+table.grid-cols th.tableblock,table.grid-cols td.tableblock{border-width:0 1px 0 0}
+table.grid-all *>tr>.tableblock:last-child,table.grid-cols *>tr>.tableblock:last-child{border-right-width:0}
+table.grid-rows th.tableblock,table.grid-rows td.tableblock{border-width:0 0 1px 0}
+table.grid-all tbody>tr:last-child>th.tableblock,table.grid-all tbody>tr:last-child>td.tableblock,table.grid-all thead:last-child>tr>th.tableblock,table.grid-rows tbody>tr:last-child>th.tableblock,table.grid-rows tbody>tr:last-child>td.tableblock,table.grid-rows thead:last-child>tr>th.tableblock{border-bottom-width:0}
+table.grid-rows tfoot>tr>th.tableblock,table.grid-rows tfoot>tr>td.tableblock{border-width:1px 0 0 0}
+table.frame-all{border-width:1px}
+table.frame-sides{border-width:0 1px}
+table.frame-topbot{border-width:1px 0}
+th.halign-left,td.halign-left{text-align:left}
+th.halign-right,td.halign-right{text-align:right}
+th.halign-center,td.halign-center{text-align:center}
+th.valign-top,td.valign-top{vertical-align:top}
+th.valign-bottom,td.valign-bottom{vertical-align:bottom}
+th.valign-middle,td.valign-middle{vertical-align:middle}
+table thead th,table tfoot th{font-weight:bold}
+tbody tr th{display:table-cell;line-height:1.6;background:#f7f8f7}
+tbody tr th,tbody tr th p,tfoot tr th,tfoot tr th p{color:rgba(0,0,0,.8);font-weight:bold}
+p.tableblock>code:only-child{background:none;padding:0}
+p.tableblock{font-size:1em}
+td>div.verse{white-space:pre}
+ol{margin-left:1.75em}
+ul li ol{margin-left:1.5em}
+dl dd{margin-left:1.125em}
+dl dd:last-child,dl dd:last-child>:last-child{margin-bottom:0}
+ol>li p,ul>li p,ul dd,ol dd,.olist .olist,.ulist .ulist,.ulist .olist,.olist .ulist{margin-bottom:.625em}
+ul.unstyled,ol.unnumbered,ul.checklist,ul.none{list-style-type:none}
+ul.unstyled,ol.unnumbered,ul.checklist{margin-left:.625em}
+ul.checklist li>p:first-child>.fa-square-o:first-child,ul.checklist li>p:first-child>.fa-check-square-o:first-child{width:1em;font-size:.85em}
+ul.checklist li>p:first-child>input[type="checkbox"]:first-child{width:1em;position:relative;top:1px}
+ul.inline{margin:0 auto .625em auto;margin-left:-1.375em;margin-right:0;padding:0;list-style:none;overflow:hidden}
+ul.inline>li{list-style:none;float:left;margin-left:1.375em;display:block}
+ul.inline>li>*{display:block}
+.unstyled dl dt{font-weight:400;font-style:normal}
+ol.arabic{list-style-type:decimal}
+ol.decimal{list-style-type:decimal-leading-zero}
+ol.loweralpha{list-style-type:lower-alpha}
+ol.upperalpha{list-style-type:upper-alpha}
+ol.lowerroman{list-style-type:lower-roman}
+ol.upperroman{list-style-type:upper-roman}
+ol.lowergreek{list-style-type:lower-greek}
+.hdlist>table,.colist>table{border:0;background:none}
+.hdlist>table>tbody>tr,.colist>table>tbody>tr{background:none}
+td.hdlist1,td.hdlist2{vertical-align:top;padding:0 .625em}
+td.hdlist1{font-weight:bold;padding-bottom:1.25em}
+.literalblock+.colist,.listingblock+.colist{margin-top:-.5em}
+.colist>table tr>td:first-of-type{padding:0 .75em;line-height:1}
+.colist>table tr>td:last-of-type{padding:.25em 0}
+.thumb,.th{line-height:0;display:inline-block;border:solid 4px #fff;-webkit-box-shadow:0 0 0 1px #ddd;box-shadow:0 0 0 1px #ddd}
+.imageblock.left,.imageblock[style*="float: left"]{margin:.25em .625em 1.25em 0}
+.imageblock.right,.imageblock[style*="float: right"]{margin:.25em 0 1.25em .625em}
+.imageblock>.title{margin-bottom:0}
+.imageblock.thumb,.imageblock.th{border-width:6px}
+.imageblock.thumb>.title,.imageblock.th>.title{padding:0 .125em}
+.image.left,.image.right{margin-top:.25em;margin-bottom:.25em;display:inline-block;line-height:0}
+.image.left{margin-right:.625em}
+.image.right{margin-left:.625em}
+a.image{text-decoration:none;display:inline-block}
+a.image object{pointer-events:none}
+sup.footnote,sup.footnoteref{font-size:.875em;position:static;vertical-align:super}
+sup.footnote a,sup.footnoteref a{text-decoration:none}
+sup.footnote a:active,sup.footnoteref a:active{text-decoration:underline}
+#footnotes{padding-top:.75em;padding-bottom:.75em;margin-bottom:.625em}
+#footnotes hr{width:20%;min-width:6.25em;margin:-.25em 0 .75em 0;border-width:1px 0 0 0}
+#footnotes .footnote{padding:0 .375em 0 .225em;line-height:1.3334;font-size:.875em;margin-left:1.2em;text-indent:-1.05em;margin-bottom:.2em}
+#footnotes .footnote a:first-of-type{font-weight:bold;text-decoration:none}
+#footnotes .footnote:last-of-type{margin-bottom:0}
+#content #footnotes{margin-top:-.625em;margin-bottom:0;padding:.75em 0}
+.gist .file-data>table{border:0;background:#fff;width:100%;margin-bottom:0}
+.gist .file-data>table td.line-data{width:99%}
+div.unbreakable{page-break-inside:avoid}
+.big{font-size:larger}
+.small{font-size:smaller}
+.underline{text-decoration:underline}
+.overline{text-decoration:overline}
+.line-through{text-decoration:line-through}
+.aqua{color:#00bfbf}
+.aqua-background{background-color:#00fafa}
+.black{color:#000}
+.black-background{background-color:#000}
+.blue{color:#0000bf}
+.blue-background{background-color:#0000fa}
+.fuchsia{color:#bf00bf}
+.fuchsia-background{background-color:#fa00fa}
+.gray{color:#606060}
+.gray-background{background-color:#7d7d7d}
+.green{color:#006000}
+.green-background{background-color:#007d00}
+.lime{color:#00bf00}
+.lime-background{background-color:#00fa00}
+.maroon{color:#600000}
+.maroon-background{background-color:#7d0000}
+.navy{color:#000060}
+.navy-background{background-color:#00007d}
+.olive{color:#606000}
+.olive-background{background-color:#7d7d00}
+.purple{color:#600060}
+.purple-background{background-color:#7d007d}
+.red{color:#bf0000}
+.red-background{background-color:#fa0000}
+.silver{color:#909090}
+.silver-background{background-color:#bcbcbc}
+.teal{color:#006060}
+.teal-background{background-color:#007d7d}
+.white{color:#bfbfbf}
+.white-background{background-color:#fafafa}
+.yellow{color:#bfbf00}
+.yellow-background{background-color:#fafa00}
+span.icon>.fa{cursor:default}
+.admonitionblock td.icon [class^="fa icon-"]{font-size:2.5em;text-shadow:1px 1px 2px rgba(0,0,0,.5);cursor:default}
+.admonitionblock td.icon .icon-note:before{content:"\f05a";color:#19407c}
+.admonitionblock td.icon .icon-tip:before{content:"\f0eb";text-shadow:1px 1px 2px rgba(155,155,0,.8);color:#111}
+.admonitionblock td.icon .icon-warning:before{content:"\f071";color:#bf6900}
+.admonitionblock td.icon .icon-caution:before{content:"\f06d";color:#bf3400}
+.admonitionblock td.icon .icon-important:before{content:"\f06a";color:#bf0000}
+.conum[data-value]{display:inline-block;color:#fff!important;background-color:rgba(0,0,0,.8);-webkit-border-radius:100px;border-radius:100px;text-align:center;font-size:.75em;width:1.67em;height:1.67em;line-height:1.67em;font-family:"Open Sans","DejaVu Sans",sans-serif;font-style:normal;font-weight:bold}
+.conum[data-value] *{color:#fff!important}
+.conum[data-value]+b{display:none}
+.conum[data-value]:after{content:attr(data-value)}
+pre .conum[data-value]{position:relative;top:-.125em}
+b.conum *{color:inherit!important}
+.conum:not([data-value]):empty{display:none}
+dt,th.tableblock,td.content,div.footnote{text-rendering:optimizeLegibility}
+h1,h2,p,td.content,span.alt{letter-spacing:-.01em}
+p strong,td.content strong,div.footnote strong{letter-spacing:-.005em}
+p,blockquote,dt,td.content,span.alt{font-size:1.0625rem}
+p{margin-bottom:1.25rem}
+.sidebarblock p,.sidebarblock dt,.sidebarblock td.content,p.tableblock{font-size:1em}
+.exampleblock>.content{background-color:#fffef7;border-color:#e0e0dc;-webkit-box-shadow:0 1px 4px #e0e0dc;box-shadow:0 1px 4px #e0e0dc}
+.print-only{display:none!important}
+@media print{@page{margin:1.25cm .75cm}
+*{-webkit-box-shadow:none!important;box-shadow:none!important;text-shadow:none!important}
+a{color:inherit!important;text-decoration:underline!important}
+a.bare,a[href^="#"],a[href^="mailto:"]{text-decoration:none!important}
+a[href^="http:"]:not(.bare):after,a[href^="https:"]:not(.bare):after{content:"(" attr(href) ")";display:inline-block;font-size:.875em;padding-left:.25em}
+abbr[title]:after{content:" (" attr(title) ")"}
+pre,blockquote,tr,img,object,svg{page-break-inside:avoid}
+thead{display:table-header-group}
+svg{max-width:100%}
+p,blockquote,dt,td.content{font-size:1em;orphans:3;widows:3}
+h2,h3,#toctitle,.sidebarblock>.content>.title{page-break-after:avoid}
+#toc,.sidebarblock,.exampleblock>.content{background:none!important}
+#toc{border-bottom:1px solid #ddddd8!important;padding-bottom:0!important}
+.sect1{padding-bottom:0!important}
+.sect1+.sect1{border:0!important}
+#header>h1:first-child{margin-top:1.25rem}
+body.book #header{text-align:center}
+body.book #header>h1:first-child{border:0!important;margin:2.5em 0 1em 0}
+body.book #header .details{border:0!important;display:block;padding:0!important}
+body.book #header .details span:first-child{margin-left:0!important}
+body.book #header .details br{display:block}
+body.book #header .details br+span:before{content:none!important}
+body.book #toc{border:0!important;text-align:left!important;padding:0!important;margin:0!important}
+body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-break-before:always}
+.listingblock code[data-lang]:before{display:block}
+#footer{background:none!important;padding:0 .9375em}
+#footer-text{color:rgba(0,0,0,.6)!important;font-size:.9em}
+.hide-on-print{display:none!important}
+.print-only{display:block!important}
+.hide-for-print{display:none!important}
+.show-for-print{display:inherit!important}}
+</style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+<style>
+.listingblock .pygments .hll { background-color: #ffffcc }
+.listingblock .pygments, .listingblock .pygments code { background: #f8f8f8; }
+.listingblock .pygments .tok-c { color: #408080; font-style: italic } /* Comment */
+.listingblock .pygments .tok-err { border: 1px solid #FF0000 } /* Error */
+.listingblock .pygments .tok-k { color: #008000; font-weight: bold } /* Keyword */
+.listingblock .pygments .tok-o { color: #666666 } /* Operator */
+.listingblock .pygments .tok-ch { color: #408080; font-style: italic } /* Comment.Hashbang */
+.listingblock .pygments .tok-cm { color: #408080; font-style: italic } /* Comment.Multiline */
+.listingblock .pygments .tok-cp { color: #BC7A00 } /* Comment.Preproc */
+.listingblock .pygments .tok-cpf { color: #408080; font-style: italic } /* Comment.PreprocFile */
+.listingblock .pygments .tok-c1 { color: #408080; font-style: italic } /* Comment.Single */
+.listingblock .pygments .tok-cs { color: #408080; font-style: italic } /* Comment.Special */
+.listingblock .pygments .tok-gd { color: #A00000 } /* Generic.Deleted */
+.listingblock .pygments .tok-ge { font-style: italic } /* Generic.Emph */
+.listingblock .pygments .tok-gr { color: #FF0000 } /* Generic.Error */
+.listingblock .pygments .tok-gh { color: #000080; font-weight: bold } /* Generic.Heading */
+.listingblock .pygments .tok-gi { color: #00A000 } /* Generic.Inserted */
+.listingblock .pygments .tok-go { color: #888888 } /* Generic.Output */
+.listingblock .pygments .tok-gp { color: #000080; font-weight: bold } /* Generic.Prompt */
+.listingblock .pygments .tok-gs { font-weight: bold } /* Generic.Strong */
+.listingblock .pygments .tok-gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+.listingblock .pygments .tok-gt { color: #0044DD } /* Generic.Traceback */
+.listingblock .pygments .tok-kc { color: #008000; font-weight: bold } /* Keyword.Constant */
+.listingblock .pygments .tok-kd { color: #008000; font-weight: bold } /* Keyword.Declaration */
+.listingblock .pygments .tok-kn { color: #008000; font-weight: bold } /* Keyword.Namespace */
+.listingblock .pygments .tok-kp { color: #008000 } /* Keyword.Pseudo */
+.listingblock .pygments .tok-kr { color: #008000; font-weight: bold } /* Keyword.Reserved */
+.listingblock .pygments .tok-kt { color: #B00040 } /* Keyword.Type */
+.listingblock .pygments .tok-m { color: #666666 } /* Literal.Number */
+.listingblock .pygments .tok-s { color: #BA2121 } /* Literal.String */
+.listingblock .pygments .tok-na { color: #7D9029 } /* Name.Attribute */
+.listingblock .pygments .tok-nb { color: #008000 } /* Name.Builtin */
+.listingblock .pygments .tok-nc { color: #0000FF; font-weight: bold } /* Name.Class */
+.listingblock .pygments .tok-no { color: #880000 } /* Name.Constant */
+.listingblock .pygments .tok-nd { color: #AA22FF } /* Name.Decorator */
+.listingblock .pygments .tok-ni { color: #999999; font-weight: bold } /* Name.Entity */
+.listingblock .pygments .tok-ne { color: #D2413A; font-weight: bold } /* Name.Exception */
+.listingblock .pygments .tok-nf { color: #0000FF } /* Name.Function */
+.listingblock .pygments .tok-nl { color: #A0A000 } /* Name.Label */
+.listingblock .pygments .tok-nn { color: #0000FF; font-weight: bold } /* Name.Namespace */
+.listingblock .pygments .tok-nt { color: #008000; font-weight: bold } /* Name.Tag */
+.listingblock .pygments .tok-nv { color: #19177C } /* Name.Variable */
+.listingblock .pygments .tok-ow { color: #AA22FF; font-weight: bold } /* Operator.Word */
+.listingblock .pygments .tok-w { color: #bbbbbb } /* Text.Whitespace */
+.listingblock .pygments .tok-mb { color: #666666 } /* Literal.Number.Bin */
+.listingblock .pygments .tok-mf { color: #666666 } /* Literal.Number.Float */
+.listingblock .pygments .tok-mh { color: #666666 } /* Literal.Number.Hex */
+.listingblock .pygments .tok-mi { color: #666666 } /* Literal.Number.Integer */
+.listingblock .pygments .tok-mo { color: #666666 } /* Literal.Number.Oct */
+.listingblock .pygments .tok-sa { color: #BA2121 } /* Literal.String.Affix */
+.listingblock .pygments .tok-sb { color: #BA2121 } /* Literal.String.Backtick */
+.listingblock .pygments .tok-sc { color: #BA2121 } /* Literal.String.Char */
+.listingblock .pygments .tok-dl { color: #BA2121 } /* Literal.String.Delimiter */
+.listingblock .pygments .tok-sd { color: #BA2121; font-style: italic } /* Literal.String.Doc */
+.listingblock .pygments .tok-s2 { color: #BA2121 } /* Literal.String.Double */
+.listingblock .pygments .tok-se { color: #BB6622; font-weight: bold } /* Literal.String.Escape */
+.listingblock .pygments .tok-sh { color: #BA2121 } /* Literal.String.Heredoc */
+.listingblock .pygments .tok-si { color: #BB6688; font-weight: bold } /* Literal.String.Interpol */
+.listingblock .pygments .tok-sx { color: #008000 } /* Literal.String.Other */
+.listingblock .pygments .tok-sr { color: #BB6688 } /* Literal.String.Regex */
+.listingblock .pygments .tok-s1 { color: #BA2121 } /* Literal.String.Single */
+.listingblock .pygments .tok-ss { color: #19177C } /* Literal.String.Symbol */
+.listingblock .pygments .tok-bp { color: #008000 } /* Name.Builtin.Pseudo */
+.listingblock .pygments .tok-fm { color: #0000FF } /* Name.Function.Magic */
+.listingblock .pygments .tok-vc { color: #19177C } /* Name.Variable.Class */
+.listingblock .pygments .tok-vg { color: #19177C } /* Name.Variable.Global */
+.listingblock .pygments .tok-vi { color: #19177C } /* Name.Variable.Instance */
+.listingblock .pygments .tok-vm { color: #19177C } /* Name.Variable.Magic */
+.listingblock .pygments .tok-il { color: #666666 } /* Literal.Number.Integer.Long */
+</style>
+</head>
+<body class="article toc2 toc-left">
+<div id="header">
+<h1>jboss-domain-mode-scripts: Scripts para a automação de tarefas no JBoss EAP (em modo domain)</h1>
+<div class="details">
+<span id="author" class="author">Paulo Jerônimo</span><br>
+<span id="email" class="email"><a href="mailto:pj@paulojeronimo.com">pj@paulojeronimo.com</a></span><br>
+<span id="revnumber">version 1.0,</span>
+<span id="revdate">2017-08-08 19:02:43 -03</span>
+</div>
+<div id="toc" class="toc2">
+<div id="toctitle">Conteúdo</div>
+<ul class="sectlevel1">
+<li><a href="#sobre">Sobre</a>
+<ul class="sectlevel2">
+<li><a href="#sobre-o-projeto">O projeto</a></li>
+<li><a href="#sobre-esta-documentacao">Esta documentação</a>
+<ul class="sectlevel3">
+<li><a href="#sobre-esta-documentacao-objetivo">Objetivo</a></li>
+<li><a href="#_formato">Formato</a></li>
+</ul>
+</li>
+<li><a href="#paulojeronimo">Paulo Jerônimo</a></li>
+</ul>
+</li>
+<li><a href="#licenca">Licença</a></li>
+<li><a href="#motivacao">1. Motivação</a></li>
+<li><a href="#pre-requisitos">2. Pré-requisitos</a></li>
+<li><a href="#instalacao-completa">3. Instalação completa (Pacotes, JDK, JBoss)</a></li>
+<li><a href="#instalacao-jboss">4. Instalação apenas do JBoss</a></li>
+<li><a href="#demonstracoes-de-funcionamento">5. Demonstrações de funcionamento</a>
+<ul class="sectlevel2">
+<li><a href="#demo-pre-requisitos">5.1. Pré-requisitos</a>
+<ul class="sectlevel3">
+<li><a href="#demo-instalacao-de-ferramentas">5.1.1. Instalação de ferramentas</a></li>
+<li><a href="#demo-geracao-do-pacote-de-instalacao">5.1.2. Geração do pacote de instalação (jboss-installer.tar.gz)</a></li>
+<li><a href="#demo-configuracao-do-arquivo-hosts">5.1.3. Configuração do arquivo /etc/hosts (na máquina HOST)</a></li>
+</ul>
+</li>
+<li><a href="#demo-1">5.2. Demo 1: instalação de um DC e um HC</a>
+<ul class="sectlevel3">
+<li><a href="#demo-1-geracao-do-pacote-de-instalacao">5.2.1. Geração do pacote de instalação (jboss-installer.tar.gz)</a></li>
+<li><a href="#demo-1-criacao-inicializacao-dos-servidores">5.2.2. Criação/inicialização dos servidores</a></li>
+<li><a href="#demo-1-instalacao-dc">5.2.3. Instalação e inicialização do DC</a></li>
+<li><a href="#demo-1-instalacao-hc">5.2.4. Instalação e inicialização do HC</a></li>
+<li><a href="#_verificação_de_funcionamento_do_ambiente">5.2.5. Verificação de funcionamento do ambiente</a></li>
+</ul>
+</li>
+<li><a href="#demo-2">5.3. Demo 2: adição de um segundo HC e dois servers</a>
+<ul class="sectlevel3">
+<li><a href="#_adição_do_segundo_hc_hc2_utilizando_patch_e_diff">5.3.1. Adição do segundo HC (hc2) - (utilizando patch e diff)</a></li>
+<li><a href="#_criação_de_arquivos_de_configuração">5.3.2. Criação de arquivos de configuração</a>
+<ul class="sectlevel4">
+<li><a href="#_scripts_config">scripts/config</a></li>
+<li><a href="#_configurations_jboss_eap_6_4_domain_configurations_domain_xml_patch">configurations/jboss-eap-6.4/domain/configurations/domain.xml.patch</a></li>
+<li><a href="#_configurations_jboss_eap_6_4_domain_configuration_host_slave_xml_no_backup_patch">configurations/jboss-eap-6.4/domain/configuration/host-slave.xml.no-backup.patch</a></li>
+<li><a href="#demo-2-tree-verificacao">Verificação</a></li>
+</ul>
+</li>
+<li><a href="#_geração_do_pacote_de_instalação_jboss_installer_tar_gz">5.3.3. Geração do pacote de instalação (jboss-installer.tar.gz)</a></li>
+<li><a href="#_finalização_do_jboss_em_dc1_e_hc1">5.3.4. Finalização do JBoss em dc1 e hc1</a></li>
+<li><a href="#demo-2-exercicio-1">5.3.5. Exercício 1: substituição do instalador, reinstalação e inicialização do DC (dc1)</a></li>
+<li><a href="#demo-2-exercicio-2">5.3.6. Exercício 2: reinstalação do hc1 e instalação do hc2</a></li>
+<li><a href="#_verificação_de_funcionamento_do_ambiente_2">5.3.7. Verificação de funcionamento do ambiente</a></li>
+</ul>
+</li>
+<li><a href="#demo-3">5.4. Demo 3: Instalação de um DC adicional (backup)</a>
+<ul class="sectlevel3">
+<li><a href="#o-que-e-um-dc-de-backup">5.4.1. O que é um DC de backup?</a></li>
+<li><a href="#_configuração">5.4.2. Configuração</a></li>
+<li><a href="#_geração_do_pacote_de_instalação_jboss_installer_tar_gz_2">5.4.3. Geração do pacote de instalação (jboss-installer.tar.gz)</a></li>
+<li><a href="#_inicialização_do_segundo_dc_dc2">5.4.4. Inicialização do segundo DC (dc2)</a></li>
+<li><a href="#_instalação_do_dc2">5.4.5. Instalação do dc2</a></li>
+<li><a href="#refs-dc-de-backup">5.4.6. Referências extras</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#scripts">6. Scripts</a>
+<ul class="sectlevel2">
+<li><a href="#jboss-installer-create">6.1. jboss-installer.create</a></li>
+<li><a href="#jboss-installer-install">6.2. jboss-installer.install</a></li>
+<li><a href="#configurar-hosts">6.3. demos/scripts/configurar-hosts</a></li>
+<li><a href="#common">6.4. scripts/common</a></li>
+<li><a href="#config-sample">6.5. scripts/config-sample</a></li>
+<li><a href="#functions">6.6. scripts/functions</a></li>
+<li><a href="#install">6.7. scripts/install</a></li>
+<li><a href="#jboss-add-user">6.8. scripts/jboss-add-user</a></li>
+<li><a href="#jboss-backup2master">6.9. scripts/jboss-backup2master</a></li>
+<li><a href="#jboss-backup2original">6.10. scripts/jboss-backup2original</a></li>
+<li><a href="#jboss-configure">6.11. scripts/jboss-configure</a></li>
+<li><a href="#jboss-copy-patches">6.12. scripts/jboss-copy-patches</a></li>
+<li><a href="#jboss-dependencies-install">6.13. scripts/jboss-dependencies-install</a></li>
+<li><a href="#jboss-extract">6.14. scripts/jboss-extract</a></li>
+<li><a href="#jboss-firewall-configure">6.15. scripts/jboss-firewall-configure</a></li>
+<li><a href="#jboss-fix-permissions">6.16. scripts/jboss-fix-permissions</a></li>
+<li><a href="#jboss-install">6.17. scripts/jboss-install</a></li>
+<li><a href="#jboss-jdk-install">6.18. scripts/jboss-jdk-install</a></li>
+<li><a href="#jboss-service-install">6.19. scripts/jboss-service-install</a></li>
+<li><a href="#jboss-start">6.20. scripts/jboss-start</a></li>
+<li><a href="#jboss-status">6.21. scripts/jboss-status</a></li>
+<li><a href="#jboss-stop">6.22. scripts/jboss-stop</a></li>
+<li><a href="#jboss-tailf">6.23. scripts/jboss-tailf</a></li>
+<li><a href="#jboss-uninstall">6.24. scripts/jboss-uninstall</a></li>
+<li><a href="#jboss-useradd">6.25. scripts/jboss-useradd</a></li>
+<li><a href="#jboss-userdel">6.26. scripts/jboss-userdel</a></li>
+</ul>
+</li>
+<li><a href="#solucoes-de-exercicios">7. Soluções de exercícios</a>
+<ul class="sectlevel2">
+<li><a href="#solucao-demo-2-exercicio-1">7.1. Demo 2, exercício 1</a></li>
+<li><a href="#solucao-demo-2-exercicio-2">7.2. Demo 2, exercício 2</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div id="content">
+<div class="sect1">
+<h2 id="sobre">Sobre</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="sobre-o-projeto">O projeto</h3>
+<div class="paragraph">
+<p>Este projeto, <strong>jboss-domain-mode-scripts</strong>, está disponível sob uma <a href="#licenca">licença MIT</a> no <a href="https://github.com">GitHub</a> (em <a href="https://github.com/paulojeronimo/jboss-domain-mode-scripts" class="bare">https://github.com/paulojeronimo/jboss-domain-mode-scripts</a>).
+É da autoria de <a href="#paulojeronimo">Paulo Jerônimo</a>.</p>
+</div>
+<div class="paragraph">
+<p>Seu intuito é ser utilizado para a <strong>instalação rápida de um ambiente <a href="https://www.redhat.com/en/technologies/jboss-middleware/application-platform">JBoss EAP</a> rodando em modo domain</strong>.</p>
+</div>
+<div class="paragraph">
+<p>Neste momento, o uso desses scripts é suportado na <a href="https://access.redhat.com/documentation/en/red-hat-jboss-enterprise-application-platform?version=6.4">versão 6.4</a> do JBoss EAP.
+Em breve, este projeto poderá ser extendido para a <a href="https://access.redhat.com/documentation/en/red-hat-jboss-enterprise-application-platform?version=7.0">versão 7.0</a>.
+Scripts similares a estes, também escritos por <a href="#paulojeronimo">Paulo Jerônimo</a>, já trazem o suporte a essa versão em outro projeto: <a href="https://github.com/paulojeronimo/jboss-scripts">jboss-scripts</a>.</p>
+</div>
+<div class="paragraph">
+<p>Diferente deste projeto, entretanto, o projeto <strong>jboss-scritps</strong> é voltado a utilização do JBoss EAP em ambiente de desenvolvimento, rodando em modo <code>standalone</code>.</p>
+</div>
+<div class="paragraph">
+<p>A manutenção deste projeto é feita através do desenvolvimento de scripts codificados em <a href="https://www.gnu.org/software/bash/">Bash</a> e/ou <a href="https://developer.jboss.org/wiki/CommandLineInterface">CLI</a>.</p>
+</div>
+<div class="paragraph">
+<p>O objetivo primário desses scripts é <strong>facilitar a construção de ambientes de execução do JBoss EAP</strong>, sejam eles de topologia simples ou complexa.
+Esses ambientes podem ser de desenvolvimento, homologação, produção ou qualquer outro.</p>
+</div>
+<div class="paragraph">
+<p><a href="#demonstracoes-de-funcionamento">Demonstrações de funcionamento</a> dos scripts são realizadas neste projeto.
+Essas demonstrações se iniciam na construção de um ambiente simples, composto por um único <strong>Domain Controller (DC)</strong> e um <strong>Host Controller (HC)</strong>) (<a href="#demo-1">Demo 1: instalação de um DC e um HC</a>).
+A seguir, conceitos de uso desses scripts são ampliados numa <a href="#demo-2">segunda demonstração</a>, onde um um novo HC é adicionado.
+Por fim, a última demonstração apresenta como pode ser realizada a <a href="#demo-3">instalação de um DC adicional, atuando como backup do primeiro</a>.</p>
+</div>
+<div class="paragraph">
+<p>Concluindo, o maior benefício no uso deste projeto pode ser verificado quando é necessária a <em>construção de um ambiente grande, complexo, que envolve o uso de dois DCs e muitos HCs</em>.</p>
+</div>
+<div style="page-break-after: always;"></div>
+</div>
+<div class="sect2">
+<h3 id="sobre-esta-documentacao">Esta documentação</h3>
+<div class="sect3">
+<h4 id="sobre-esta-documentacao-objetivo">Objetivo</h4>
+<div class="paragraph">
+<p>Esta documentação tem o objetivo de demonstrar o uso dos scripts do projeto.
+E, ela restringe-se a esse objetivo.
+Sendo assim, com relação ao público esperado na leitura deste documento, assume-se que:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Ele já tenha experiência no uso de comandos executados num shell <a href="https://www.gnu.org/software/bash/">Bash</a>, em nível intermediário.</p>
+</li>
+<li>
+<p>Ele já possua conhecimentos e experiência em <a href="https://www.redhat.com/en/technologies/jboss-middleware/application-platform">JBoss EAP</a>, particularmente em ambiente <a href="{uri-rhel}">RHEL</a>, em nível intermediário.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Para adquirir o conhecimento e a experiência necesssárias para um melhor entendimento deste documento, nos assuntos apontados acima, é recomendada a participação em <a href="https://www.redhat.com/pt-br/services/training">treinamentos oficiais da Red Hat</a> ou equivalentes.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_formato">Formato</h4>
+<div class="paragraph">
+<p>Este documento é produzido na forma de um tutorial. Nele executamos <a href="#demonstracoes-de-funcionamento">demonstrações que explicam o funcionamento dos scripts deste projeto</a>.
+Em algumas demonstrações, exercícios são propostos para fixar conteúdo já apresentado em momentos anteriores.
+As <a href="#solucoes-de-exercicios">soluções</a> para esses exercícios estão disponíveis ao final deste documento.</p>
+</div>
+<div class="paragraph">
+<p>Criada através da ferramenta <a href="http://asciidoctor.org">Asciidoctor</a> (muito utilizada em vários projetos da <a href="https://redhat.com">Red Hat</a>), esta documentação evolui da mesma maneira que o código deste projeto.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Ela também pode ser <a href="https://paulojeronimo.github.io/jboss-domain-mode-scripts/docs/pt-br/jboss-domain-mode-scripts.pdf">baixada e lida em formato PDF</a>.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Os fontes em desenvolvimento deste documento estão no mesmo <a href="https://github.com/paulojeronimo/jboss-domain-mode-scripts">repositório</a> que o projeto, no diretório <a href="../../docs/pt-br">docs/pt-br</a>.
+Dessa forma, eles também são tratados como código e podem ter sua evolução visualizada através do <a href="https://github.com">GitHub</a>.
+Assim como realizado no desenvolvimento de qualquer software gerenciado por esta ferramenta.</p>
+</div>
+<div style="page-break-after: always;"></div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="paulojeronimo">Paulo Jerônimo</h3>
+<div class="paragraph">
+<p><a href="http://paulojeronimo.com">Paulo Jerônimo</a> é desenvolvedor de software.
+Também é consultor, e instrutor de treinamentos oficiais, na <a href="https://redhat.com">Red Hat</a>.
+Em seu site, <a href="http://paulojeronimo.com">paulojeronimo.com</a>, podem ser encontradas mais informações sobre suas atividades atuais.</p>
+</div>
+<div class="paragraph">
+<p><a href="#paulojeronimo">Paulo Jerônimo</a> também gosta de escrever documentos.
+Mas, utilizando <a href="https://en.wikipedia.org/wiki/Lightweight_markup_language">linguagens de marcação leves</a>.
+Ele se recusa, <strong>veementemente</strong>, a editar textos com quaisquer ferramentas da classe "Office".
+Seu editor de textos preferido, tanto na edição de códigos em linguagens de programação, quanto em textos em geral, é o <a href="http://www.vim.org/">Vim</a>.
+Utilizando-se o Vim e o Asciidoctor podem ser enscritos documentos que vão de apresentações simples a grandes livros.
+Leia mais sobre isso no artigo <a href="https://paulojeronimo.github.io/asciidoc-e-asciidoctor/">"Asciidoc e Asciidoctor"</a> (também escrito por <a href="http://paulojeronimo.com">Paulo Jerônimo</a>).</p>
+</div>
+<div style="page-break-after: always;"></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="licenca">Licença</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Uma <a href="https://pt.wikipedia.org/wiki/Licen%C3%A7a_MIT">licença MIT</a> é aplicada a este projeto.
+Segue o seu conteúdo:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>The MIT License (MIT)
+
+Copyright (c) 2017 Paulo Jerônimo
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of
+this software and associated documentation files (the "Software"), to deal in
+the Software without restriction, including without limitation the rights to
+use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+the Software, and to permit persons to whom the Software is furnished to do so,
+subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</pre>
+</div>
+</div>
+<div style="page-break-after: always;"></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="motivacao">1. Motivação</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>A motivação principal para a construção deste projeto foi a necessidade de seu criador, <a href="#paulojeronimo">Paulo Jerônimo</a>, de não ficar se repetindo em tarefas de instalação de ambientes de execução do <a href="https://www.redhat.com/en/technologies/jboss-middleware/application-platform">JBoss EAP</a>, utilizando o sistema operacional Linux (<a href="{uri-rhel}">RHEL</a>).</p>
+</div>
+<div class="paragraph">
+<p>A tarefa de instalação/manutenção do JBoss EAP precisava ser simplificada de forma tal que fosse possível, através da parametrização de poucos scripts de configuração (idealmente um), ser realizada a montagem de um ambiente em qualquer topologia.</p>
+</div>
+<div class="paragraph">
+<p>Apesar de existir uma <a href="https://access.redhat.com/documentation/en-US/JBoss_Enterprise_Application_Platform/7.0/html/using_the_red_hat_jboss_enterprise_application_platform_docker_image/">imagem Docker que facilita a execução do JBoss EAP</a>, sua documentação descreve apenas como utilizá-la no modo <code>standalone</code>.
+Além disso, o uso dessa imagem Docker não é suportada pela Red Hat caso não exista uma subscrição.
+Havendo uma, porém, é necessário o uso da versão 7.0 (ou superior) do JBoss EAP.
+Finalmente, o seu ambiente de execução precisa ser um RHEL 7.2 ou superior.</p>
+</div>
+<div class="paragraph">
+<p>Sendo assim, mesmo atendendo as condições necessárias para a utilização do JBoss EAP no Docker, ainda seria necessário <a href="https://access.redhat.com/documentation/en-US/JBoss_Enterprise_Application_Platform/7.0/html/using_the_red_hat_jboss_enterprise_application_platform_docker_image//#extending-the-image">extender a imagem</a> para utilizá-la em modo domain.
+Portanto este projeto pode ser, também, uma base para a realização de um trabalho como esse.</p>
+</div>
+<div style="page-break-after: always;"></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="pre-requisitos">2. Pré-requisitos</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>A primeira versão deste projeto contém scripts que podem ser executados somente pelo usuário <code>root</code>.
+O ambiente deve ser Linux (RHEL e/ou CentOS).</p>
+</div>
+<div class="paragraph">
+<p>Uma cópia do instalador do <a href="http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html">Java Development Kit (JDK)</a> para Linux deve ser disponibizada no diretório <code>installers</code>.
+O binário de instalação do JBoss (e seus patches) também devem ser copiados para esse diretório.
+Para mais informações, leia o <code>installers/README.adoc</code>.</p>
+</div>
+<div class="paragraph">
+<p>Os arquivos que você deseja que sejam adicionados ao JBoss devem ser inseridos no diretório <code>configurations</code>.
+Esses arquivos incluem, por exemplo, binários de módulos (como drivers JDBC) e arquivos relativos a segurança (<code>*.pem</code>, <code>*.keystore</code>, etc).
+Também poderão ser incluídos neste diretório, patches que você deseja que sejam aplicados aos arquivos de configuração existentes no JBoss.
+Para mais informações, leia o <code>configurations/README.adoc</code>.</p>
+</div>
+<div class="paragraph">
+<p>No diretório <code>scripts</code>, copie o arquivo <a href="#config-sample">scripts/config-sample</a> para <code>config</code>.
+Em seguida, edite esse arquivo conforme tuas necessidades.</p>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+Se o arquivo <code>config</code> não for criado, o arquivo <a href="#config-sample">scripts/config-sample</a> será utilizado em seu lugar.
+</td>
+</tr>
+</table>
+</div>
+<div style="page-break-after: always;"></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="instalacao-completa">3. Instalação completa (Pacotes, JDK, JBoss)</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Essa forma de instalação, executada pelo script <a href="#install">scripts/install</a>, deve ser utilizada ao ser configurada uma nova máquina.
+Através dela, todos os pacotes necessários para o bom funcionamento do JBoss serão instalados.
+Além de pacotes necessários (por exemplo o JDK), pacotes opcionais podem ser instalados (exemplos: <code>tmux</code>, <code>lsof</code>, <code>vim</code>, etc).
+Verifique que pacotes que serão instalados editando o teu script de configuração (<code>config</code>).</p>
+</div>
+<div class="paragraph">
+<p>Forma de execução:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>./scripts/install</pre>
+</div>
+</div>
+<div style="page-break-after: always;"></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="instalacao-jboss">4. Instalação apenas do JBoss</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Essa forma de instalação deve ser utilizada apenas para a reinstalação do JBoss.
+Ela só deve ser executada, após a <a href="#instalacao-completa">instalação completa</a>, caso seja necessária a reinstalação do JBoss.
+A execução do script <a href="#jboss-install">scripts/jboss-install</a> verificará a existência do usuário que executará o JBoss e, caso necessário, fará sua criação.
+Esse script também fará a cópia do diretório pré-configurado do JBoss (<code>JBOSS_INSTALLER</code>) para a sua localização de execução.
+Finalmente, ele ajustará os parâmetros necessários para realizar a execução do JBoss (como DC ou HC).</p>
+</div>
+<div class="paragraph">
+<p>Forma de execução:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>./scripts/jboss-install</pre>
+</div>
+</div>
+<div style="page-break-after: always;"></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="demonstracoes-de-funcionamento">5. Demonstrações de funcionamento</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="demo-pre-requisitos">5.1. Pré-requisitos</h3>
+<div class="sect3">
+<h4 id="demo-instalacao-de-ferramentas">5.1.1. Instalação de ferramentas</h4>
+<div class="paragraph">
+<p>O teste dos scripts através das demonstrações a seguir exige a instalação de algumas ferramentas. São elas:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><a href="https://www.virtualbox.org">VirtualBox</a></p>
+</li>
+<li>
+<p><a href="https://www.vagrantup.com/">Vagrant</a></p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Façamos a instalação dessas ferramentas antes de prosseguir.
+O VirtualBox será utilizado para a criação e o gerenciamento de máquinas virtuais.
+O Vagrant, por sua vez, será utilizado para provisionamento dessas máquinas.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>O uso das ferramentas acima não é necessário caso já tenhamos acesso a máquinas (virtuais ou reais) que possam ser gerenciadas pelo usuário <code>root</code>.
+De fato, nesse caso, o uso dessas ferramentas é totalmente dispensável.</p>
+</li>
+<li>
+<p>Os scripts que serão executados possuem independência completa do uso dessas ferramentas.</p>
+</li>
+<li>
+<p>Nas demonstrações, apenas um provisionamento básico será realizado nas máquinas que serão criadas.
+Apesar de ser possível uma automação completa da instalação do JBoss através do provisionamento com o Vagrant, nas demonstrações a seguir, os passos que envolvem a instalação do JBoss serão realizados de maneira complemente manual.
+Dessa forma, espera-se que o leitor entenda o uso dos scripts e não como eles poderiam ser chamados através de um provisionamento automático pelo Vagrant.</p>
+</li>
+</ol>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="demo-geracao-do-pacote-de-instalacao">5.1.2. Geração do pacote de instalação (jboss-installer.tar.gz)</h4>
+<div class="paragraph">
+<p>Para cada construção de ambiente, um pacote (arquivo <code>jboss-installer.tar.gz</code>) precisará ser gerado.
+Esse pacote contém uma cópia de todos os arquivos necessários para a instalação do JBoss, em cada um dos servidores desse ambiente.</p>
+</div>
+<div class="paragraph">
+<p>A geração do pacote deverá ser realizada pelo script <a href="#jboss-installer-create">jboss-installer.create</a>.
+Esse script está disponível na raiz dos arquivos do projeto.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Veremos, em versões futuras dos scripts deste projeto, que esse pacote pode deixar de ser útil.</p>
+</li>
+<li>
+<p>De fato, nessas novas versões, poderemos utilizar, por exemplo, o <code>rsync</code> ou <code>git</code> (preferencialmente).
+Serão esses aplicativos que farão a distribuição dos arquivos necessários, para cada servidor.</p>
+</li>
+</ol>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="demo-configuracao-do-arquivo-hosts">5.1.3. Configuração do arquivo /etc/hosts (na máquina HOST)</h4>
+<div class="paragraph">
+<p>Como as demonstracões serão todas realizadas localmente, a partir de uma máquina HOST que executa máquinas virtuais, o arquivo <code>/etc/hosts</code> dessa máquina precisará ser configurado pelo script <a href="#configurar-hosts">demos/scripts/configurar-hosts</a>. Façamos isso, agora:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash">./demos/scripts/configurar-hosts</code></pre>
+</div>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+O comando acima deve ser executado na raiz dos arquivos do projeto.
+Da mesma forma, os próximos comandos, que serão realizados em demonstrações a partir do tópico seguinte, terão sempre a sua execução iniciada nesse diretório.
+Haverá um aviso quando essa não for a regra.
+</td>
+</tr>
+</table>
+</div>
+<div style="page-break-after: always;"></div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="demo-1">5.2. Demo 1: instalação de um DC e um HC</h3>
+<div class="paragraph">
+<p>Nesta demonstração executaremos os passos necessários para a instalação de um DC (<code>dc1</code>) e de um HC (<code>hc1</code>).
+Nenhuma instância jboss (<code>server</code>) será criada.
+Mas, ao final desta demonstração, o <code>hc1</code> estará pronto e preparado para ser gerenciado pelo <code>dc1</code>.</p>
+</div>
+<div class="sect3">
+<h4 id="demo-1-geracao-do-pacote-de-instalacao">5.2.1. Geração do pacote de instalação (jboss-installer.tar.gz)</h4>
+<div class="paragraph">
+<p>Nosso primeiro passo, <a href="#demo-geracao-do-pacote-de-instalacao">conforme explicado</a>, será a construção do pacote <code>jboss-installer.tar.gz</code>.
+Para gerá-lo, executemos:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash">./jboss-installer.create</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="demo-1-criacao-inicializacao-dos-servidores">5.2.2. Criação/inicialização dos servidores</h4>
+<div class="paragraph">
+<p>O Vagrant lerá o conteúdo de um arquivo <code>Vagrantfile</code> para criar e provisionar as duas máquinas desta demonstração.
+Dentro do diretório <code>demos</code>, vamos copiar o arquivo <code>1/Vagrantfile</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span class="tok-nb">cd</span> demos
+cp <span class="tok-m">1</span>/Vagrantfile .</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Esse é o conteúdo do arquivo <code>Vagrantfile</code> copiado nas linhas acima:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="ruby"><span class="tok-c1"># -*- mode: ruby -*-</span>
+<span class="tok-c1"># vim: set ft=ruby ts=2 sw=2 expandtab:</span>
+
+<span class="tok-n">required_plugins</span> <span class="tok-o">=</span> <span class="tok-sx">%w( vagrant-vbguest )</span>
+<span class="tok-n">required_plugins</span><span class="tok-o">.</span><span class="tok-n">each</span> <span class="tok-k">do</span> <span class="tok-o">|</span><span class="tok-n">plugin</span><span class="tok-o">|</span>
+  <span class="tok-nb">system</span> <span class="tok-s2">&quot;vagrant plugin install </span><span class="tok-si">#{</span><span class="tok-n">plugin</span><span class="tok-si">}</span><span class="tok-s2">&quot;</span> <span class="tok-k">unless</span> <span class="tok-no">Vagrant</span><span class="tok-o">.</span><span class="tok-n">has_plugin?</span> <span class="tok-n">plugin</span>
+<span class="tok-k">end</span>
+
+<span class="tok-no">Vagrant</span><span class="tok-o">.</span><span class="tok-n">configure</span><span class="tok-p">(</span><span class="tok-mi">2</span><span class="tok-p">)</span> <span class="tok-k">do</span> <span class="tok-o">|</span><span class="tok-n">config</span><span class="tok-o">|</span>
+  <span class="tok-no">ENV</span><span class="tok-o">[</span><span class="tok-s1">&#39;VAGRANT_DEFAULT_PROVIDER&#39;</span><span class="tok-o">]</span> <span class="tok-o">=</span> <span class="tok-s1">&#39;virtualbox&#39;</span>
+
+  <span class="tok-n">config</span><span class="tok-o">.</span><span class="tok-n">vm</span><span class="tok-o">.</span><span class="tok-n">box</span> <span class="tok-o">=</span> <span class="tok-s2">&quot;boxcutter/centos73&quot;</span>
+  <span class="tok-n">config</span><span class="tok-o">.</span><span class="tok-n">vbguest</span><span class="tok-o">.</span><span class="tok-n">auto_update</span> <span class="tok-o">=</span> <span class="tok-kp">false</span>
+
+  <span class="tok-n">config</span><span class="tok-o">.</span><span class="tok-n">vm</span><span class="tok-o">.</span><span class="tok-n">define</span> <span class="tok-s2">&quot;dc1&quot;</span> <span class="tok-k">do</span> <span class="tok-o">|</span><span class="tok-n">dc1</span><span class="tok-o">|</span>
+    <span class="tok-n">dc1</span><span class="tok-o">.</span><span class="tok-n">vm</span><span class="tok-o">.</span><span class="tok-n">hostname</span><span class="tok-o">=</span><span class="tok-s2">&quot;dc1&quot;</span>
+    <span class="tok-n">dc1</span><span class="tok-o">.</span><span class="tok-n">vm</span><span class="tok-o">.</span><span class="tok-n">network</span> <span class="tok-s2">&quot;private_network&quot;</span><span class="tok-p">,</span> <span class="tok-ss">ip</span><span class="tok-p">:</span> <span class="tok-s2">&quot;172.17.6.81&quot;</span>
+    <span class="tok-n">dc1</span><span class="tok-o">.</span><span class="tok-n">vm</span><span class="tok-o">.</span><span class="tok-n">provision</span> <span class="tok-s2">&quot;shell&quot;</span><span class="tok-p">,</span> <span class="tok-ss">path</span><span class="tok-p">:</span> <span class="tok-s2">&quot;scripts/instalar-vm&quot;</span><span class="tok-p">,</span> <span class="tok-ss">privileged</span><span class="tok-p">:</span> <span class="tok-kp">false</span>
+    <span class="tok-n">dc1</span><span class="tok-o">.</span><span class="tok-n">vm</span><span class="tok-o">.</span><span class="tok-n">provider</span> <span class="tok-s2">&quot;virtualbox&quot;</span> <span class="tok-k">do</span> <span class="tok-o">|</span><span class="tok-n">v</span><span class="tok-o">|</span>
+      <span class="tok-n">v</span><span class="tok-o">.</span><span class="tok-n">memory</span> <span class="tok-o">=</span> <span class="tok-mi">1024</span>
+    <span class="tok-k">end</span>
+  <span class="tok-k">end</span>
+
+  <span class="tok-n">config</span><span class="tok-o">.</span><span class="tok-n">vm</span><span class="tok-o">.</span><span class="tok-n">define</span> <span class="tok-s2">&quot;hc1&quot;</span> <span class="tok-k">do</span> <span class="tok-o">|</span><span class="tok-n">hc</span><span class="tok-o">|</span>
+    <span class="tok-n">hc</span><span class="tok-o">.</span><span class="tok-n">vm</span><span class="tok-o">.</span><span class="tok-n">hostname</span><span class="tok-o">=</span><span class="tok-s2">&quot;hc1&quot;</span>
+    <span class="tok-n">hc</span><span class="tok-o">.</span><span class="tok-n">vm</span><span class="tok-o">.</span><span class="tok-n">network</span> <span class="tok-s2">&quot;private_network&quot;</span><span class="tok-p">,</span> <span class="tok-ss">ip</span><span class="tok-p">:</span> <span class="tok-s2">&quot;172.17.6.82&quot;</span>
+    <span class="tok-n">hc</span><span class="tok-o">.</span><span class="tok-n">vm</span><span class="tok-o">.</span><span class="tok-n">provision</span> <span class="tok-s2">&quot;shell&quot;</span><span class="tok-p">,</span> <span class="tok-ss">path</span><span class="tok-p">:</span> <span class="tok-s2">&quot;scripts/instalar-vm&quot;</span><span class="tok-p">,</span> <span class="tok-ss">privileged</span><span class="tok-p">:</span> <span class="tok-kp">false</span>
+    <span class="tok-n">hc</span><span class="tok-o">.</span><span class="tok-n">vm</span><span class="tok-o">.</span><span class="tok-n">provider</span> <span class="tok-s2">&quot;virtualbox&quot;</span> <span class="tok-k">do</span> <span class="tok-o">|</span><span class="tok-n">v</span><span class="tok-o">|</span>
+      <span class="tok-n">v</span><span class="tok-o">.</span><span class="tok-n">memory</span> <span class="tok-o">=</span> <span class="tok-mi">2048</span>
+    <span class="tok-k">end</span>
+  <span class="tok-k">end</span>
+<span class="tok-k">end</span></code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+A linguagem utilizada para configurar um <code>Vagrantfile</code> é o <a href="https://www.ruby-lang.org/en/">Ruby</a>.
+Sendo assim, um conhecimento mínimo nessa linguagem é o suficiente para a compreensão dos arquivos de configuração do <a href="https://www.vagrantup.com/">Vagrant</a>.
+Superpoderes (<span class="icon"><i class="fa fa-money"></i></span>), entretanto, vão aparecendo conforme ampliamos o conhecimento (<span class="icon"><i class="fa fa-book"></i></span>) nesta linguagem!
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Agora vamos iniciar o Vagrant e aguardar que ele faça a criação dessas máquinas.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>vagrant up</pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Podemos ir tomar um café <span class="icon"><i class="fa fa-coffee"></i></span>! <span class="icon"><i class="fa fa-smile-o"></i></span>.
+Esse comando poderá demorar um pouquinho, dependendo da nossa velocidade de Internet.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="demo-1-instalacao-dc">5.2.3. Instalação e inicialização do DC</h4>
+<div class="paragraph">
+<p>Voltemos ao diretório anterior (raiz do projeto):</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span class="tok-nb">cd</span> ..</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Vamos copiar o conteúdo do pacote (<code>jboss-installer.tar.gz</code>) para o servidor.
+Realizaremos isso chamando o <a href="#jboss-installer-install">jboss-installer.install</a> da seguinte forma:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span class="tok-nv">SSH_PORT</span><span class="tok-o">=</span><span class="tok-m">2222</span> <span class="tok-nv">SERVER</span><span class="tok-o">=</span>localhost ./jboss-installer.install</code></pre>
+</div>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+Na execução do script acima será solicitada a senha do usuário <code>root</code> (da máquina <code>dc1</code>).
+Informe: <code>vagrant</code>.
+Por padrão, as <code>boxes</code> de base criadas com o <code>vagrant</code> utilizam essa senha.
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Normalmente, para acessar o shell da máquina <code>dc1</code>, utilizaríamos o comando <code>vagrant ssh dc1</code>.
+Entretanto, o que desejamos é executar comandos remotos com o usuário <code>root</code>.
+Aprofunde-se na leitura do <a href="#jboss-installer-install">jboss-installer.install</a>.
+Você entenderá que o papel desse script é, simplesmente, copiar e extrair o conteúdo de <code>jboss-installer.tar.gz</code> num local padronizado (pela variável <code>PREFIX</code>).
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Vamos instalar o JBoss:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash">ssh -p <span class="tok-m">2222</span> root@localhost /opt/rh/jboss-installer/scripts/install</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+A execução do comando acima demonstra como o <a href="#install">scripts/install</a> é executado.
+Esse script é responsável, <a href="#instalacao-completa">como já citado</a>, pela instalação completa do ambiente de execução do JBoss.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Façamos a inicialização do JBoss:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash">ssh -p <span class="tok-m">2222</span> root@localhost service jboss-as-domain start</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>O comando acima também poderia ser substituído pela execução do <a href="#jboss-start">scripts/jboss-start</a>.
+Este seria o comando equivalente:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash">ssh -p <span class="tok-m">2222</span> root@localhost /opt/rh/jboss-installers/scripts/jboss-start</code></pre>
+</div>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Vejamos o log do JBoss:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash">ssh -p <span class="tok-m">2222</span> root@localhost tail -f /var/log/jboss-as/console.log</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>O comando acima também poderia ser substituído pela execução do <a href="#jboss-tailf">scripts/jboss-tailf</a>.
+Este seria o comando equivalente:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash">ssh -p <span class="tok-m">2222</span> root@localhost /opt/rh/jboss-installers/scripts/jboss-tailf</code></pre>
+</div>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="demo-1-instalacao-hc">5.2.4. Instalação e inicialização do HC</h4>
+<div class="paragraph">
+<p>Vamos abrir um outro terminal (shell Bash) para, agora, fazer a instalação do JBoss no <code>hc1</code>.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Um bom utilitário para multiplexar terminais é o <a href="https://github.com/tmux/tmux">tmux</a>.
+Um material simples e rápido para aprender sua utilização é artigo <a href="https://robots.thoughtbot.com/a-tmux-crash-course">"A tmux Crash Course"</a>.</p>
+</li>
+<li>
+<p>Devemos nos lembrar que, ao abrir um novo terminal, precisaremos executar o próximo comando a partir da raiz do projeto.</p>
+</li>
+</ol>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Vamos fazer a cópia do conteúdo do pacote (<code>jboss-installer.tar.gz</code>) para esse servidor:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span class="tok-nv">SSH_PORT</span><span class="tok-o">=</span><span class="tok-m">2200</span> <span class="tok-nv">SERVER</span><span class="tok-o">=</span>localhost ./jboss-installer.install</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Observe que uma das diferenças entre a máquina <code>dc1</code> e a máquina <code>hc1</code> é o acesso.
+No caso, o <code>hc1</code> é acessado pela porta 2200 enquanto que a <code>dc1</code> é acessada pela porta 2222.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p><a id="minimizacao-de-dedadas"></a>Vamos utilizar uma "técnica" para a "Minimização de dedadas" (no teclado <span class="icon"><i class="fa fa-smile-o"></i></span>):</p>
+</div>
+<div id="demo-1-scripts-assign" class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span class="tok-nv">scripts</span><span class="tok-o">=</span>/opt/rh/jboss-installer/scripts
+<span class="tok-nb">alias</span> <span class="tok-nv">hc1ssh</span><span class="tok-o">=</span><span class="tok-s1">&#39;ssh -p 2200 root@localhost&#39;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Instalemos o JBoss:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash">hc1ssh <span class="tok-nv">$scripts</span>/install</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Façamos sua inicialização:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash">hc1ssh <span class="tok-nv">$scripts</span>/jboss-start</code></pre>
+</div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+Podemos verificar, no terminal aberto para a visualização do log do JBoss no <code>dc1</code>, que o <code>hc1</code> deverá ter sido registrado.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>E vejamos o seu log:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash">hc1ssh <span class="tok-nv">$scripts</span>/jboss-tailf</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_verificação_de_funcionamento_do_ambiente">5.2.5. Verificação de funcionamento do ambiente</h4>
+<div class="paragraph">
+<p>Vamos abrir o browser em <a href="http://dc1:9990" class="bare">http://dc1:9990</a>.
+Façamos o login com o usuário <code>admin</code> e a senha <code>jbAdmin@123!</code>.
+Precisamos acessar a aba <code>Domain</code> e verificar se o <code>hc1</code> está registrado na lista de hosts.
+Em caso positivo, concluímos com sucesso esta demonstração.</p>
+</div>
+<div style="page-break-after: always;"></div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="demo-2">5.3. Demo 2: adição de um segundo HC e dois servers</h3>
+<div class="paragraph">
+<p>Nesta demonstração, alteraremos o ambiente para a adição de um novo HC (<code>hc2</code>).
+Além disso, nesse ambiente, duas instâncias jboss serão iniciadas.
+Cada instância será executada em seu próprio HC.
+Essas instâncias terão o mesmo nome (<code>app-1</code>) e pertencerão ao mesmo <code>Server Group</code>: <code>app-1-group</code>.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Ainda exploraremos as limitações relativas a uma montagem de ambiente utilizando os scripts nesta versão.
+Contudo, já neste momento, é bom saber que somente através do uso desses scripts, e se não levássemos em conta a possibilidade de uso do <a href="https://access.redhat.com/documentation/en-US/JBoss_Enterprise_Application_Platform/6.4/html/Administration_and_Configuration_Guide/sect-The_Management_Console.html">console de gerenciamento do JBoss</a>, ou a sua capacidade de execução de <a href="https://developer.jboss.org/wiki/CommandLineInterface">scripts CLI</a>, estaríamos muito, muito limitados.</p>
+</div>
+<div class="paragraph">
+<p>O motivo disso é que, basicamente, os scripts dessa versão são excelentes para a instalação de infraestruturas estáticas (DCs e HCs).
+Porém, para lidar com a dinamicidade que envolve a criação de grupos de servidores e servidores, muitas vezes em direfentes <code>profiles</code>, esses scripts não conseguem oferecer o auxílio necessário.
+Precisaria ser inserido, nesses scripts, um mecanismo que nos possibilitasse executar scripts CLI de maneira mais direta e sistematica.
+Mais a frente, veremos como isso pode ser feito.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="sect3">
+<h4 id="_adição_do_segundo_hc_hc2_utilizando_patch_e_diff">5.3.1. Adição do segundo HC (hc2) - (utilizando patch e diff)</h4>
+<div class="paragraph">
+<p>Vamos utilizar o comando <a href="https://en.wikipedia.org/wiki/Patch_(Unix)">patch</a>.
+Ele recebe como entrada, um arquivo com a extensão <code>.patch</code>.
+Um arquivo <code>patch</code> mostra alterações entre duas versões de um mesmo arquivo.
+Ele informa que linhas devem ser adicionadas (<code>+</code>) ou removidas (<code>-</code>) no arquivo em que o <code>patch</code> será aplicado.</p>
+</div>
+<div class="paragraph">
+<p>Este é o conteúdo do arquivo <a href="../../demos/2/Vagrantfile.patch">Vagrantfile.patch</a>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="diff"><span class="tok-gd">--- 1/Vagrantfile	2017-07-25 10:39:30.000000000 -0300</span>
+<span class="tok-gi">+++ Vagrantfile	2017-07-26 08:11:11.000000000 -0300</span>
+<span class="tok-gu">@@ -21,12 +21,14 @@</span>
+     end
+   end
+
+<span class="tok-gd">-  config.vm.define &quot;hc1&quot; do |hc|</span>
+<span class="tok-gd">-    hc.vm.hostname=&quot;hc1&quot;</span>
+<span class="tok-gd">-    hc.vm.network &quot;private_network&quot;, ip: &quot;172.17.6.82&quot;</span>
+<span class="tok-gd">-    hc.vm.provision &quot;shell&quot;, path: &quot;scripts/instalar-vm&quot;, privileged: false</span>
+<span class="tok-gd">-    hc.vm.provider &quot;virtualbox&quot; do |v|</span>
+<span class="tok-gd">-      v.memory = 2048</span>
+<span class="tok-gi">+  (1..2).each do |i|</span>
+<span class="tok-gi">+    config.vm.define &quot;hc#{i}&quot; do |hc|</span>
+<span class="tok-gi">+      hc.vm.hostname=&quot;hc#{i}&quot;</span>
+<span class="tok-gi">+      hc.vm.network &quot;private_network&quot;, ip: &quot;172.17.6.8#{i+2}&quot;</span>
+<span class="tok-gi">+      hc.vm.provision &quot;shell&quot;, path: &quot;scripts/instalar-vm&quot;, privileged: false</span>
+<span class="tok-gi">+      hc.vm.provider &quot;virtualbox&quot; do |v|</span>
+<span class="tok-gi">+        v.memory = 2048</span>
+<span class="tok-gi">+      end</span>
+     end
+   end
+ end</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Fazendo sua leitura identificamos que as linhas de configuração do <code>hc1</code> foram removidas e, no lugar delas, um "loop" (com duas iterações) entrou.
+Esse "loop" (<code>(1..2).each |v|</code>) fará, então, a criação do <code>hc2</code>.</p>
+</div>
+<div class="paragraph">
+<p>Para aplicar esse <code>patch</code>, modificando o conteúdo do arquivo <code>Vagrantfile</code>, basta executar o comando abaixo:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span class="tok-nb">cd</span> demos
+patch Vagrantfile &lt; <span class="tok-m">2</span>/Vagrantfile.patch</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Em relação a <a href="#demo-1">demo 1</a>, o <code>Vagrantfile</code> que acabamos de modificar com o <code>patch</code> faz, conforme explicado, a adição do <code>hc2</code>.</p>
+</div>
+<div class="paragraph">
+<p>Por curiosidade, você poderia ver como gerar um <code>patch</code> através do comando comando <a href="https://en.wikipedia.org/wiki/Diff_utility">diff</a>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash">diff -uNr <span class="tok-m">1</span>/Vagrantfile Vagrantfile</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Em seguida, para termos certeza de que, realmente, o conteúdo deste <code>patch</code> é o que está no arquivo <code>2/Vagrantfile.patch</code>, poderíamos utilizar o <a href="http://www.vim.org/">Vim</a>, através deste comando:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash">vim -d &lt;<span class="tok-o">(</span>!!<span class="tok-o">)</span> <span class="tok-m">2</span>/Vagrantfile.patch</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+A saída do comando <code>diff</code> tem, aproximadamente (mudando-se um <code>timestamp</code>), o mesmo conteúdo do arquivo <a href="../../demos/2/Vagrantfile.patch">demos/2/Vagrantfile.patch</a>.
+Dessa forma, se você ainda não sabia como gerar um <code>patch</code> (e aplicá-lo), este tópico acaba de lhe ensinar como fazer isso (através do <code>diff</code>).
+O que os scripts deste projeto executam <em><a href="http://onlineslangdictionary.com/meaning-definition-of/under-the-hood">"under the hood"</a></em>, desde a primeira demonstração, é uma aplicação sistemática de <code>patches</code>, de forma a fazer os ajustes necessários para colocar o JBoss em execução, de acordo com certos parâmetros.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Após a aplicação do <code>patch</code>, vamos solicitar ao Vagrant que inicie as máquinas:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash">vagrant up</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Quando na execução do comando acima, o Vagrant verificará que as máquinas <code>dc1</code> e <code>hc1</code> já estão em execução e foram provisionadas.
+Portanto, para elas, nada será realizado.
+Mas, seguindo em frente, o Vagrant verificará que a máquina <code>hc2</code> precisará ser criada.
+E fará a sua criação e provisionamento.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_criação_de_arquivos_de_configuração">5.3.2. Criação de arquivos de configuração</h4>
+<div class="paragraph">
+<p>Para esta demonstração precisamos, em relação a <a href="#demo-1">demo 1</a>, de três (3) arquivos adicionais.
+Eles são apresentados na saída do comando a seguir (executado no diretório <code>demos</code>):</p>
+</div>
+<div id="demo-2-tree" class="listingblock">
+<div class="content">
+<pre>$ tree 2/{configurations,scripts}
+2/configurations
+`-- jboss-eap-6.4
+    `-- domain
+        `-- configuration
+            |-- domain.xml.patch
+            `-- host-slave.xml.no-backup.srv1.patch
+2/scripts
+`-- config
+
+3 directories, 3 files</pre>
+</div>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+Só poderemos executar esse comando quando terminarmos os passos que precisamos seguir a partir de agora.
+Portanto, voltaremos a ele ao <a href="#demo-2-tree-verificacao">final desse tópico</a>.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Esses arquivos serão utilizados pelos scripts deste projeto, no processo de instalação do JBoss.
+Mas, eles ainda não existem.
+Então, vamos criá-los.</p>
+</div>
+<div class="sect4">
+<h5 id="_scripts_config">scripts/config</h5>
+<div class="paragraph">
+<p>O arquivo <code>scripts/config</code> nós já conhecemos.
+Quer dizer, ainda não tão detalhadamente.
+Mas, podemos ler mais a respeito dele vendo o conteúdo do <a href="#config-sample">scripts/config-sample</a>.</p>
+</div>
+<div class="paragraph">
+<p>O <code>config</code> é o arquivo citado no tópico "<a href="#pre-requisitos">Pré-requisitos</a>".
+É importante saber que, na demo 1, não fizemos nenhuma configuração.
+Não criamos o arquivo <code>config</code>.
+Mesmo assim, as coisas funcionaram: o <code>hc1</code> conseguiu se conectar ao <code>dc1</code>.
+Isso quer dizer, <a href="#pre-requisitos">como explicado</a>, que foi utilizado o <a href="#config-sample">scripts/config-sample</a>.</p>
+</div>
+<div class="paragraph">
+<p>Nesta demonstração, entretanto, queremos ir um pouco além.
+Queremos configurar um novo <code>Server Group</code> e, também, duas instâncias executando em dois HCs diferentes.
+Para isso, precisamos criar o nosso arquivo <code>config</code>.
+Nele, configuraremos que tanto <code>hc1</code> quanto <code>hc2</code> ajustarão o valor <code>srv1</code> para a variável <code>JBOSS_SERVER_CONFIG</code>.
+Fazendo essa configuração, quando o <a href="#jboss-configure">scripts/jboss-configure</a> for chamado (pelo <a href="#jboss-install">scripts/jboss-install</a>), ele tentará aplicar um <code>patch</code> chamado <code>host-slave.xml.no-backup.srv1.patch</code> ao arquivo <code>host-config.xml</code>.</p>
+</div>
+<div class="paragraph">
+<p>Como podemos criar o arquivo <code>config</code>? Simples!
+A maneira mais fácil seria copiar o <a href="#config-sample">scripts/config-sample</a> para <code>scripts/config</code> e utilizá-lo como base na nossa edição.
+Nele, dentro do <code>case</code> da linha 72, as seguintes linhas poderiam ser inseridas:</p>
+</div>
+<div id="ajuste-para-gerar-demos-2-scripts-config" class="listingblock">
+<div class="title">demos/2/scripts/config</div>
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash">  <span class="tok-c1"># If host is hc1 or hc2, JBOSS_SERVER_CONFIG will be srv1</span>
+  hc<span class="tok-o">[</span><span class="tok-m">1</span>,2<span class="tok-o">])</span>
+    <span class="tok-nv">JBOSS_SERVER_CONFIG</span><span class="tok-o">=</span>srv1
+    <span class="tok-p">;;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Contudo, já sabemos como funciona um <code>patch</code>!
+Então, ao invés de editarmos o arquivo <code>config</code>, faremos a sua cópia a partir do <a href="#config-sample">scripts/config-sample</a>, e aplicaremos o <code>patch</code> <a href="../../demos/2/scripts/config.patch">config.patch</a>.
+Para isso, executemos os seguintes comandos:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash">mkdir -p <span class="tok-m">2</span>/scripts
+cp ../scripts/config.sample <span class="tok-m">2</span>/scripts/config
+<span class="tok-o">(</span><span class="tok-nb">cd</span> <span class="tok-m">2</span>/scripts<span class="tok-p">;</span> patch config &lt; ../config.patch<span class="tok-o">)</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>A aplicação desse <code>patch</code> fará o ajuste informado nas <a href="#ajuste-para-gerar-demos-2-scripts-config">linhas acima</a>. Obviamente, o conteúdo deste <code>patch</code> apresenta contém essas linhas.
+Esse é o conteúdo do <code>config.patch</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="diff"><span class="tok-gd">--- config.sample	2017-07-27 16:14:40.000000000 -0300</span>
+<span class="tok-gi">+++ config	2017-07-27 16:23:40.000000000 -0300</span>
+<span class="tok-gu">@@ -76,6 +76,10 @@</span>
+     JBOSS_TYPE=master
+     ;;
+
+<span class="tok-gi">+  # If host is hc1 or hc2, JBOSS_SERVER_CONFIG will be srv1</span>
+<span class="tok-gi">+  hc[1,2])</span>
+<span class="tok-gi">+    JBOSS_SERVER_CONFIG=srv1</span>
+<span class="tok-gi">+    ;;</span>
+ esac
+
+ # Host config file is JBOSS_TYPE dependant</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Poderíamos ser redundantes (mas seguros) fazendo uma dupa checagem do conteúdo do arquivo arquivo gerado (<code>2/scripts/config</code>).
+Se guiséssemos fazer isso, poderíamos executar o seguinte comando: <code>grep JBOSS_SERVER_CONFIG -A 4 2/scripts/config</code>.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_configurations_jboss_eap_6_4_domain_configurations_domain_xml_patch">configurations/jboss-eap-6.4/domain/configurations/domain.xml.patch</h5>
+<div class="paragraph">
+<p>Para criar um <code>patch</code>, como já vimos, precisamos do arquivo original.
+No processo de instalação do JBoss, executado por este projeto, a versão que será instalada é uma em que os <code>patches</code> do JBoss já estão aplicados.
+"Patches do JBoss" são os arquivos binários, configurados no arquivo <code>config</code>, como nas linhas apresentadas pela saída do comando <code>"grep -A 4 JBOSS_PATCHES 2/scripts/config"</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span class="tok-nv">JBOSS_PATCHES</span><span class="tok-o">=(</span>
+  jboss-eap-6.4.9-patch.zip
+  jboss-eap-6.4.16-patch.zip
+<span class="tok-o">)</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>A versão do JBoss que será instalada, após seus <code>patches</code> serem aplicados, estará disponível em
+<code>/opt/rh/jboss-installer/installers/jboss-eap-6.4</code>.</p>
+</div>
+<div class="admonitionblock caution">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-caution" title="Caution"></i>
+</td>
+<td class="content">
+O diretório <code>/opt/rh/jboss-installer/installers/jboss-eap-6.4</code> não é o diretório em que o JBoss final será executado!
+Esse diretório é criado pelo <a href="#jboss-extract">scripts/jboss-extract</a>, caso ele não exista.
+Essa criação é realizada pela extração do <code>zip</code> de instalação do JBoss.
+Em seguida, nesse diretório, são aplicados os <code>patches</code> de atualização do JBoss.
+Após a aplicação dos <code>patches</code>, o <a href="#jboss-extract">scripts/jboss-extract</a> também mescla o conteúdo disponível no diretório <code>configurations</code>, com o conteúdo extraído.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Dessa forma, podemos copiar o arquivo original que desejamos configurar (<code>domain.xml</code>), com os seguintes comandos:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span class="tok-nv">b</span><span class="tok-o">=</span><span class="tok-m">2</span>/configurations
+<span class="tok-nv">o</span><span class="tok-o">=</span>/opt/rh/jboss-installer/installers
+<span class="tok-nv">d</span><span class="tok-o">=</span>jboss-eap-6.4/domain/configuration
+mkdir -p <span class="tok-nv">$b</span>/<span class="tok-nv">$d</span> <span class="tok-o">&amp;&amp;</span> <span class="tok-nb">cd</span> <span class="tok-nv">$_</span>
+scp -P <span class="tok-m">2200</span> root@localhost:<span class="tok-nv">$o</span>/<span class="tok-nv">$d</span>/domain.xml .</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Antes de editar o <code>domain.xml</code> com as alterações que queremos, façamos uma cópia dele para <code>domain.xml.original</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash">cp domain.xml<span class="tok-o">{</span>,.original<span class="tok-o">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Agora, podemos editar o arquivo com as alterações que desejamos.
+No caso, desejamos eliminar os <code>server-groups</code> <code>default</code>: <code>main-server-group</code> e <code>other-server-group</code>. Além disso, queremos criar o <code>server-group</code> <code>app1-server-group</code>, utilizando o profile <code>default</code>.</p>
+</div>
+<div class="paragraph">
+<p>Utilizando o <a href="http://www.vim.org/">Vim</a>, vamos editar o arquivo <code>domain.xml</code>, alterá-lo de acordo com as mudanças que desejamos, e salvá-lo.
+Mas, ao invés de fazer isso de maneira interativa (entrando comandos no editor), vamos executar o script <a href="../../demos/2/domain.xml.vim">2/domain.xml.vim</a> para fazer as mudança que queremos:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash">vim -c <span class="tok-s2">&quot;source ../../../../domain.xml.vim&quot;</span> domain.xml</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>O conteúdo desse <code>domain.xml.vim</code> é extremamente simples, e didático, para quem já tem conhecimentos básicos no <a href="http://www.vim.org/">Vim</a>.
+Veja:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="vim"><span class="tok-m">1400</span><span class="tok-p">,</span><span class="tok-m">1412</span>d
+<span class="tok-m">1400</span>
+<span class="tok-k">i</span>
+        <span class="tok-p">&lt;</span>server<span class="tok-p">-</span>group name<span class="tok-p">=</span><span class="tok-s2">&quot;app-1-server-group&quot;</span> profile<span class="tok-p">=</span><span class="tok-s2">&quot;default&quot;</span><span class="tok-p">&gt;</span>
+            <span class="tok-p">&lt;</span>socket<span class="tok-p">-</span>binding<span class="tok-p">-</span>group ref<span class="tok-p">=</span><span class="tok-s2">&quot;standard-sockets&quot;</span>/<span class="tok-p">&gt;</span>
+.
+<span class="tok-k">x</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Pela sua leitura, observamos o seguinte:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>13 linhas serão excluídas (da linha 1400 a 1412).</p>
+</li>
+<li>
+<p>Será inserido, na linha 1400, o conteúdo apresentado.</p>
+</li>
+<li>
+<p>O arquivo será salvo e a execução do Vim será encerrada.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Faremos a criação do <code>domain.xml.patch</code> executando:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash">diff -uNr domain.xml<span class="tok-o">{</span>.original,<span class="tok-o">}</span> &gt; domain.xml.patch</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Finalmente, removeremos os arquivos <code>domain.xml</code> e <code>domain.xml.original</code> pois eles não são utilizados pelos scripts deste projeto:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash">rm -f domain.xml<span class="tok-o">{</span>.original,<span class="tok-o">}</span></code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_configurations_jboss_eap_6_4_domain_configuration_host_slave_xml_no_backup_patch">configurations/jboss-eap-6.4/domain/configuration/host-slave.xml.no-backup.patch</h5>
+<div class="paragraph">
+<p>Voltaremos ao diretório anterior (<code>demos</code>) para, agora, buscar outro arquivo de configuração para o qual precisaremos criar um <code>patch</code>.
+Estamos falando do arquivo <code>host-slave.xml</code>.
+Executemos:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span class="tok-nb">cd</span> -
+<span class="tok-nb">cd</span> <span class="tok-nv">$b</span>/<span class="tok-nv">$d</span> <span class="tok-o">&amp;&amp;</span> scp -P <span class="tok-m">2200</span> root@localhost:<span class="tok-nv">$o</span>/<span class="tok-nv">$d</span>/host-slave.xml .</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Antes de editar esse arquivo, vamos salvar o seu conteúdo original:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash">cp host-slave.xml<span class="tok-o">{</span>,.original<span class="tok-o">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Para que o <a href="#jboss-configure">scripts/jboss-configure</a> consiga fazer o seu trabalho, configurar o <code>hc2</code> da forma necessária, precisamos editar esse arquivo.
+Faremos isso, através do script <code>2/host-slave.xml.vim</code>, executando o seguinte comando:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash">vim -c <span class="tok-s2">&quot;source ../../../../host-slave.xml.vim&quot;</span> host-slave.xml</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>O conteúdo do arquivo <code>host-slave.xml.vim</code>, da mesma forma que o <code>domain.xml.vim</code>, também é muito simples.
+Ele indica, como vimos, as mudanças que devem ser realizadas.
+Seu conteúdo (com a apresentação de um número de linha) é o seguinte:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="vim"><table class="pyhltable"><tr><td class="linenos"><div class="linenodiv"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13</div></td><td class="code"><span></span><span class="tok-m">10</span>d
+<span class="tok-k">i</span>
+                     <span class="tok-p">&lt;</span>secret value<span class="tok-p">=</span><span class="tok-s2">&quot;JBOSS_ADMIN_PASSWORD_BASE64&quot;</span>/<span class="tok-p">&gt;</span>
+.
+<span class="tok-m">58</span>d
+<span class="tok-k">i</span>
+       <span class="tok-p">&lt;</span>remote host<span class="tok-p">=</span><span class="tok-s2">&quot;${jboss.domain.master.address}&quot;</span> port<span class="tok-p">=</span><span class="tok-s2">&quot;${jboss.domain.master.port:9999}&quot;</span> security<span class="tok-p">-</span>realm<span class="tok-p">=</span><span class="tok-s2">&quot;ManagementRealm&quot;</span> username<span class="tok-p">=</span><span class="tok-s2">&quot;JBOSS_ADMIN_USER&quot;</span>/<span class="tok-p">&gt;</span>
+.
+<span class="tok-m">86</span><span class="tok-p">,</span><span class="tok-m">91</span>d
+<span class="tok-k">i</span>
+       <span class="tok-p">&lt;</span>server name<span class="tok-p">=</span><span class="tok-s2">&quot;app-1&quot;</span> group<span class="tok-p">=</span><span class="tok-s2">&quot;app-1-server-group&quot;</span>/<span class="tok-p">&gt;</span>
+.
+<span class="tok-k">x</span>
+</td></tr></table></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Pela sua leitura, observamos o seguinte:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>A linha 10 é alterada de forma que, para o atributo <code>value</code> do elemento <code>secret</code>, agora temos o valor <code>JBOSS_ADMIN_PASSWORD_BASE64</code>.</p>
+</li>
+<li>
+<p>A linha 58 é alterada adicionando-se o atributo <code>username</code>, cujo valor é <code>JBOSS_ADMIN_USER</code>.</p>
+</li>
+<li>
+<p>A definição dos grupos <code>default</code>, entre as linhas 86 e 91 é removida.
+Em seu lugar é feita a configuração do servidor <code>app-1</code>.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p><a href="#sobre-esta-documentacao-objetivo">Como citado no objetivo deste documento</a>, está fora de seu escopo explicar como é realizada a configuração para que um HC se conecte a um DC.
+Administradores experientes em <a href="https://www.redhat.com/en/technologies/jboss-middleware/application-platform">JBoss EAP</a> aprendem isso num curso básico.
+Contudo, é necessário saber que os valores para as variáveis <code>JBOSS_ADMIN_PASSWORD_BASE64</code> e <code>JBOSS_ADMIN_USER</code> serão ajustados logo após a execução do <a href="#jboss-configure">scripts/jboss-configure</a>. Dessa forma, os valores dessas variáveis precisam estar cofigurados no arquivo <code>config</code>.</p>
+</div>
+<div class="paragraph">
+<p>Para encerrar a construção dos arquivos de configurações que precisamos, no intuito de dar continuidade a esta demonstração, vamos gerar o <code>patch</code> (e excluir os arquivos desnecessários após isso) executando os comandos a seguir:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash">diff -uNr host-slave.xml<span class="tok-o">{</span>.original,<span class="tok-o">}</span> &gt; host-slave.xml.no-backup.srv1.patch
+rm -f host-slave.<span class="tok-o">{</span>.original,<span class="tok-o">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Um detalhe importante de ser explicado é o nome que demos a esse <code>patch</code>: <code>host-slave.xml.no-backup.srv1.patch</code>.
+É necessário que ele tenha esse nome.
+Isso porque o <a href="#jboss-configure">scripts/jboss-configure</a> executará a seguinte lógica:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span class="tok-nv">f</span><span class="tok-o">=</span>domain/configuration/<span class="tok-nv">$JBOSS_HOST_CONFIG</span>
+<span class="tok-nv">f_patch</span><span class="tok-o">=</span><span class="tok-nv">$f</span>
+<span class="tok-k">if</span> <span class="tok-o">[</span> <span class="tok-s2">&quot;</span><span class="tok-nv">$JBOSS_HOST_CONFIG</span><span class="tok-s2">&quot;</span> <span class="tok-o">=</span> <span class="tok-s2">&quot;host-slave.xml&quot;</span> <span class="tok-o">]</span>
+<span class="tok-k">then</span>
+  <span class="tok-o">[</span> <span class="tok-s2">&quot;</span><span class="tok-nv">$JBOSS_DOMAIN_BACKUP_ADDRESS</span><span class="tok-s2">&quot;</span> <span class="tok-o">]</span> <span class="tok-o">||</span> <span class="tok-nv">f_patch</span><span class="tok-o">=</span><span class="tok-nv">$f_patch</span>.no-backup
+<span class="tok-k">fi</span>
+<span class="tok-o">[</span> <span class="tok-s2">&quot;</span><span class="tok-nv">$JBOSS_SERVER_CONFIG</span><span class="tok-s2">&quot;</span> <span class="tok-o">]</span> <span class="tok-o">&amp;&amp;</span> <span class="tok-nv">f_patch</span><span class="tok-o">=</span><span class="tok-nv">$f_patch</span>.<span class="tok-nv">$JBOSS_SERVER_CONFIG</span>
+patch <span class="tok-nv">$f</span> <span class="tok-nv">$f_patch</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Como configuramos (<a href="#ajuste-para-gerar-demos-2-scripts-config">no config</a>) que <code>JBOSS_SERVER_CONFIG</code> terá o valor <code>srv1</code> e, como ainda não especificamos um valor para <code>JBOSS_DOMAIN_BACKUP_ADDRESS</code> (veremos isso no próximo tópico), então o nome do arquivo precisará seguir o padrão estipulado (acima) e deverá ser o que informamos.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="demo-2-tree-verificacao">Verificação</h5>
+<div class="paragraph">
+<p>Para ter certeza que tudo está em seu devido lugar, executemos os seguintes comandos:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span class="tok-nb">cd</span> -
+tree <span class="tok-m">2</span>/<span class="tok-o">{</span>configurations,scripts<span class="tok-o">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Esperamos que o resultado desse último comando seja <a href="#demo-2-tree">apresentado no início deste tópico</a>.</p>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_geração_do_pacote_de_instalação_jboss_installer_tar_gz">5.3.3. Geração do pacote de instalação (jboss-installer.tar.gz)</h4>
+<div class="paragraph">
+<p>Voltemos a raiz do projeto:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span class="tok-nb">cd</span> ..</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>A inclusão do parâmetro <code>DEMO=2</code>, antes da execução do script <code>jboss-installer.create</code>, faz com que sejam copiados, para o pacote <code>jboss-installer.tar.gz</code>, o conteúdo dos scripts e das configurações que estão disponíveis no diretório <code>demos/2</code>.
+Executemos:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span class="tok-nv">DEMO</span><span class="tok-o">=</span><span class="tok-m">2</span> ./jboss-installer.create</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>O resultado da execução acima é um pacote que, além de conter os script e configurações padrão, também possuirá o conteúdo de <code>demos/2/scripts</code> e <code>demos/2/configurations</code>. Verifiquemos isso executando o comando abaixo:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash">tar tvf jboss-installer.tar.gz</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_finalização_do_jboss_em_dc1_e_hc1">5.3.4. Finalização do JBoss em dc1 e hc1</h4>
+<div class="paragraph">
+<p>Vamos parar as instâncias JBoss já em execução em <code>dc1</code> e em <code>hc1</code>.
+Executemos o seguinte comando:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span class="tok-k">for</span> p in <span class="tok-m">22</span><span class="tok-o">{</span><span class="tok-m">00</span>,22<span class="tok-o">}</span><span class="tok-p">;</span> <span class="tok-k">do</span> ssh -p <span class="tok-nv">$p</span> root@localhost /opt/rh/jboss-installer/scripts/jboss-stop<span class="tok-p">;</span> <span class="tok-k">done</span></code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Recordando o que aprendemos ao final da <a href="#demo-1">demo 1</a>: além do <a href="#jboss-stop">scripts/jboss-stop</a>, também há comandos para as tarefas de inicialização, otenção do estado de execução, e visualização do log do JBoss: <a href="#jboss-start">scripts/jboss-start</a>, <a href="#jboss-status">scripts/jboss-status</a>, <a href="#jboss-tailf">scripts/jboss-tailf</a>.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="demo-2-exercicio-1">5.3.5. Exercício 1: substituição do instalador, reinstalação e inicialização do DC (dc1)</h4>
+<div class="paragraph">
+<p>Repita os mesmos <a href="#demo-1-instalacao-dc">passos</a> que já foram executados (na <a href="#demo-1">demo-1</a>) para a instalação e inicialização do DC.</p>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+<div class="title">Requisitos:</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Ao invés de gastar os dedos da forma como realizado em "<a href="#demo-1-instalacao-dc">Instalação e inicialização do DC</a>", seja <code>smart</code> e utilize o mecanismo de "<a href="#minimizacao-de-dedadas">minimização de dedadas</a>" apresentado em "<a href="#demo-1-instalacao-hc">Instalação e inicialização do HC</a>".</p>
+</li>
+<li>
+<p>Utilize o comando <code>sshpass</code> (se não souber o que ele faz, busque no Google!).</p>
+</li>
+</ol>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Veja a solução no tópico "<a href="#solucoes-de-exercicios">Soluções de exercícios</a>" em "<a href="#solucao-demo-2-exercicio-1">Demo 2, exercício 1</a>".
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="demo-2-exercicio-2">5.3.6. Exercício 2: reinstalação do hc1 e instalação do hc2</h4>
+<div class="paragraph">
+<p>Repita, para cada HC, os mesmo <a href="#demo-1-instalacao-hc">passos</a> que já foram executados (na Demo 1) para a instalação e inicialização do <code>hc1</code>.</p>
+</div>
+<div class="admonitionblock caution">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-caution" title="Caution"></i>
+</td>
+<td class="content">
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Da mesma forma que realizado no exercício anterior, você precisará substituir o instalador do <code>hc1</code>.</p>
+</li>
+<li>
+<p>Ao serem iniciados os passos para a realização da instalação do <code>hc2</code> deve ser observado que a porta utilizada é a 2201.</p>
+</li>
+</ol>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Veja a solução no tópico "<a href="#solucoes-de-exercicios">Soluções de exercícios</a>" em "<a href="#solucao-demo-2-exercicio-2">Demo 2, exercício 2</a>".
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_verificação_de_funcionamento_do_ambiente_2">5.3.7. Verificação de funcionamento do ambiente</h4>
+<div class="paragraph">
+<p>Abra o browser em <a href="http://dc1:9990" class="bare">http://dc1:9990</a>.
+Logue-se com o usuário <code>admin</code> e a senha <code>jbAdmin@123!</code>.
+Acesse a aba <code>Domain</code> e verifique que tanto o <code>hc1</code> quanto o <code>hc2</code> estão registrados na lista de hosts.
+Verifique também, na aba <a href="http://dc1:9990/console/App.html#topology">topologia</a>, que há duas instâncias de <code>app-1</code> sendo executadas.</p>
+</div>
+<div style="page-break-after: always;"></div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="demo-3">5.4. Demo 3: Instalação de um DC adicional (backup)</h3>
+<div class="sect3">
+<h4 id="o-que-e-um-dc-de-backup">5.4.1. O que é um DC de backup?</h4>
+<div class="paragraph">
+<p>Um DC tem o papel primário de fazer o gerenciamento de um HC (ou vários).
+Quando ele fica indisponível, o funcionamento das aplicações do domínio não é impactado.
+Entretanto, o administrador do domínio fica incapacitado de gerenciar instâncias.
+Tarefas de administração e configurações dos servidores são impactadas na ausência do DC.
+Sendo assim, é importante que exista um mecanismo de alta disponibilidade para um DC.</p>
+</div>
+<div class="paragraph">
+<p>O JBoss EAP provê a possibilidade de se instalar e gerenciar um DC de backup.
+Criando-se um DC de backup, é eliminada a impossibilidade de se administrar o domínio na ausência do DC primário (master).
+Na documentação do JBoss EAP, o tópico <a href="https://access.redhat.com/documentation/en-US/JBoss_Enterprise_Application_Platform/6.4/html/Administration_and_Configuration_Guide/About_Domain_Controller_Failover.html">"About Domain Controller Discovery and Failover"</a> trata da configuração de um DC de backup.
+Nos próximos tópicos desta documentação, é apresentado, passo a passo, como configurar um DC de backup.
+Também, é simulada uma indisponbilidade do DC primário e o que deve ser feito para colocar um DC de backup em ação.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_configuração">5.4.2. Configuração</h4>
+<div class="paragraph">
+<p>A configuração do <code>Vagrantfile</code> para a adição do <code>dc2</code> pode ser realizada pela aplicação do <code>patch</code> <a href="../../demos/3/Vagrantfile.patch">demos/3/Vagrantfile</a>.</p>
+</div>
+<div class="paragraph">
+<p>Este é o seu conteúdo:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="diff"><span class="tok-gd">--- Vagrantfile	2017-07-26 08:51:18.000000000 -0300</span>
+<span class="tok-gi">+++ 3/Vagrantfile	2017-07-25 10:39:30.000000000 -0300</span>
+<span class="tok-gu">@@ -12,16 +12,16 @@</span>
+   config.vm.box = &quot;boxcutter/centos73&quot;
+   config.vbguest.auto_update = false
+
+<span class="tok-gd">-  config.vm.define &quot;dc1&quot; do |dc1|</span>
+<span class="tok-gd">-    dc1.vm.hostname=&quot;dc1&quot;</span>
+<span class="tok-gd">-    dc1.vm.network &quot;private_network&quot;, ip: &quot;172.17.6.81&quot;</span>
+<span class="tok-gd">-    dc1.vm.provision &quot;shell&quot;, path: &quot;scripts/instalar-vm&quot;, privileged: false</span>
+<span class="tok-gd">-    dc1.vm.provider &quot;virtualbox&quot; do |v|</span>
+<span class="tok-gd">-      v.memory = 1024</span>
+<span class="tok-gi">+  (1..2).each do |i|</span>
+<span class="tok-gi">+    config.vm.define &quot;dc#{i}&quot; do |dc|</span>
+<span class="tok-gi">+      dc.vm.hostname=&quot;dc#{i}&quot;</span>
+<span class="tok-gi">+      dc.vm.network &quot;private_network&quot;, ip: &quot;172.17.6.8#{i}&quot;</span>
+<span class="tok-gi">+      dc.vm.provision &quot;shell&quot;, path: &quot;scripts/instalar-vm&quot;, privileged: false</span>
+<span class="tok-gi">+      dc.vm.provider &quot;virtualbox&quot; do |v|</span>
+<span class="tok-gi">+        v.memory = 1024</span>
+<span class="tok-gi">+      end</span>
+     end
+<span class="tok-gd">-  end</span>
+
+<span class="tok-gd">-  (1..2).each do |i|</span>
+     config.vm.define &quot;hc#{i}&quot; do |hc|
+       hc.vm.hostname=&quot;hc#{i}&quot;
+       hc.vm.network &quot;private_network&quot;, ip: &quot;172.17.6.8#{i+2}&quot;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Façamos a aplicação deste <code>patch</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span class="tok-nb">cd</span> demos
+patch Vagrantfile &lt; <span class="tok-m">3</span>/Vagrantfile.patch</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Precisamos, também, gerar o <code>scripts/config</code> dessa demo, baseando-nos na configuração realizada para a <a href="#demo-2">demo anterior</a>.
+O <code>patch</code> <a href="../../demos/3/config.patch">3/config.patch</a> pode ser utilizado para isso.
+Seu conteúdo é o seguinte:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="diff"><span class="tok-gd">--- ../2/scripts/config	2017-08-03 10:56:40.000000000 -0300</span>
+<span class="tok-gi">+++ scripts/config	2017-08-03 11:14:15.000000000 -0300</span>
+<span class="tok-gu">@@ -60,6 +60,9 @@</span>
+ # JBoss domain (master) address (ip or hostname)
+ JBOSS_DOMAIN_MASTER_ADDRESS=dc1
+
+<span class="tok-gi">+# JBoss domain (backup) address (ip or hostname)</span>
+<span class="tok-gi">+JBOSS_DOMAIN_BACKUP_ADDRESS=dc2</span>
+<span class="tok-gi">+</span>
+ # JBoss admin username (to access console)
+ JBOSS_ADMIN_USER=admin
+ # JBoss admin password
+<span class="tok-gu">@@ -72,7 +75,7 @@</span>
+ case $JBOSS_HOST in
+
+   # If host is master, JBOSS_TYPE is master
+<span class="tok-gd">-  $JBOSS_DOMAIN_MASTER_ADDRESS)</span>
+<span class="tok-gi">+  $JBOSS_DOMAIN_MASTER_ADDRESS|$JBOSS_DOMAIN_BACKUP_ADDRESS)</span>
+     JBOSS_TYPE=master
+     ;;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>A geração do arquivo <code>3/scripts/config</code> pode ser realizada da seguinte forma:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash">cp <span class="tok-m">2</span>/scripts/config <span class="tok-m">3</span>/scripts/
+<span class="tok-o">(</span><span class="tok-nb">cd</span> <span class="tok-m">3</span>/scripts<span class="tok-p">;</span> patch config &lt; config.patch<span class="tok-o">)</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Podemos executar o comando abaixo para visualizar, através do <a href="http://www.vim.org/">Vim</a>, que diferenças há entre o <code>config</code> da <a href="#demo-2">demonstração 2</a> e o <code>config</code> que acabamos de criar:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash">vim -d <span class="tok-o">{</span><span class="tok-m">2</span>,3<span class="tok-o">}</span>/scripts/config</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Pela visualização das diferenças, apresentadas pelo Vim, notamos que foram adicionadas informações específicas para o <code>dc2</code>.
+Mais a frente, nas explicações sobre o arquivo de configuração, obteremos detalhes a respeito disso.
+Nossa preocupação, até o final desse tópico sobre demonstrações, será apenas a de saber como executar os scripts.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_geração_do_pacote_de_instalação_jboss_installer_tar_gz_2">5.4.3. Geração do pacote de instalação (jboss-installer.tar.gz)</h4>
+<div class="paragraph">
+<p>Agora que já temos o arquivo <code>scripts/config</code>, assim como outros arquivos no diretório <code>configurations</code>, podemos gerar o pacote de instalação:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span class="tok-nv">DEMO</span><span class="tok-o">=</span><span class="tok-m">3</span> ./jboss-installer.create</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_inicialização_do_segundo_dc_dc2">5.4.4. Inicialização do segundo DC (dc2)</h4>
+
+</div>
+<div class="sect3">
+<h4 id="_instalação_do_dc2">5.4.5. Instalação do dc2</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span class="tok-nb">cd</span> ..
+<span class="tok-nb">alias</span> <span class="tok-nv">dc2ssh</span><span class="tok-o">=</span><span class="tok-s1">&#39;ssh -p 2202 root@localhost&#39;</span>
+dc2ssh <span class="tok-nv">$scripts</span>/install</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="refs-dc-de-backup">5.4.6. Referências extras</h4>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://access.redhat.com/solutions//255963">High Availability of the Domain Controller in JBoss EAP 6</a></p>
+</li>
+<li>
+<p><a href="https://github.com/tqvarnst/eap-dc-failover-demo">JBoss EAP 6.3 Domain controller failover demo</a></p>
+</li>
+</ul>
+</div>
+<div style="page-break-after: always;"></div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="scripts">6. Scripts</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="jboss-installer-create">6.1. jboss-installer.create</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span class="tok-ch">#!/bin/bash</span>
+<span class="tok-nb">set</span> +x
+<span class="tok-nb">set</span> -e
+
+<span class="tok-nv">BASE_DIR</span><span class="tok-o">=</span><span class="tok-sb">`</span><span class="tok-nb">cd</span> <span class="tok-s2">&quot;</span><span class="tok-k">$(</span>dirname <span class="tok-s2">&quot;</span><span class="tok-nv">$0</span><span class="tok-s2">&quot;</span><span class="tok-k">)</span><span class="tok-s2">&quot;</span><span class="tok-p">;</span> <span class="tok-nb">pwd</span><span class="tok-sb">`</span>
+<span class="tok-nv">INSTALLER</span><span class="tok-o">=</span><span class="tok-si">${</span><span class="tok-nv">INSTALLER</span><span class="tok-k">:-</span><span class="tok-nv">jboss</span><span class="tok-p">-installer.tar.gz</span><span class="tok-si">}</span>
+<span class="tok-nv">PREFIX</span><span class="tok-o">=</span><span class="tok-si">${</span><span class="tok-nv">PREFIX</span><span class="tok-k">:-</span><span class="tok-p">/opt/rh/jboss-installer</span><span class="tok-si">}</span>
+<span class="tok-nv">DEMO</span><span class="tok-o">=</span><span class="tok-si">${</span><span class="tok-nv">DEMO</span><span class="tok-k">:-</span><span class="tok-nv">1</span><span class="tok-si">}</span>
+
+<span class="tok-nb">trap</span> <span class="tok-s2">&quot;{ rm -rf merged; }&quot;</span> EXIT
+<span class="tok-nb">trap</span> <span class="tok-s2">&quot;{ rm -f &quot;</span><span class="tok-nv">$INSTALLER</span><span class="tok-s2">&quot;; }&quot;</span> INT
+
+<span class="tok-o">[[</span> <span class="tok-nv">$OSTYPE</span> <span class="tok-o">=</span>~ darwin.* <span class="tok-o">]]</span> <span class="tok-o">&amp;&amp;</span> <span class="tok-nv">tar</span><span class="tok-o">=</span>gtar <span class="tok-o">||</span> <span class="tok-nv">tar</span><span class="tok-o">=</span>tar
+
+<span class="tok-nb">cd</span> <span class="tok-s2">&quot;</span><span class="tok-nv">$BASE_DIR</span><span class="tok-s2">&quot;</span>
+
+<span class="tok-o">[</span> -d <span class="tok-s2">&quot;demos/</span><span class="tok-nv">$DEMO</span><span class="tok-s2">&quot;</span> <span class="tok-o">]</span> <span class="tok-o">||</span> <span class="tok-o">{</span>
+  <span class="tok-nb">echo</span> <span class="tok-s2">&quot;DEMO directory (demos/</span><span class="tok-nv">$DEMO</span><span class="tok-s2">) does not exists!&quot;</span>
+  <span class="tok-nb">exit</span> <span class="tok-m">1</span>
+<span class="tok-o">}</span>
+
+rsync -a scripts configurations merged
+<span class="tok-o">[</span> -d <span class="tok-s2">&quot;demos/</span><span class="tok-nv">$DEMO</span><span class="tok-s2">/scripts&quot;</span> <span class="tok-o">]</span> <span class="tok-o">&amp;&amp;</span> <span class="tok-se">\</span>
+  rsync -qa demos/<span class="tok-nv">$DEMO</span>/<span class="tok-o">{</span>scripts,configurations<span class="tok-o">}</span> merged/
+
+<span class="tok-nb">echo</span> <span class="tok-s2">&quot;Creating </span><span class="tok-nv">$INSTALLER</span><span class="tok-s2"> ...&quot;</span>
+find . -type f <span class="tok-se">\(</span> <span class="tok-se">\</span>
+  -path <span class="tok-s1">&#39;./installers/*&#39;</span> -o <span class="tok-se">\</span>
+  -path <span class="tok-s1">&#39;./merged/*&#39;</span> <span class="tok-se">\</span>
+  <span class="tok-se">\)</span> <span class="tok-se">\(</span> ! -name README.adoc -o -name <span class="tok-s2">&quot;</span><span class="tok-nv">$config</span><span class="tok-s2">&quot;</span> <span class="tok-se">\)</span> -print0 <span class="tok-p">|</span> <span class="tok-se">\</span>
+<span class="tok-nv">$tar</span> cvfz <span class="tok-nv">$INSTALLER</span> <span class="tok-se">\</span>
+--transform <span class="tok-s2">&quot;s,^\./merged,.,&quot;</span> <span class="tok-se">\</span>
+--transform <span class="tok-s2">&quot;s,^\.,</span><span class="tok-nv">$PREFIX</span><span class="tok-s2">,&quot;</span> <span class="tok-se">\</span>
+--null -T -</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Download: <a href="../../jboss-installer.create" class="bare">../../jboss-installer.create</a></p>
+</li>
+</ul>
+</div>
+<div style="page-break-after: always;"></div>
+</div>
+<div class="sect2">
+<h3 id="jboss-installer-install">6.2. jboss-installer.install</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span class="tok-ch">#!/bin/bash</span>
+<span class="tok-nb">set</span> +x
+<span class="tok-nb">set</span> -e
+
+<span class="tok-nv">BASE_DIR</span><span class="tok-o">=</span><span class="tok-sb">`</span><span class="tok-nb">cd</span> <span class="tok-s2">&quot;</span><span class="tok-k">$(</span>dirname <span class="tok-s2">&quot;</span><span class="tok-nv">$0</span><span class="tok-s2">&quot;</span><span class="tok-k">)</span><span class="tok-s2">&quot;</span><span class="tok-p">;</span> <span class="tok-nb">pwd</span><span class="tok-sb">`</span>
+<span class="tok-nv">INSTALLER</span><span class="tok-o">=</span><span class="tok-si">${</span><span class="tok-nv">INSTALLER</span><span class="tok-k">:-</span><span class="tok-nv">jboss</span><span class="tok-p">-installer.tar.gz</span><span class="tok-si">}</span>
+<span class="tok-nv">PREFIX</span><span class="tok-o">=</span><span class="tok-si">${</span><span class="tok-nv">PREFIX</span><span class="tok-k">:-</span><span class="tok-p">/opt/rh/jboss-installer</span><span class="tok-si">}</span>
+<span class="tok-nv">SSH_USER</span><span class="tok-o">=</span><span class="tok-si">${</span><span class="tok-nv">SSH_USER</span><span class="tok-k">:-</span><span class="tok-nv">root</span><span class="tok-si">}</span>
+<span class="tok-nv">SSH_PORT</span><span class="tok-o">=</span><span class="tok-si">${</span><span class="tok-nv">SSH_PORT</span><span class="tok-k">:-</span><span class="tok-nv">22</span><span class="tok-si">}</span>
+
+ssh<span class="tok-o">()</span> <span class="tok-o">{</span>
+  <span class="tok-nb">local</span> <span class="tok-nv">ssh</span><span class="tok-o">=</span><span class="tok-sb">`</span>which ssh<span class="tok-sb">`</span>
+  <span class="tok-nb">local</span> <span class="tok-nv">params</span><span class="tok-o">=</span><span class="tok-s2">&quot;-p </span><span class="tok-nv">$SSH_PORT</span><span class="tok-s2"> </span><span class="tok-nv">$SSH_USER</span><span class="tok-s2">@</span><span class="tok-nv">$SERVER</span><span class="tok-s2"> </span><span class="tok-nv">$@</span><span class="tok-s2">&quot;</span>
+
+  <span class="tok-o">[</span> <span class="tok-s2">&quot;</span><span class="tok-nv">$SSHPASS</span><span class="tok-s2">&quot;</span> <span class="tok-o">]</span> <span class="tok-o">&amp;&amp;</span> sshpass -e <span class="tok-nv">$ssh</span> <span class="tok-nv">$params</span> <span class="tok-o">||</span> <span class="tok-nv">$ssh</span> <span class="tok-nv">$params</span>
+<span class="tok-o">}</span>
+
+<span class="tok-k">if</span> ! <span class="tok-o">[</span> <span class="tok-s2">&quot;</span><span class="tok-nv">$SERVER</span><span class="tok-s2">&quot;</span> <span class="tok-o">]</span>
+<span class="tok-k">then</span>
+  <span class="tok-nb">echo</span> <span class="tok-s2">&quot;Usage: SERVER=&lt;server&gt; </span><span class="tok-nv">$0</span><span class="tok-s2">&quot;</span>
+  <span class="tok-nb">exit</span> <span class="tok-m">1</span>
+<span class="tok-k">fi</span>
+
+<span class="tok-k">if</span> ! <span class="tok-o">[</span> -f <span class="tok-s2">&quot;</span><span class="tok-nv">$INSTALLER</span><span class="tok-s2">&quot;</span> <span class="tok-o">]</span>
+<span class="tok-k">then</span>
+  <span class="tok-nb">echo</span> <span class="tok-s2">&quot;INSTALLER (</span><span class="tok-nv">$INSTALLER</span><span class="tok-s2">) not found!&quot;</span>
+  <span class="tok-nb">exit</span> <span class="tok-m">1</span>
+<span class="tok-k">fi</span>
+
+<span class="tok-nv">SCRIPT</span><span class="tok-o">=</span><span class="tok-k">$(</span>cat <span class="tok-s">&lt;&lt; EOF</span>
+<span class="tok-s">echo &quot;I&#39;m at \$HOSTNAME ...&quot; ;</span>
+<span class="tok-s">[ -d &quot;$PREFIX&quot; ] &amp;&amp; { echo &quot;Removing existing $PREFIX dir ...&quot; ; rm -rf $PREFIX ; };</span>
+<span class="tok-s">echo &quot;Extracting files from pipe to / ...&quot; ;</span>
+<span class="tok-s">tar xvfmPz - -C /</span>
+<span class="tok-s">EOF</span>
+<span class="tok-k">)</span>
+
+<span class="tok-nb">cd</span> <span class="tok-s2">&quot;</span><span class="tok-nv">$BASE_DIR</span><span class="tok-s2">&quot;</span>
+cat <span class="tok-nv">$INSTALLER</span> <span class="tok-p">|</span> ssh <span class="tok-nv">$SCRIPT</span></code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Download: <a href="../../jboss-installer.install" class="bare">../../jboss-installer.install</a></p>
+</li>
+</ul>
+</div>
+<div style="page-break-after: always;"></div>
+</div>
+<div class="sect2">
+<h3 id="configurar-hosts">6.3. demos/scripts/configurar-hosts</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span class="tok-ch">#!/bin/bash</span>
+<span class="tok-nb">set</span> +x
+
+configurar<span class="tok-o">()</span> <span class="tok-o">{</span>
+    <span class="tok-nb">local</span> <span class="tok-nv">f</span><span class="tok-o">=</span>/etc/hosts
+
+    grep -q <span class="tok-s2">&quot;^</span><span class="tok-nv">$1</span><span class="tok-s2">.*</span><span class="tok-nv">$2</span><span class="tok-s2">&quot;</span> <span class="tok-nv">$f</span> <span class="tok-o">||</span> <span class="tok-o">{</span> <span class="tok-nb">echo</span> -e <span class="tok-s2">&quot;</span><span class="tok-nv">$1</span><span class="tok-s2">\t</span><span class="tok-nv">$2</span><span class="tok-s2">&quot;</span> <span class="tok-p">|</span> sudo tee -a <span class="tok-nv">$f</span> &gt; /dev/null<span class="tok-p">;</span> <span class="tok-o">}</span>
+<span class="tok-o">}</span>
+
+<span class="tok-k">if</span> <span class="tok-o">[</span> <span class="tok-s2">&quot;</span><span class="tok-nv">$1</span><span class="tok-s2">&quot;</span> -a <span class="tok-s2">&quot;</span><span class="tok-nv">$2</span><span class="tok-s2">&quot;</span> <span class="tok-o">]</span>
+<span class="tok-k">then</span>
+  configurar <span class="tok-nv">$1</span> <span class="tok-nv">$2</span>
+<span class="tok-k">else</span>
+  configurar <span class="tok-m">172</span>.17.6.81 dc1
+  configurar <span class="tok-m">172</span>.17.6.82 dc2
+  configurar <span class="tok-m">172</span>.17.6.83 hc1
+  configurar <span class="tok-m">172</span>.17.6.84 hc2
+<span class="tok-k">fi</span></code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Download: <a href="../../demos/scripts/configurar-hosts" class="bare">../../demos/scripts/configurar-hosts</a></p>
+</li>
+</ul>
+</div>
+<div style="page-break-after: always;"></div>
+</div>
+<div class="sect2">
+<h3 id="common">6.4. scripts/common</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span class="tok-ch">#!/bin/bash</span>
+<span class="tok-nb">set</span> +x
+<span class="tok-nb">set</span> -e
+
+<span class="tok-nb">source</span> <span class="tok-s2">&quot;</span><span class="tok-nv">$BASE_DIR</span><span class="tok-s2">&quot;</span>/functions
+
+<span class="tok-nv">LINUX_NEEDED</span><span class="tok-o">=</span><span class="tok-si">${</span><span class="tok-nv">LINUX_NEEDED</span><span class="tok-k">:-</span><span class="tok-nv">true</span><span class="tok-si">}</span>
+<span class="tok-k">if</span> <span class="tok-nv">$LINUX_NEEDED</span> <span class="tok-o">&amp;&amp;</span> ! <span class="tok-o">[[</span> <span class="tok-nv">$OSTYPE</span> <span class="tok-o">=</span>~ linux* <span class="tok-o">]]</span>
+<span class="tok-k">then</span>
+  <span class="tok-nb">echo</span> <span class="tok-s2">&quot;This script needs to be executed on Linux!&quot;</span>
+  <span class="tok-nb">exit</span> <span class="tok-m">1</span>
+<span class="tok-k">fi</span>
+
+<span class="tok-nv">ROOT_NEEDED</span><span class="tok-o">=</span><span class="tok-si">${</span><span class="tok-nv">ROOT_NEEDED</span><span class="tok-k">:-</span><span class="tok-nv">true</span><span class="tok-si">}</span>
+<span class="tok-k">if</span> <span class="tok-nv">$ROOT_NEEDED</span> <span class="tok-o">&amp;&amp;</span> <span class="tok-o">((</span> <span class="tok-sb">`</span>id -u<span class="tok-sb">`</span> !<span class="tok-o">=</span> <span class="tok-m">0</span> <span class="tok-o">))</span>
+<span class="tok-k">then</span>
+  <span class="tok-nb">echo</span> <span class="tok-s2">&quot;You must run this script as root (or with sudo)!&quot;</span>
+  <span class="tok-nb">exit</span> <span class="tok-m">1</span>
+<span class="tok-k">fi</span>
+
+<span class="tok-nv">config</span><span class="tok-o">=</span><span class="tok-s2">&quot;</span><span class="tok-nv">$BASE_DIR</span><span class="tok-s2">&quot;</span>/config
+<span class="tok-nv">load_configuration_warned</span><span class="tok-o">=</span><span class="tok-si">${</span><span class="tok-nv">load_configuration_warned</span><span class="tok-k">:-</span><span class="tok-nv">false</span><span class="tok-si">}</span>
+<span class="tok-o">[</span> -r <span class="tok-s2">&quot;</span><span class="tok-nv">$config</span><span class="tok-s2">&quot;</span> <span class="tok-o">]</span> <span class="tok-o">||</span> <span class="tok-nv">config</span><span class="tok-o">=</span><span class="tok-nv">$config</span>.sample
+
+<span class="tok-nb">source</span> <span class="tok-s2">&quot;</span><span class="tok-nv">$config</span><span class="tok-s2">&quot;</span>
+
+<span class="tok-k">if</span> <span class="tok-nv">$VERBOSE</span>
+<span class="tok-k">then</span>
+  <span class="tok-nv">$load_configuration_warned</span> <span class="tok-o">||</span> <span class="tok-o">{</span>
+    <span class="tok-nb">echo</span> <span class="tok-s2">&quot;Loading JBoss configurations from \&quot;</span><span class="tok-nv">$config</span><span class="tok-s2">\&quot; ...&quot;</span>
+    <span class="tok-nb">export</span> <span class="tok-nv">load_configuration_warned</span><span class="tok-o">=</span><span class="tok-nb">true</span>
+  <span class="tok-o">}</span>
+<span class="tok-k">fi</span></code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Download: <a href="../../scripts/common" class="bare">../../scripts/common</a></p>
+</li>
+<li>
+<p>Dependências:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="#functions">scripts/functions</a></p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div style="page-break-after: always;"></div>
+</div>
+<div class="sect2">
+<h3 id="config-sample">6.5. scripts/config-sample</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span class="tok-ch">#!/bin/bash</span>
+
+<span class="tok-c1"># The INSTALLERS_DIR must be relative to this directory</span>
+<span class="tok-c1"># It have to contains binaries like jboss-eap-6.4.0.zip, jboss-eap-6.4.*.patch.zip</span>
+<span class="tok-nv">INSTALLERS_DIR</span><span class="tok-o">=</span>../installers
+
+<span class="tok-c1"># The CONFIGURATIONS_DIR must be relative to this directory</span>
+<span class="tok-c1"># It have to contains patch and additional files that will be added to JBOSS_DIR</span>
+<span class="tok-nv">CONFIGURATIONS_DIR</span><span class="tok-o">=</span>../configurations
+
+<span class="tok-c1"># Scripts will show warnings?</span>
+<span class="tok-nv">VERBOSE</span><span class="tok-o">=</span><span class="tok-nb">false</span>
+
+<span class="tok-c1"># JDK Installer is a RPM binary file</span>
+<span class="tok-nv">JDK_INSTALLER</span><span class="tok-o">=</span>jdk-8u144-linux-x64.rpm
+
+<span class="tok-c1"># Binay file to extract JBoss (PATH is relative to INSTALLERS_DIR)</span>
+<span class="tok-c1"># These files are the original downloaded from https://access.redhat.com</span>
+<span class="tok-nv">JBOSS_INSTALLER_ZIP</span><span class="tok-o">=</span>jboss-eap-6.4.0.zip
+<span class="tok-nv">JBOSS_PATCHES</span><span class="tok-o">=(</span>
+  jboss-eap-6.4.9-patch.zip
+  jboss-eap-6.4.16-patch.zip
+<span class="tok-o">)</span>
+
+<span class="tok-c1"># JBoss directory when extracted</span>
+<span class="tok-nv">JBOSS_DIR</span><span class="tok-o">=</span>jboss-eap-6.4
+
+<span class="tok-c1"># User (operational system) that runs JBoss</span>
+<span class="tok-nv">JBOSS_USER</span><span class="tok-o">=</span>jboss
+<span class="tok-nv">JBOSS_USER_PASSWORD</span><span class="tok-o">=</span><span class="tok-s1">&#39;jb@3!2_&#39;</span>
+<span class="tok-c1"># Group (operational system) that runs JBoss</span>
+<span class="tok-nv">JBOSS_GROUP</span><span class="tok-o">=</span>jboss
+
+<span class="tok-c1"># Directory that will contains $JBOSS_DIR</span>
+<span class="tok-nv">JBOSS_INSTALL_DIR</span><span class="tok-o">=</span>/opt
+
+<span class="tok-c1"># Link (bellow JBOSS_INSTALL_DIR) that will points to $JBOSS_DIR</span>
+<span class="tok-nv">JBOSS_LINK</span><span class="tok-o">=</span>jboss
+
+<span class="tok-c1"># Full path to JBoss</span>
+<span class="tok-nv">JBOSS_HOME</span><span class="tok-o">=</span><span class="tok-nv">$JBOSS_INSTALL_DIR</span>/<span class="tok-nv">$JBOSS_LINK</span>
+
+<span class="tok-c1"># JBoss console log file</span>
+<span class="tok-nv">JBOSS_CONSOLE_LOG</span><span class="tok-o">=</span>/var/log/jboss-as/console.log
+
+<span class="tok-c1"># Hostname of the machine that runs JBoss</span>
+<span class="tok-nv">JBOSS_HOST</span><span class="tok-o">=</span><span class="tok-sb">`</span>hostname -s<span class="tok-sb">`</span>
+
+<span class="tok-c1"># JBoss bind address (ip or hostname)</span>
+<span class="tok-k">case</span> <span class="tok-s2">&quot;</span><span class="tok-nv">$OSTYPE</span><span class="tok-s2">&quot;</span> in
+  <span class="tok-c1"># In this case (linux), it is configured with IP address of the second interface</span>
+  linux*<span class="tok-o">)</span> <span class="tok-nv">JBOSS_BIND_ADDRESS</span><span class="tok-o">=</span><span class="tok-sb">`</span>hostname -I <span class="tok-p">|</span> cut -d <span class="tok-s1">&#39; &#39;</span> -f <span class="tok-m">2</span><span class="tok-sb">`</span><span class="tok-p">;;</span>
+  <span class="tok-c1"># We put a macOS alternative just to permit a jboss-copy-patches script execution</span>
+  darwin*<span class="tok-o">)</span> <span class="tok-nv">JBOSS_BIND_ADDRESS</span><span class="tok-o">=</span>localhost<span class="tok-p">;;</span>
+<span class="tok-k">esac</span>
+
+<span class="tok-c1"># JBoss bind address management (ip or hostname)</span>
+<span class="tok-nv">JBOSS_BIND_ADDRESS_MANAGEMENT</span><span class="tok-o">=</span><span class="tok-nv">$JBOSS_BIND_ADDRESS</span>
+
+<span class="tok-c1"># JBoss domain (master) address (ip or hostname)</span>
+<span class="tok-nv">JBOSS_DOMAIN_MASTER_ADDRESS</span><span class="tok-o">=</span>dc1
+
+<span class="tok-c1"># JBoss admin username (to access console)</span>
+<span class="tok-nv">JBOSS_ADMIN_USER</span><span class="tok-o">=</span>admin
+<span class="tok-c1"># JBoss admin password</span>
+<span class="tok-nv">JBOSS_ADMIN_PASSWORD</span><span class="tok-o">=</span><span class="tok-s1">&#39;jbAdmin@123!&#39;</span>
+
+<span class="tok-c1"># Default JBoss type</span>
+<span class="tok-nv">JBOSS_TYPE</span><span class="tok-o">=</span>slave
+
+<span class="tok-c1"># Variable configurations depending on $JBOSS_HOST</span>
+<span class="tok-k">case</span> <span class="tok-nv">$JBOSS_HOST</span> in
+
+  <span class="tok-c1"># If host is master, JBOSS_TYPE is master</span>
+  <span class="tok-nv">$JBOSS_DOMAIN_MASTER_ADDRESS</span><span class="tok-o">)</span>
+    <span class="tok-nv">JBOSS_TYPE</span><span class="tok-o">=</span>master
+    <span class="tok-p">;;</span>
+
+<span class="tok-k">esac</span>
+
+<span class="tok-c1"># Host config file is JBOSS_TYPE dependant</span>
+<span class="tok-nv">JBOSS_HOST_CONFIG</span><span class="tok-o">=</span>host-<span class="tok-si">${</span><span class="tok-nv">JBOSS_TYPE</span><span class="tok-si">}</span>.xml</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Download: <a href="../../scripts/config.sample" class="bare">../../scripts/config.sample</a></p>
+</li>
+</ul>
+</div>
+<div style="page-break-after: always;"></div>
+</div>
+<div class="sect2">
+<h3 id="functions">6.6. scripts/functions</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span class="tok-ch">#!/bin/bash</span>
+
+patch<span class="tok-o">()</span> <span class="tok-o">{</span>
+  <span class="tok-nb">local</span> <span class="tok-nv">cmd</span><span class="tok-o">=</span><span class="tok-sb">`</span>which patch<span class="tok-sb">`</span>
+  <span class="tok-nb">local</span> <span class="tok-nv">f</span><span class="tok-o">=</span><span class="tok-nv">$1</span>
+  <span class="tok-nb">local</span> <span class="tok-nv">f_patch</span><span class="tok-o">=</span><span class="tok-nv">$2</span>.patch
+  <span class="tok-nb">local</span> <span class="tok-nv">original</span><span class="tok-o">=</span><span class="tok-nv">$f</span>.original
+
+  <span class="tok-k">if</span> <span class="tok-o">[</span> ! -f <span class="tok-s2">&quot;</span><span class="tok-nv">$original</span><span class="tok-s2">&quot;</span> <span class="tok-o">]</span>
+  <span class="tok-k">then</span>
+    <span class="tok-nb">echo</span> <span class="tok-s2">&quot;Saving </span><span class="tok-nv">$f</span><span class="tok-s2"> to </span><span class="tok-nv">$original</span><span class="tok-s2"> ...&quot;</span>
+    cp <span class="tok-nv">$f</span> <span class="tok-nv">$original</span>
+  <span class="tok-k">fi</span>
+  <span class="tok-nb">echo</span> <span class="tok-s2">&quot;Patching </span><span class="tok-nv">$f</span><span class="tok-s2"> with </span><span class="tok-nv">$f_patch</span><span class="tok-s2"> ...&quot;</span>
+  <span class="tok-k">if</span> <span class="tok-o">[</span> -f <span class="tok-s2">&quot;</span><span class="tok-nv">$f_patch</span><span class="tok-s2">&quot;</span> <span class="tok-o">]</span>
+  <span class="tok-k">then</span>
+    <span class="tok-nv">$cmd</span> <span class="tok-nv">$f</span> &lt; <span class="tok-nv">$f_patch</span> &gt; /dev/null
+  <span class="tok-k">else</span>
+    <span class="tok-nb">echo</span> <span class="tok-s2">&quot;Warning: file </span><span class="tok-nv">$f_patch</span><span class="tok-s2"> not found!&quot;</span>
+  <span class="tok-k">fi</span>
+<span class="tok-o">}</span></code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Download: <a href="../../scripts/functions" class="bare">../../scripts/functions</a></p>
+</li>
+</ul>
+</div>
+<div style="page-break-after: always;"></div>
+</div>
+<div class="sect2">
+<h3 id="install">6.7. scripts/install</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span class="tok-ch">#!/bin/bash</span>
+<span class="tok-nv">BASE_DIR</span><span class="tok-o">=</span><span class="tok-sb">`</span><span class="tok-nb">cd</span> <span class="tok-s2">&quot;</span><span class="tok-k">$(</span>dirname <span class="tok-s2">&quot;</span><span class="tok-nv">$0</span><span class="tok-s2">&quot;</span><span class="tok-k">)</span><span class="tok-s2">&quot;</span><span class="tok-p">;</span> <span class="tok-nb">pwd</span><span class="tok-sb">`</span>
+<span class="tok-nb">source</span> <span class="tok-s2">&quot;</span><span class="tok-nv">$BASE_DIR</span><span class="tok-s2">&quot;</span>/common
+
+<span class="tok-nb">cd</span> <span class="tok-s2">&quot;</span><span class="tok-nv">$BASE_DIR</span><span class="tok-s2">&quot;</span>
+
+./jboss-dependencies-install
+./jboss-jdk-install
+./jboss-install
+./jboss-firewall-configure</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Download: <a href="../../scripts/install" class="bare">../../scripts/install</a></p>
+</li>
+<li>
+<p>Dependências:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="#common">scripts/common</a></p>
+</li>
+<li>
+<p><a href="#jboss-dependencies-install">scripts/jboss-dependencies-install</a></p>
+</li>
+<li>
+<p><a href="#jboss-jdk-install">scripts/jboss-jdk-install</a></p>
+</li>
+<li>
+<p><a href="#jboss-install">scripts/jboss-install</a></p>
+</li>
+<li>
+<p><a href="#jboss-firewall-configure">scripts/jboss-firewall-configure</a></p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div style="page-break-after: always;"></div>
+</div>
+<div class="sect2">
+<h3 id="jboss-add-user">6.8. scripts/jboss-add-user</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span class="tok-ch">#!/bin/bash</span>
+<span class="tok-nv">BASE_DIR</span><span class="tok-o">=</span><span class="tok-sb">`</span><span class="tok-nb">cd</span> <span class="tok-s2">&quot;</span><span class="tok-k">$(</span>dirname <span class="tok-s2">&quot;</span><span class="tok-nv">$0</span><span class="tok-s2">&quot;</span><span class="tok-k">)</span><span class="tok-s2">&quot;</span><span class="tok-p">;</span> <span class="tok-nb">pwd</span><span class="tok-sb">`</span>
+<span class="tok-nb">source</span> <span class="tok-s2">&quot;</span><span class="tok-nv">$BASE_DIR</span><span class="tok-s2">&quot;</span>/common
+
+<span class="tok-nb">echo</span> <span class="tok-s2">&quot;Adding JBoss admin user (</span><span class="tok-nv">$JBOSS_ADMIN_USER</span><span class="tok-s2">) ...&quot;</span>
+<span class="tok-nv">$JBOSS_HOME</span>/bin/add-user.sh -s -u <span class="tok-s2">&quot;</span><span class="tok-nv">$JBOSS_ADMIN_USER</span><span class="tok-s2">&quot;</span> -p <span class="tok-s2">&quot;</span><span class="tok-nv">$JBOSS_ADMIN_PASSWORD</span><span class="tok-s2">&quot;</span></code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Download: <a href="../../jboss-add-user" class="bare">../../jboss-add-user</a></p>
+</li>
+<li>
+<p>Dependências:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="#common">scripts/common</a></p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div style="page-break-after: always;"></div>
+</div>
+<div class="sect2">
+<h3 id="jboss-backup2master">6.9. scripts/jboss-backup2master</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span class="tok-ch">#!/bin/bash</span>
+<span class="tok-nv">BASE_DIR</span><span class="tok-o">=</span><span class="tok-sb">`</span><span class="tok-nb">cd</span> <span class="tok-s2">&quot;</span><span class="tok-k">$(</span>dirname <span class="tok-s2">&quot;</span><span class="tok-nv">$0</span><span class="tok-s2">&quot;</span><span class="tok-k">)</span><span class="tok-s2">&quot;</span><span class="tok-p">;</span> <span class="tok-nb">pwd</span><span class="tok-sb">`</span>
+<span class="tok-nb">source</span> <span class="tok-s2">&quot;</span><span class="tok-nv">$BASE_DIR</span><span class="tok-s2">&quot;</span>/common
+
+<span class="tok-nv">$JBOSS_INSTALL_DIR</span>/<span class="tok-nv">$JBOSS_LINK</span>/bin/jboss-cli.sh -c <span class="tok-se">\</span>
+--controller<span class="tok-o">=</span><span class="tok-nv">$JBOSS_DOMAIN_MASTER_ADDRESS</span> <span class="tok-se">\</span>
+--commands<span class="tok-o">=</span><span class="tok-s2">&quot;/host=backup:write-local-domain-controller,reload --host=backup&quot;</span></code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Download: <a href="../../jboss-backup2master" class="bare">../../jboss-backup2master</a></p>
+</li>
+<li>
+<p>Dependências:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="#common">scripts/common</a></p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div style="page-break-after: always;"></div>
+</div>
+<div class="sect2">
+<h3 id="jboss-backup2original">6.10. scripts/jboss-backup2original</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span class="tok-ch">#!/bin/bash</span>
+<span class="tok-nv">BASE_DIR</span><span class="tok-o">=</span><span class="tok-sb">`</span><span class="tok-nb">cd</span> <span class="tok-s2">&quot;</span><span class="tok-k">$(</span>dirname <span class="tok-s2">&quot;</span><span class="tok-nv">$0</span><span class="tok-s2">&quot;</span><span class="tok-k">)</span><span class="tok-s2">&quot;</span><span class="tok-p">;</span> <span class="tok-nb">pwd</span><span class="tok-sb">`</span>
+<span class="tok-nb">source</span> <span class="tok-s2">&quot;</span><span class="tok-nv">$BASE_DIR</span><span class="tok-s2">&quot;</span>/common
+
+<span class="tok-nv">f</span><span class="tok-o">=</span>domain/configuration/host-backup.xml
+cp <span class="tok-nv">$INSTALLERS_DIR</span>/<span class="tok-nv">$JBOSS_DIR</span>/<span class="tok-nv">$f</span> <span class="tok-nv">$JBOSS_INSTALL_DIR</span>/<span class="tok-nv">$JBOSS_LINK</span>/<span class="tok-nv">$f</span>
+chown <span class="tok-nv">$JBOSS_USER</span>: <span class="tok-nv">$JBOSS_INSTALL_DIR</span>/<span class="tok-nv">$JBOSS_LINK</span>/<span class="tok-nv">$f</span>
+service jboss-as-domain restart</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Download: <a href="../../jboss-backup2original" class="bare">../../jboss-backup2original</a></p>
+</li>
+<li>
+<p>Dependências:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="#common">scripts/common</a></p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div style="page-break-after: always;"></div>
+</div>
+<div class="sect2">
+<h3 id="jboss-configure">6.11. scripts/jboss-configure</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span class="tok-ch">#!/bin/bash</span>
+<span class="tok-nv">BASE_DIR</span><span class="tok-o">=</span><span class="tok-sb">`</span><span class="tok-nb">cd</span> <span class="tok-s2">&quot;</span><span class="tok-k">$(</span>dirname <span class="tok-s2">&quot;</span><span class="tok-nv">$0</span><span class="tok-s2">&quot;</span><span class="tok-k">)</span><span class="tok-s2">&quot;</span><span class="tok-p">;</span> <span class="tok-nb">pwd</span><span class="tok-sb">`</span>
+<span class="tok-nb">source</span> <span class="tok-s2">&quot;</span><span class="tok-nv">$BASE_DIR</span><span class="tok-s2">&quot;</span>/common
+
+<span class="tok-nv">d</span><span class="tok-o">=</span><span class="tok-nv">$JBOSS_INSTALL_DIR</span>/<span class="tok-nv">$JBOSS_DIR</span>
+<span class="tok-nb">echo</span> <span class="tok-s2">&quot;Configuring </span><span class="tok-nv">$d</span><span class="tok-s2"> files ...&quot;</span>
+<span class="tok-nb">cd</span> <span class="tok-s2">&quot;</span><span class="tok-nv">$d</span><span class="tok-s2">&quot;</span>
+
+<span class="tok-nv">f</span><span class="tok-o">=</span>bin/domain.conf
+<span class="tok-k">case</span> <span class="tok-s2">&quot;</span><span class="tok-nv">$JBOSS_TYPE</span><span class="tok-s2">&quot;</span> in
+  master<span class="tok-o">)</span> <span class="tok-nv">f_patch</span><span class="tok-o">=</span><span class="tok-nv">$f</span>.master<span class="tok-p">;;</span>
+  backup<span class="tok-p">|</span>slave<span class="tok-o">)</span> <span class="tok-nv">f_patch</span><span class="tok-o">=</span><span class="tok-nv">$f</span>.slave<span class="tok-p">;;</span>
+<span class="tok-k">esac</span>
+patch <span class="tok-nv">$f</span> <span class="tok-nv">$f_patch</span>
+
+<span class="tok-nb">echo</span> <span class="tok-s2">&quot;  Configuring JBOSS variables in </span><span class="tok-nv">$f</span><span class="tok-s2"> ...&quot;</span>
+<span class="tok-nb">echo</span> <span class="tok-s2">&quot;    JBOSS_BIND_ADDRESS_MANAGEMENT=</span><span class="tok-nv">$JBOSS_BIND_ADDRESS_MANAGEMENT</span><span class="tok-s2">&quot;</span>
+<span class="tok-nb">echo</span> <span class="tok-s2">&quot;    JBOSS_BIND_ADDRESS=</span><span class="tok-nv">$JBOSS_BIND_ADDRESS</span><span class="tok-s2">&quot;</span>
+<span class="tok-nb">echo</span> <span class="tok-s2">&quot;    JBOSS_DOMAIN_MASTER_ADDRESS=</span><span class="tok-nv">$JBOSS_DOMAIN_MASTER_ADDRESS</span><span class="tok-s2">&quot;</span>
+<span class="tok-o">[</span> <span class="tok-s2">&quot;</span><span class="tok-nv">$JBOSS_DOMAIN_BACKUP_ADDRESS</span><span class="tok-s2">&quot;</span> <span class="tok-o">]</span> <span class="tok-o">&amp;&amp;</span> <span class="tok-se">\</span>
+<span class="tok-nb">echo</span> <span class="tok-s2">&quot;    JBOSS_DOMAIN_BACKUP_ADDRESS=</span><span class="tok-nv">$JBOSS_DOMAIN_BACKUP_ADDRESS</span><span class="tok-s2">&quot;</span>
+
+sed -i <span class="tok-s2">&quot;</span>
+<span class="tok-s2">  s/JBOSS_BIND_ADDRESS_MANAGEMENT/</span><span class="tok-nv">$JBOSS_BIND_ADDRESS_MANAGEMENT</span><span class="tok-s2">/g ;</span>
+<span class="tok-s2">  s/JBOSS_BIND_ADDRESS/</span><span class="tok-nv">$JBOSS_BIND_ADDRESS</span><span class="tok-s2">/g ;</span>
+<span class="tok-s2">  s/JBOSS_DOMAIN_MASTER_ADDRESS/</span><span class="tok-nv">$JBOSS_DOMAIN_MASTER_ADDRESS</span><span class="tok-s2">/g ;</span>
+<span class="tok-s2">  s/JBOSS_DOMAIN_BACKUP_ADDRESS/</span><span class="tok-nv">$JBOSS_DOMAIN_BACKUP_ADDRESS</span><span class="tok-s2">/g</span>
+<span class="tok-s2">&quot;</span> <span class="tok-nv">$f</span>
+
+<span class="tok-k">if</span> <span class="tok-o">[</span> <span class="tok-s2">&quot;</span><span class="tok-nv">$JBOSS_TYPE</span><span class="tok-s2">&quot;</span> <span class="tok-o">=</span> master <span class="tok-o">]</span>
+<span class="tok-k">then</span>
+  <span class="tok-nv">f</span><span class="tok-o">=</span>domain/configuration/domain.xml
+  patch <span class="tok-nv">$f</span> <span class="tok-nv">$f</span>
+<span class="tok-k">fi</span>
+
+<span class="tok-c1"># tag::host-slave[]</span>
+<span class="tok-nv">f</span><span class="tok-o">=</span>domain/configuration/<span class="tok-nv">$JBOSS_HOST_CONFIG</span>
+<span class="tok-nv">f_patch</span><span class="tok-o">=</span><span class="tok-nv">$f</span>
+<span class="tok-k">if</span> <span class="tok-o">[</span> <span class="tok-s2">&quot;</span><span class="tok-nv">$JBOSS_HOST_CONFIG</span><span class="tok-s2">&quot;</span> <span class="tok-o">=</span> <span class="tok-s2">&quot;host-slave.xml&quot;</span> <span class="tok-o">]</span>
+<span class="tok-k">then</span>
+  <span class="tok-o">[</span> <span class="tok-s2">&quot;</span><span class="tok-nv">$JBOSS_DOMAIN_BACKUP_ADDRESS</span><span class="tok-s2">&quot;</span> <span class="tok-o">]</span> <span class="tok-o">||</span> <span class="tok-nv">f_patch</span><span class="tok-o">=</span><span class="tok-nv">$f_patch</span>.no-backup
+<span class="tok-k">fi</span>
+<span class="tok-o">[</span> <span class="tok-s2">&quot;</span><span class="tok-nv">$JBOSS_SERVER_CONFIG</span><span class="tok-s2">&quot;</span> <span class="tok-o">]</span> <span class="tok-o">&amp;&amp;</span> <span class="tok-nv">f_patch</span><span class="tok-o">=</span><span class="tok-nv">$f_patch</span>.<span class="tok-nv">$JBOSS_SERVER_CONFIG</span>
+patch <span class="tok-nv">$f</span> <span class="tok-nv">$f_patch</span>
+<span class="tok-c1"># end::host-slave[]</span>
+
+<span class="tok-nv">JBOSS_ADMIN_PASSWORD_BASE64</span><span class="tok-o">=</span><span class="tok-sb">`</span><span class="tok-nb">echo</span> -n <span class="tok-nv">$JBOSS_ADMIN_PASSWORD</span><span class="tok-p">|</span>base64<span class="tok-sb">`</span>
+<span class="tok-nb">echo</span> <span class="tok-s2">&quot;  Configuring JBOSS variables in </span><span class="tok-nv">$f</span><span class="tok-s2"> ...&quot;</span>
+<span class="tok-nb">echo</span> <span class="tok-s2">&quot;    JBOSS_HOST=</span><span class="tok-nv">$JBOSS_HOST</span><span class="tok-s2">&quot;</span>
+<span class="tok-nb">echo</span> <span class="tok-s2">&quot;    JBOSS_ADMIN_USER=</span><span class="tok-nv">$JBOSS_ADMIN_USER</span><span class="tok-s2">&quot;</span>
+<span class="tok-nb">echo</span> <span class="tok-s2">&quot;    JBOSS_ADMIN_PASSWORD_BASE64=</span><span class="tok-nv">$JBOSS_ADMIN_PASSWORD_BASE64</span><span class="tok-s2">&quot;</span>
+sed -i <span class="tok-s2">&quot;</span>
+<span class="tok-s2">  s/JBOSS_ADMIN_USER/</span><span class="tok-nv">$JBOSS_ADMIN_USER</span><span class="tok-s2">/g ;</span>
+<span class="tok-s2">  s/JBOSS_ADMIN_PASSWORD_BASE64/</span><span class="tok-nv">$JBOSS_ADMIN_PASSWORD_BASE64</span><span class="tok-s2">/g ;</span>
+<span class="tok-s2">  s/JBOSS_HOST/</span><span class="tok-nv">$JBOSS_HOST</span><span class="tok-s2">/g</span>
+<span class="tok-s2">&quot;</span> <span class="tok-nv">$f</span></code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Download: <a href="../../jboss-configure" class="bare">../../jboss-configure</a></p>
+</li>
+<li>
+<p>Dependências:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="#common">scripts/common</a></p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div style="page-break-after: always;"></div>
+</div>
+<div class="sect2">
+<h3 id="jboss-copy-patches">6.12. scripts/jboss-copy-patches</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span class="tok-ch">#!/bin/bash</span>
+<span class="tok-nv">BASE_DIR</span><span class="tok-o">=</span><span class="tok-sb">`</span><span class="tok-nb">cd</span> <span class="tok-s2">&quot;</span><span class="tok-k">$(</span>dirname <span class="tok-s2">&quot;</span><span class="tok-nv">$0</span><span class="tok-s2">&quot;</span><span class="tok-k">)</span><span class="tok-s2">&quot;</span><span class="tok-p">;</span> <span class="tok-nb">pwd</span><span class="tok-sb">`</span>
+<span class="tok-nv">LINUX_NEEDED</span><span class="tok-o">=</span><span class="tok-nb">false</span> <span class="tok-nv">ROOT_NEEDED</span><span class="tok-o">=</span><span class="tok-nb">false</span> <span class="tok-nb">source</span> <span class="tok-s2">&quot;</span><span class="tok-nv">$BASE_DIR</span><span class="tok-s2">&quot;</span>/common
+
+<span class="tok-nb">cd</span> <span class="tok-s2">&quot;</span><span class="tok-nv">$BASE_DIR</span><span class="tok-s2">/</span><span class="tok-nv">$INSTALLERS_DIR</span><span class="tok-s2">&quot;</span>
+<span class="tok-nb">echo</span> <span class="tok-s2">&quot;Copying </span><span class="tok-nv">$JBOSS_DIR</span><span class="tok-s2">/*.patch (recursively and with parents) to </span><span class="tok-nv">$CONFIGURATIONS_DIR</span><span class="tok-s2"> ...&quot;</span>
+
+<span class="tok-o">[</span> -d <span class="tok-s2">&quot;</span><span class="tok-nv">$JBOSS_DIR</span><span class="tok-s2">&quot;</span> <span class="tok-o">]</span> <span class="tok-o">||</span> <span class="tok-o">{</span> <span class="tok-nb">echo</span> <span class="tok-s2">&quot;Directory </span><span class="tok-nv">$JBOSS_DIR</span><span class="tok-s2"> not found!&quot;</span><span class="tok-p">;</span> <span class="tok-nb">exit</span> <span class="tok-m">1</span><span class="tok-p">;</span> <span class="tok-o">}</span>
+
+tar cf - <span class="tok-k">$(</span>find <span class="tok-s2">&quot;</span><span class="tok-nv">$JBOSS_DIR</span><span class="tok-s2">&quot;</span> -type f -name <span class="tok-s1">&#39;*.patch&#39;</span><span class="tok-k">)</span> <span class="tok-p">|</span> tar xf - -C <span class="tok-s2">&quot;</span><span class="tok-nv">$CONFIGURATIONS_DIR</span><span class="tok-s2">&quot;</span></code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Download: <a href="../../jboss-copy-patches" class="bare">../../jboss-copy-patches</a></p>
+</li>
+<li>
+<p>Dependências:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="#common">scripts/common</a></p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div style="page-break-after: always;"></div>
+</div>
+<div class="sect2">
+<h3 id="jboss-dependencies-install">6.13. scripts/jboss-dependencies-install</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span class="tok-ch">#!/bin/bash</span>
+<span class="tok-nv">BASE_DIR</span><span class="tok-o">=</span><span class="tok-sb">`</span><span class="tok-nb">cd</span> <span class="tok-s2">&quot;</span><span class="tok-k">$(</span>dirname <span class="tok-s2">&quot;</span><span class="tok-nv">$0</span><span class="tok-s2">&quot;</span><span class="tok-k">)</span><span class="tok-s2">&quot;</span><span class="tok-p">;</span> <span class="tok-nb">pwd</span><span class="tok-sb">`</span>
+<span class="tok-nb">source</span> <span class="tok-s2">&quot;</span><span class="tok-nv">$BASE_DIR</span><span class="tok-s2">&quot;</span>/common
+
+yum -y install vim rsync zip unzip tree lsof bzip2 telnet patch tmux</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Download: <a href="../../jboss-dependencies-install" class="bare">../../jboss-dependencies-install</a></p>
+</li>
+<li>
+<p>Dependências:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="#common">scripts/common</a></p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div style="page-break-after: always;"></div>
+</div>
+<div class="sect2">
+<h3 id="jboss-extract">6.14. scripts/jboss-extract</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span class="tok-ch">#!/bin/bash</span>
+<span class="tok-c1">#</span>
+<span class="tok-c1"># 1) Extract a fresh copy of JBoss EAP on $INSTALLER_DIR</span>
+<span class="tok-c1"># 2) Apply JBoss EAP patches</span>
+<span class="tok-c1">#</span>
+<span class="tok-c1"># This script can be called outside Linux (ex.: macOS) and does needs to be executed by root</span>
+<span class="tok-c1">#</span>
+<span class="tok-nv">BASE_DIR</span><span class="tok-o">=</span><span class="tok-sb">`</span><span class="tok-nb">cd</span> <span class="tok-s2">&quot;</span><span class="tok-k">$(</span>dirname <span class="tok-s2">&quot;</span><span class="tok-nv">$0</span><span class="tok-s2">&quot;</span><span class="tok-k">)</span><span class="tok-s2">&quot;</span><span class="tok-p">;</span> <span class="tok-nb">pwd</span><span class="tok-sb">`</span>
+<span class="tok-nv">LINUX_NEEDED</span><span class="tok-o">=</span><span class="tok-nb">false</span> <span class="tok-nv">ROOT_NEEDED</span><span class="tok-o">=</span><span class="tok-nb">false</span> <span class="tok-nb">source</span> <span class="tok-s2">&quot;</span><span class="tok-nv">$BASE_DIR</span><span class="tok-s2">&quot;</span>/common
+
+<span class="tok-nb">cd</span> <span class="tok-s2">&quot;</span><span class="tok-nv">$BASE_DIR</span><span class="tok-s2">/</span><span class="tok-nv">$INSTALLERS_DIR</span><span class="tok-s2">&quot;</span>
+<span class="tok-nb">echo</span> <span class="tok-s2">&quot;Creating base installation (</span><span class="tok-nv">$PWD</span><span class="tok-s2">/</span><span class="tok-nv">$JBOSS_DIR</span><span class="tok-s2">) from </span><span class="tok-nv">$JBOSS_INSTALLER_ZIP</span><span class="tok-s2"> ...&quot;</span>
+
+<span class="tok-k">if</span> <span class="tok-o">[</span> -d <span class="tok-s2">&quot;</span><span class="tok-nv">$JBOSS_DIR</span><span class="tok-s2">&quot;</span> <span class="tok-o">]</span>
+<span class="tok-k">then</span>
+  <span class="tok-nb">echo</span> <span class="tok-s2">&quot;Removing existing ...&quot;</span>
+  rm -rf <span class="tok-s2">&quot;</span><span class="tok-nv">$JBOSS_DIR</span><span class="tok-s2">&quot;</span>
+<span class="tok-k">fi</span>
+
+<span class="tok-nb">echo</span> <span class="tok-s2">&quot;Extracting JBoss from </span><span class="tok-nv">$JBOSS_INSTALLER_ZIP</span><span class="tok-s2"> ...&quot;</span>
+unzip -q <span class="tok-nv">$JBOSS_INSTALLER_ZIP</span>
+
+<span class="tok-nb">echo</span> <span class="tok-s2">&quot;Patching JBoss ...&quot;</span>
+<span class="tok-k">for</span> patch in <span class="tok-si">${</span><span class="tok-nv">JBOSS_PATCHES</span><span class="tok-p">[*]</span><span class="tok-si">}</span>
+<span class="tok-k">do</span>
+  <span class="tok-nb">echo</span> <span class="tok-s2">&quot;  Applying patch </span><span class="tok-nv">$patch</span><span class="tok-s2"> ...&quot;</span>
+  <span class="tok-nv">$JBOSS_DIR</span>/bin/jboss-cli.sh --command<span class="tok-o">=</span><span class="tok-s2">&quot;patch apply --override-all </span><span class="tok-nv">$patch</span><span class="tok-s2">&quot;</span> &gt; /dev/null
+<span class="tok-k">done</span>
+
+<span class="tok-nb">echo</span> <span class="tok-s2">&quot;Copying configurations from </span><span class="tok-nv">$CONFIGURATIONS_DIR</span><span class="tok-s2"> ...&quot;</span>
+rsync -a <span class="tok-s2">&quot;</span><span class="tok-nv">$CONFIGURATIONS_DIR</span><span class="tok-s2">/</span><span class="tok-nv">$JBOSS_DIR</span><span class="tok-s2">&quot;</span> .</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Download: <a href="../../scripts/jboss-extract" class="bare">../../scripts/jboss-extract</a></p>
+</li>
+<li>
+<p>Dependências:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="#common">scripts/common</a></p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div style="page-break-after: always;"></div>
+</div>
+<div class="sect2">
+<h3 id="jboss-firewall-configure">6.15. scripts/jboss-firewall-configure</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span class="tok-ch">#!/bin/bash</span>
+<span class="tok-nv">BASE_DIR</span><span class="tok-o">=</span><span class="tok-sb">`</span><span class="tok-nb">cd</span> <span class="tok-s2">&quot;</span><span class="tok-k">$(</span>dirname <span class="tok-s2">&quot;</span><span class="tok-nv">$0</span><span class="tok-s2">&quot;</span><span class="tok-k">)</span><span class="tok-s2">&quot;</span><span class="tok-p">;</span> <span class="tok-nb">pwd</span><span class="tok-sb">`</span>
+<span class="tok-nb">source</span> <span class="tok-s2">&quot;</span><span class="tok-nv">$BASE_DIR</span><span class="tok-s2">&quot;</span>/common
+
+<span class="tok-k">for</span> port in <span class="tok-m">9990</span> <span class="tok-m">9999</span> <span class="tok-m">8080</span> <span class="tok-m">8443</span>
+<span class="tok-k">do</span>
+  firewall-cmd --zone<span class="tok-o">=</span>public --add-port<span class="tok-o">=</span><span class="tok-nv">$port</span>/tcp --permanent
+<span class="tok-k">done</span>
+firewall-cmd --reload</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Download: <a href="../../scripts/jboss-firewall-configure" class="bare">../../scripts/jboss-firewall-configure</a></p>
+</li>
+<li>
+<p>Dependências:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="#common">scripts/common</a></p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div style="page-break-after: always;"></div>
+</div>
+<div class="sect2">
+<h3 id="jboss-fix-permissions">6.16. scripts/jboss-fix-permissions</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span class="tok-ch">#!/bin/bash</span>
+<span class="tok-nv">BASE_DIR</span><span class="tok-o">=</span><span class="tok-sb">`</span><span class="tok-nb">cd</span> <span class="tok-s2">&quot;</span><span class="tok-k">$(</span>dirname <span class="tok-s2">&quot;</span><span class="tok-nv">$0</span><span class="tok-s2">&quot;</span><span class="tok-k">)</span><span class="tok-s2">&quot;</span><span class="tok-p">;</span> <span class="tok-nb">pwd</span><span class="tok-sb">`</span>
+<span class="tok-nb">source</span> <span class="tok-s2">&quot;</span><span class="tok-nv">$BASE_DIR</span><span class="tok-s2">&quot;</span>/common
+
+<span class="tok-nb">echo</span> <span class="tok-s2">&quot;Configuring JBoss owner (</span><span class="tok-nv">$JBOSS_USER</span><span class="tok-s2">:</span><span class="tok-nv">$JBOSS_GROUP</span><span class="tok-s2">) ...&quot;</span>
+chown -R <span class="tok-nv">$JBOSS_USER</span>:<span class="tok-nv">$JBOSS_GROUP</span> <span class="tok-s2">&quot;</span><span class="tok-nv">$JBOSS_INSTALL_DIR</span><span class="tok-s2">/</span><span class="tok-nv">$JBOSS_DIR</span><span class="tok-s2">&quot;</span></code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Download: <a href="../../scripts/jboss-fix-permissions" class="bare">../../scripts/jboss-fix-permissions</a></p>
+</li>
+<li>
+<p>Dependências:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="#common">scripts/common</a></p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div style="page-break-after: always;"></div>
+</div>
+<div class="sect2">
+<h3 id="jboss-install">6.17. scripts/jboss-install</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span class="tok-ch">#!/bin/bash</span>
+<span class="tok-nv">BASE_DIR</span><span class="tok-o">=</span><span class="tok-sb">`</span><span class="tok-nb">cd</span> <span class="tok-s2">&quot;</span><span class="tok-k">$(</span>dirname <span class="tok-s2">&quot;</span><span class="tok-nv">$0</span><span class="tok-s2">&quot;</span><span class="tok-k">)</span><span class="tok-s2">&quot;</span><span class="tok-p">;</span> <span class="tok-nb">pwd</span><span class="tok-sb">`</span>
+<span class="tok-nb">source</span> <span class="tok-s2">&quot;</span><span class="tok-nv">$BASE_DIR</span><span class="tok-s2">&quot;</span>/common
+
+<span class="tok-nb">cd</span> <span class="tok-s2">&quot;</span><span class="tok-nv">$BASE_DIR</span><span class="tok-s2">&quot;</span>
+
+<span class="tok-nb">echo</span> <span class="tok-s2">&quot;Installing JBoss Host (</span><span class="tok-nv">$JBOSS_HOST</span><span class="tok-s2">: </span><span class="tok-nv">$JBOSS_TYPE</span><span class="tok-s2">) ...&quot;</span>
+
+./jboss-useradd
+./jboss-uninstall
+
+<span class="tok-o">[</span> -d <span class="tok-s2">&quot;</span><span class="tok-nv">$INSTALLERS_DIR</span><span class="tok-s2">/</span><span class="tok-nv">$JBOSS_DIR</span><span class="tok-s2">&quot;</span> <span class="tok-o">]</span> <span class="tok-o">||</span> ./jboss-extract
+
+<span class="tok-nb">echo</span> <span class="tok-s2">&quot;Copying </span><span class="tok-nv">$INSTALLERS_DIR</span><span class="tok-s2">/</span><span class="tok-nv">$JBOSS_DIR</span><span class="tok-s2"> to </span><span class="tok-nv">$JBOSS_INSTALL_DIR</span><span class="tok-s2"> ...&quot;</span>
+rsync -a <span class="tok-s2">&quot;</span><span class="tok-nv">$INSTALLERS_DIR</span><span class="tok-s2">/</span><span class="tok-nv">$JBOSS_DIR</span><span class="tok-s2">&quot;</span> <span class="tok-s2">&quot;</span><span class="tok-nv">$JBOSS_INSTALL_DIR</span><span class="tok-s2">&quot;</span>
+
+<span class="tok-nb">echo</span> <span class="tok-s2">&quot;Creating link </span><span class="tok-nv">$JBOSS_INSTALL_DIR</span><span class="tok-s2">/</span><span class="tok-nv">$JBOSS_LINK</span><span class="tok-s2"> ...&quot;</span>
+<span class="tok-nb">cd</span> <span class="tok-s2">&quot;</span><span class="tok-nv">$JBOSS_INSTALL_DIR</span><span class="tok-s2">&quot;</span>
+ln -s <span class="tok-nv">$JBOSS_DIR</span> <span class="tok-nv">$JBOSS_LINK</span>
+<span class="tok-nb">cd</span> - <span class="tok-p">&amp;</span>&gt; /dev/null
+
+./jboss-configure
+./jboss-add-user
+./jboss-fix-permissions
+./jboss-service-install</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Download: <a href="../../scripts/jboss-install" class="bare">../../scripts/jboss-install</a></p>
+</li>
+<li>
+<p>Dependências:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="#common">scripts/common</a></p>
+</li>
+<li>
+<p><a href="#jboss-useradd">scripts/jboss-useradd</a></p>
+</li>
+<li>
+<p><a href="#jboss-uninstall">scripts/jboss-uninstall</a></p>
+</li>
+<li>
+<p><a href="#jboss-configure">scripts/jboss-configure</a></p>
+</li>
+<li>
+<p><a href="#jboss-add-user">scripts/jboss-add-user</a></p>
+</li>
+<li>
+<p><a href="#jboss-fix-permissions">scripts/jboss-fix-permissions</a></p>
+</li>
+<li>
+<p><a href="#jboss-service-install">scripts/jboss-service-install</a></p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div style="page-break-after: always;"></div>
+</div>
+<div class="sect2">
+<h3 id="jboss-jdk-install">6.18. scripts/jboss-jdk-install</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span class="tok-ch">#!/bin/bash</span>
+<span class="tok-nv">BASE_DIR</span><span class="tok-o">=</span><span class="tok-sb">`</span><span class="tok-nb">cd</span> <span class="tok-s2">&quot;</span><span class="tok-k">$(</span>dirname <span class="tok-s2">&quot;</span><span class="tok-nv">$0</span><span class="tok-s2">&quot;</span><span class="tok-k">)</span><span class="tok-s2">&quot;</span><span class="tok-p">;</span> <span class="tok-nb">pwd</span><span class="tok-sb">`</span>
+<span class="tok-nb">source</span> <span class="tok-s2">&quot;</span><span class="tok-nv">$BASE_DIR</span><span class="tok-s2">&quot;</span>/common
+
+<span class="tok-nb">cd</span> <span class="tok-s2">&quot;</span><span class="tok-nv">$BASE_DIR</span><span class="tok-s2">&quot;</span>
+
+<span class="tok-k">if</span> ! which java <span class="tok-p">&amp;</span>&gt; /dev/null
+<span class="tok-k">then</span>
+  <span class="tok-nb">echo</span> <span class="tok-s2">&quot;Installing </span><span class="tok-nv">$INSTALLERS_DIR</span><span class="tok-s2">/</span><span class="tok-nv">$JDK_INSTALLER</span><span class="tok-s2"> ...&quot;</span>
+  rpm -ivh <span class="tok-s2">&quot;</span><span class="tok-nv">$INSTALLERS_DIR</span><span class="tok-s2">/</span><span class="tok-nv">$JDK_INSTALLER</span><span class="tok-s2">&quot;</span>
+<span class="tok-k">fi</span></code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Download: <a href="../../jboss-jdk-install" class="bare">../../jboss-jdk-install</a></p>
+</li>
+<li>
+<p>Dependências:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="#common">scripts/common</a></p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div style="page-break-after: always;"></div>
+</div>
+<div class="sect2">
+<h3 id="jboss-service-install">6.19. scripts/jboss-service-install</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span class="tok-ch">#!/bin/bash</span>
+<span class="tok-nv">BASE_DIR</span><span class="tok-o">=</span><span class="tok-sb">`</span><span class="tok-nb">cd</span> <span class="tok-s2">&quot;</span><span class="tok-k">$(</span>dirname <span class="tok-s2">&quot;</span><span class="tok-nv">$0</span><span class="tok-s2">&quot;</span><span class="tok-k">)</span><span class="tok-s2">&quot;</span><span class="tok-p">;</span> <span class="tok-nb">pwd</span><span class="tok-sb">`</span>
+<span class="tok-nb">source</span> <span class="tok-s2">&quot;</span><span class="tok-nv">$BASE_DIR</span><span class="tok-s2">&quot;</span>/common
+
+<span class="tok-nb">cd</span> <span class="tok-s2">&quot;</span><span class="tok-nv">$BASE_DIR</span><span class="tok-s2">&quot;</span>
+
+<span class="tok-nv">f</span><span class="tok-o">=</span><span class="tok-nv">$JBOSS_INSTALL_DIR</span>/<span class="tok-nv">$JBOSS_DIR</span>/bin/init.d/jboss-as-domain.sh
+<span class="tok-nv">f2</span><span class="tok-o">=</span>/etc/init.d/jboss-as-domain
+<span class="tok-nb">echo</span> <span class="tok-s2">&quot;Copying </span><span class="tok-nv">$f</span><span class="tok-s2"> to </span><span class="tok-nv">$f2</span><span class="tok-s2"> ...&quot;</span>
+<span class="tok-o">[</span> -r <span class="tok-nv">$f2</span> <span class="tok-o">]</span> <span class="tok-o">&amp;&amp;</span> rm -f <span class="tok-nv">$f2</span>
+cp <span class="tok-s2">&quot;</span><span class="tok-nv">$f</span><span class="tok-s2">&quot;</span> <span class="tok-s2">&quot;</span><span class="tok-nv">$f2</span><span class="tok-s2">&quot;</span>
+
+<span class="tok-nv">f</span><span class="tok-o">=</span>/etc/jboss-as/jboss-as.conf
+<span class="tok-nb">echo</span> <span class="tok-s2">&quot;Configuring </span><span class="tok-nv">$f</span><span class="tok-s2"> ...&quot;</span>
+mkdir -p <span class="tok-sb">`</span>dirname <span class="tok-s2">&quot;</span><span class="tok-nv">$f</span><span class="tok-s2">&quot;</span><span class="tok-sb">`</span>
+cat &gt; <span class="tok-s2">&quot;</span><span class="tok-nv">$f</span><span class="tok-s2">&quot;</span> <span class="tok-s">&lt;&lt;EOF</span>
+<span class="tok-s">JBOSS_USER=$JBOSS_USER</span>
+<span class="tok-s">JBOSS_CONSOLE_LOG=/var/log/jboss-as/console.log</span>
+<span class="tok-s">JBOSS_HOME=$JBOSS_HOME</span>
+<span class="tok-s">JBOSS_HOST_CONFIG=$JBOSS_HOST_CONFIG</span>
+<span class="tok-s">EOF</span>
+
+<span class="tok-k">if</span> <span class="tok-o">[</span> <span class="tok-nv">$JBOSS_TYPE</span> <span class="tok-o">=</span> backup <span class="tok-o">]</span>
+<span class="tok-k">then</span>
+  <span class="tok-nb">echo</span> <span class="tok-s2">&quot;JBOSS_SCRIPT=&#39;</span><span class="tok-nv">$JBOSS_INSTALL_DIR</span><span class="tok-s2">/</span><span class="tok-nv">$JBOSS_LINK</span><span class="tok-s2">/bin/domain.sh --backup&#39;&quot;</span> &gt;&gt; <span class="tok-nv">$f</span>
+<span class="tok-k">fi</span>
+
+<span class="tok-k">if</span> ! chkconfig --list jboss-as-domain <span class="tok-p">&amp;</span>&gt; /dev/null
+<span class="tok-k">then</span>
+  <span class="tok-nb">echo</span> <span class="tok-s2">&quot;Adding jboss-as-domain to chkconfig ...&quot;</span>
+  chkconfig --add jboss-as-domain
+  chkconfig jboss-as-domain on
+<span class="tok-k">fi</span></code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Download: <a href="../../scripts/jboss-service-install" class="bare">../../scripts/jboss-service-install</a></p>
+</li>
+<li>
+<p>Dependências:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="#common">scripts/common</a></p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div style="page-break-after: always;"></div>
+</div>
+<div class="sect2">
+<h3 id="jboss-start">6.20. scripts/jboss-start</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span class="tok-ch">#!/bin/bash</span>
+<span class="tok-nv">BASE_DIR</span><span class="tok-o">=</span><span class="tok-sb">`</span><span class="tok-nb">cd</span> <span class="tok-s2">&quot;</span><span class="tok-k">$(</span>dirname <span class="tok-s2">&quot;</span><span class="tok-nv">$0</span><span class="tok-s2">&quot;</span><span class="tok-k">)</span><span class="tok-s2">&quot;</span><span class="tok-p">;</span> <span class="tok-nb">pwd</span><span class="tok-sb">`</span>
+<span class="tok-nb">source</span> <span class="tok-s2">&quot;</span><span class="tok-nv">$BASE_DIR</span><span class="tok-s2">&quot;</span>/common
+
+service jboss-as-domain start</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Download: <a href="../../scripts/jboss-start" class="bare">../../scripts/jboss-start</a></p>
+</li>
+<li>
+<p>Dependências:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="#common">scripts/common</a></p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div style="page-break-after: always;"></div>
+</div>
+<div class="sect2">
+<h3 id="jboss-status">6.21. scripts/jboss-status</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span class="tok-ch">#!/bin/bash</span>
+<span class="tok-nv">BASE_DIR</span><span class="tok-o">=</span><span class="tok-sb">`</span><span class="tok-nb">cd</span> <span class="tok-s2">&quot;</span><span class="tok-k">$(</span>dirname <span class="tok-s2">&quot;</span><span class="tok-nv">$0</span><span class="tok-s2">&quot;</span><span class="tok-k">)</span><span class="tok-s2">&quot;</span><span class="tok-p">;</span> <span class="tok-nb">pwd</span><span class="tok-sb">`</span>
+<span class="tok-nb">source</span> <span class="tok-s2">&quot;</span><span class="tok-nv">$BASE_DIR</span><span class="tok-s2">&quot;</span>/common
+
+service jboss-as-domain status</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Download: <a href="../../scripts/jboss-status" class="bare">../../scripts/jboss-status</a></p>
+</li>
+<li>
+<p>Dependências:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="#common">scripts/common</a></p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div style="page-break-after: always;"></div>
+</div>
+<div class="sect2">
+<h3 id="jboss-stop">6.22. scripts/jboss-stop</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span class="tok-ch">#!/bin/bash</span>
+<span class="tok-nv">BASE_DIR</span><span class="tok-o">=</span><span class="tok-sb">`</span><span class="tok-nb">cd</span> <span class="tok-s2">&quot;</span><span class="tok-k">$(</span>dirname <span class="tok-s2">&quot;</span><span class="tok-nv">$0</span><span class="tok-s2">&quot;</span><span class="tok-k">)</span><span class="tok-s2">&quot;</span><span class="tok-p">;</span> <span class="tok-nb">pwd</span><span class="tok-sb">`</span>
+<span class="tok-nb">source</span> <span class="tok-s2">&quot;</span><span class="tok-nv">$BASE_DIR</span><span class="tok-s2">&quot;</span>/common
+
+service jboss-as-domain stop</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Download: <a href="../../scripts/jboss-stop" class="bare">../../scripts/jboss-stop</a></p>
+</li>
+<li>
+<p>Dependências:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="#common">scripts/common</a></p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div style="page-break-after: always;"></div>
+</div>
+<div class="sect2">
+<h3 id="jboss-tailf">6.23. scripts/jboss-tailf</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span class="tok-ch">#!/bin/bash</span>
+<span class="tok-nv">BASE_DIR</span><span class="tok-o">=</span><span class="tok-sb">`</span><span class="tok-nb">cd</span> <span class="tok-s2">&quot;</span><span class="tok-k">$(</span>dirname <span class="tok-s2">&quot;</span><span class="tok-nv">$0</span><span class="tok-s2">&quot;</span><span class="tok-k">)</span><span class="tok-s2">&quot;</span><span class="tok-p">;</span> <span class="tok-nb">pwd</span><span class="tok-sb">`</span>
+<span class="tok-nb">source</span> <span class="tok-s2">&quot;</span><span class="tok-nv">$BASE_DIR</span><span class="tok-s2">&quot;</span>/common
+
+tailf <span class="tok-s2">&quot;</span><span class="tok-nv">$JBOSS_CONSOLE_LOG</span><span class="tok-s2">&quot;</span></code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Download: <a href="../../scripts/jboss-tailf" class="bare">../../scripts/jboss-tailf</a></p>
+</li>
+<li>
+<p>Dependências:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="#common">scripts/common</a></p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div style="page-break-after: always;"></div>
+</div>
+<div class="sect2">
+<h3 id="jboss-uninstall">6.24. scripts/jboss-uninstall</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span class="tok-ch">#!/bin/bash</span>
+<span class="tok-nv">BASE_DIR</span><span class="tok-o">=</span><span class="tok-sb">`</span><span class="tok-nb">cd</span> <span class="tok-s2">&quot;</span><span class="tok-k">$(</span>dirname <span class="tok-s2">&quot;</span><span class="tok-nv">$0</span><span class="tok-s2">&quot;</span><span class="tok-k">)</span><span class="tok-s2">&quot;</span><span class="tok-p">;</span> <span class="tok-nb">pwd</span><span class="tok-sb">`</span>
+<span class="tok-nb">source</span> <span class="tok-s2">&quot;</span><span class="tok-nv">$BASE_DIR</span><span class="tok-s2">&quot;</span>/common
+
+<span class="tok-nb">cd</span> <span class="tok-s2">&quot;</span><span class="tok-nv">$BASE_DIR</span><span class="tok-s2">&quot;</span>
+
+./jboss-service-uninstall
+
+<span class="tok-nv">d</span><span class="tok-o">=</span><span class="tok-nv">$JBOSS_INSTALL_DIR</span>/<span class="tok-nv">$JBOSS_DIR</span>
+<span class="tok-k">if</span> <span class="tok-o">[</span> -d <span class="tok-s2">&quot;</span><span class="tok-nv">$d</span><span class="tok-s2">&quot;</span> <span class="tok-o">]</span>
+<span class="tok-k">then</span>
+  <span class="tok-nb">echo</span> <span class="tok-s2">&quot;Removing </span><span class="tok-nv">$d</span><span class="tok-s2"> ...&quot;</span>
+  rm -rf <span class="tok-s2">&quot;</span><span class="tok-nv">$d</span><span class="tok-s2">&quot;</span>
+<span class="tok-k">fi</span>
+
+<span class="tok-nv">f</span><span class="tok-o">=</span><span class="tok-nv">$JBOSS_INSTALL_DIR</span>/<span class="tok-nv">$JBOSS_LINK</span>
+<span class="tok-k">if</span> <span class="tok-o">[</span> -L <span class="tok-s2">&quot;</span><span class="tok-nv">$f</span><span class="tok-s2">&quot;</span> <span class="tok-o">]</span>
+<span class="tok-k">then</span>
+  <span class="tok-nb">echo</span> <span class="tok-s2">&quot;Removing link </span><span class="tok-nv">$f</span><span class="tok-s2"> ...&quot;</span>
+  rm <span class="tok-s2">&quot;</span><span class="tok-nv">$f</span><span class="tok-s2">&quot;</span>
+<span class="tok-k">fi</span></code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Download: <a href="../../scripts/jboss-uninstall" class="bare">../../scripts/jboss-uninstall</a></p>
+</li>
+<li>
+<p>Dependências:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="#common">scripts/common</a></p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div style="page-break-after: always;"></div>
+</div>
+<div class="sect2">
+<h3 id="jboss-useradd">6.25. scripts/jboss-useradd</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span class="tok-ch">#!/bin/bash</span>
+<span class="tok-nv">BASE_DIR</span><span class="tok-o">=</span><span class="tok-sb">`</span><span class="tok-nb">cd</span> <span class="tok-s2">&quot;</span><span class="tok-k">$(</span>dirname <span class="tok-s2">&quot;</span><span class="tok-nv">$0</span><span class="tok-s2">&quot;</span><span class="tok-k">)</span><span class="tok-s2">&quot;</span><span class="tok-p">;</span> <span class="tok-nb">pwd</span><span class="tok-sb">`</span>
+<span class="tok-nb">source</span> <span class="tok-s2">&quot;</span><span class="tok-nv">$BASE_DIR</span><span class="tok-s2">&quot;</span>/common
+
+<span class="tok-nb">cd</span> <span class="tok-s2">&quot;</span><span class="tok-nv">$BASE_DIR</span><span class="tok-s2">&quot;</span>
+
+grep -q <span class="tok-nv">$JBOSS_GROUP</span> /etc/group <span class="tok-o">||</span> ./jboss-groupadd
+
+<span class="tok-k">if</span> ! grep -q <span class="tok-nv">$JBOSS_USER</span> /etc/passwd
+<span class="tok-k">then</span>
+  useradd -r <span class="tok-nv">$JBOSS_USER</span> -g <span class="tok-nv">$JBOSS_GROUP</span> <span class="tok-o">&amp;&amp;</span> <span class="tok-nb">echo</span> <span class="tok-s2">&quot;JBOSS_USER (</span><span class="tok-nv">$JBOSS_USER</span><span class="tok-s2">) created!&quot;</span>
+  passwd --stdin <span class="tok-nv">$JBOSS_USER</span> <span class="tok-o">&lt;&lt;&lt;</span> <span class="tok-nv">$JBOSS_USER_PASSWORD</span>
+<span class="tok-k">else</span>
+  <span class="tok-nb">echo</span> <span class="tok-s2">&quot;JBOSS_USER (</span><span class="tok-nv">$JBOSS_USER</span><span class="tok-s2">) already created!&quot;</span>
+<span class="tok-k">fi</span></code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Download: <a href="../../scripts/jboss-useradd" class="bare">../../scripts/jboss-useradd</a></p>
+</li>
+<li>
+<p>Dependências:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="#common">scripts/common</a></p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div style="page-break-after: always;"></div>
+</div>
+<div class="sect2">
+<h3 id="jboss-userdel">6.26. scripts/jboss-userdel</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span class="tok-ch">#!/bin/bash</span>
+<span class="tok-nv">BASE_DIR</span><span class="tok-o">=</span><span class="tok-sb">`</span><span class="tok-nb">cd</span> <span class="tok-s2">&quot;</span><span class="tok-k">$(</span>dirname <span class="tok-s2">&quot;</span><span class="tok-nv">$0</span><span class="tok-s2">&quot;</span><span class="tok-k">)</span><span class="tok-s2">&quot;</span><span class="tok-p">;</span> <span class="tok-nb">pwd</span><span class="tok-sb">`</span>
+<span class="tok-nb">source</span> <span class="tok-s2">&quot;</span><span class="tok-nv">$BASE_DIR</span><span class="tok-s2">&quot;</span>/common
+
+<span class="tok-nb">cd</span> <span class="tok-s2">&quot;</span><span class="tok-nv">$BASE_DIR</span><span class="tok-s2">&quot;</span>
+
+<span class="tok-k">if</span> grep -q <span class="tok-nv">$JBOSS_USER</span> /etc/passwd
+<span class="tok-k">then</span>
+  userdel <span class="tok-nv">$JBOSS_USER</span> <span class="tok-o">&amp;&amp;</span> <span class="tok-nb">echo</span> <span class="tok-s2">&quot;JBOSS_USER (</span><span class="tok-nv">$JBOSS_USER</span><span class="tok-s2">) removed!&quot;</span>
+<span class="tok-k">else</span>
+  <span class="tok-nb">echo</span> <span class="tok-s2">&quot;JBOSS_USER (</span><span class="tok-nv">$JBOSS_USER</span><span class="tok-s2">) already removed!&quot;</span>
+<span class="tok-k">fi</span></code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Download: <a href="../../scripts/jboss-userdel" class="bare">../../scripts/jboss-userdel</a></p>
+</li>
+<li>
+<p>Dependências:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="#common">scripts/common</a></p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div style="page-break-after: always;"></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="solucoes-de-exercicios">7. Soluções de exercícios</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="solucao-demo-2-exercicio-1">7.1. Demo 2, exercício 1</h3>
+<div class="paragraph">
+<p>Possível solução para "<a href="#demo-2-exercicio-1">Exercício 1: substituição do instalador, reinstalação e inicialização do DC (dc1)</a>":</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span class="tok-nb">alias</span> <span class="tok-nv">dc1ssh</span><span class="tok-o">=</span><span class="tok-s1">&#39;sshpass -p vagrant ssh -p 2222 root@$SERVER&#39;</span> <i class="conum" data-value="1"></i><b>(1)</b>
+
+<i class="conum" data-value="2"></i><b>(2)</b>
+<span class="tok-nb">export</span> <span class="tok-nv">SERVER</span><span class="tok-o">=</span>localhost
+
+<i class="conum" data-value="3"></i><b>(3)</b>
+<span class="tok-nv">SSH_PORT</span><span class="tok-o">=</span><span class="tok-m">2222</span> ./jboss-installer.install
+
+<i class="conum" data-value="4"></i><b>(4)</b>
+dc1ssh <span class="tok-nv">$scripts</span>/jboss-install <i class="conum" data-value="5"></i><b>(5)</b>
+dc1ssh <span class="tok-nv">$scripts</span>/jboss-start</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Diferenças desse <code>alias</code> para o apresentado na "<a href="#demo-1">Demo 1</a>": 1) Estamos utilizando o <code>sshpass</code> para não sermos solicitados a entrar a senha do usuário <code>root</code>. 2) Estamos utilizando a variável <code>SERVER</code>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Criamos e exportamos a variável <code>SERVER</code> para não precisarmos mais ficar digitando-a na frente dos scripts.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Não precisamos mais passar <code>SERVER</code> como parâmetro.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>Para ser utilizada a partir desse ponto, a variável <code>scripts</code> já precisaria estar definida.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>Observe que não precisamos fazer a instalação completa (via <a href="#install">scripts/install</a>) pois o <code>dc1</code> já estava instalado.
+<a href="#demo-1-scripts-assign">Fizemos isso</a> na "Demo 1".</td>
+</tr>
+</table>
+</div>
+<div style="page-break-after: always;"></div>
+</div>
+<div class="sect2">
+<h3 id="solucao-demo-2-exercicio-2">7.2. Demo 2, exercício 2</h3>
+<div class="paragraph">
+<p><strong>Solução 1</strong> para "<a href="#demo-2-exercicio-2">Exercício 2: reinstalação do hc1 e instalação do hc2</a>" (execute-a num shell Bash escrevendo-a linha a linha):</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="bash"><span class="tok-nb">export</span> <span class="tok-nv">SSHPASS</span><span class="tok-o">=</span>vagrant <i class="conum" data-value="1"></i><b>(1)</b>
+
+<span class="tok-nb">alias</span> <span class="tok-nv">hc1ssh</span><span class="tok-o">=</span><span class="tok-s1">&#39;sshpass -e ssh -p 2200 root@$SERVER&#39;</span>
+<span class="tok-nb">alias</span> <span class="tok-nv">hc2ssh</span><span class="tok-o">=</span><span class="tok-s1">&#39;sshpass -e ssh -p 2201 root@$SERVER&#39;</span>
+
+<span class="tok-k">for</span> p in <span class="tok-m">220</span><span class="tok-o">{</span><span class="tok-m">0</span>,1<span class="tok-o">}</span><span class="tok-p">;</span> <span class="tok-k">do</span> <span class="tok-nv">SSH_PORT</span><span class="tok-o">=</span><span class="tok-nv">$p</span> ./jboss-installer.install<span class="tok-p">;</span> <span class="tok-k">done</span> <i class="conum" data-value="2"></i><b>(2)</b>
+
+hc1ssh <span class="tok-nv">$scripts</span>/jboss-install
+hc1ssh <span class="tok-nv">$scripts</span>/jboss-start
+hc1ssh <span class="tok-nv">$scripts</span>/jboss-tailf <span class="tok-p">&amp;</span>&gt; /tmp/hc1ssh.log <span class="tok-p">&amp;</span> <i class="conum" data-value="3"></i><b>(3)</b>
+
+hc2ssh <span class="tok-nv">$scripts</span>/install <i class="conum" data-value="4"></i><b>(4)</b>
+hc2ssh <span class="tok-nv">$scripts</span>/jboss-start
+hc2ssh <span class="tok-nv">$scripts</span>/jboss-tailf <span class="tok-p">&amp;</span>&gt; /tmp/hc2ssh.log <span class="tok-p">&amp;</span></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>A variável <code>SSHPASS</code> pode ser utilizada no lugar de passarmos uma senha via linha de comando. Ela também está sendo utilizada pelo <a href="#jboss-installer-install">jboss-installer.install</a>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Esse <code>loop</code> é executado de forma serializada (performance ruim).</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Esse comando redirecionará os últimos logs de <code>hc1</code> para um arquivo temporário.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>No <code>hc2</code>, de forma contrária ao <code>hc1</code>, precisamos fazer a instalação completa (é a sua primeira instalação).</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Version 1.0<br>
+Last updated 2017-08-07 12:49:29 -03
+</div>
+</div>
+</body>
+</html>

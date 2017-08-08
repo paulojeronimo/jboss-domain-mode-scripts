@@ -1,0 +1,10 @@
+#!/bin/bash
+BASE_DIR=`cd "$(dirname "$0")"; pwd`
+source "$BASE_DIR"/common
+
+cd "$BASE_DIR"
+
+./jboss-dependencies-install
+./jboss-jdk-install
+./jboss-install
+./jboss-firewall-configure

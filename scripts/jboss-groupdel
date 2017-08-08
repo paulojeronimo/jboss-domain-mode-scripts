@@ -1,0 +1,12 @@
+#!/bin/bash
+BASE_DIR=`cd "$(dirname "$0")"; pwd`
+source "$BASE_DIR"/common
+
+cd "$BASE_DIR"
+
+if grep -q $JBOSS_GROUP /etc/group
+then
+  groupdel $JBOSS_GROUP && echo "JBOSS_GROUP ($JBOSS_GROUP) removed!"
+else
+  echo "JBOSS_GROUP ($JBOSS_GROUP) already removed!"
+fi

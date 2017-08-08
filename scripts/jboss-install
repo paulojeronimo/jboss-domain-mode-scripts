@@ -1,0 +1,25 @@
+#!/bin/bash
+BASE_DIR=`cd "$(dirname "$0")"; pwd`
+source "$BASE_DIR"/common
+
+cd "$BASE_DIR"
+
+echo "Installing JBoss Host ($JBOSS_HOST: $JBOSS_TYPE) ..."
+
+./jboss-useradd
+./jboss-uninstall
+
+[ -d "$INSTALLERS_DIR/$JBOSS_DIR" ] || ./jboss-extract
+
+echo "Copying $INSTALLERS_DIR/$JBOSS_DIR to $JBOSS_INSTALL_DIR ..."
+rsync -a "$INSTALLERS_DIR/$JBOSS_DIR" "$JBOSS_INSTALL_DIR"
+
+echo "Creating link $JBOSS_INSTALL_DIR/$JBOSS_LINK ..."
+cd "$JBOSS_INSTALL_DIR"
+ln -s $JBOSS_DIR $JBOSS_LINK
+cd - &> /dev/null
+
+./jboss-configure
+./jboss-add-user
+./jboss-fix-permissions
+./jboss-service-install

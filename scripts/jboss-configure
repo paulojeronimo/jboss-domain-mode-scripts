@@ -1,0 +1,56 @@
+#!/bin/bash
+BASE_DIR=`cd "$(dirname "$0")"; pwd`
+source "$BASE_DIR"/common
+
+d=$JBOSS_INSTALL_DIR/$JBOSS_DIR
+echo "Configuring $d files ..."
+cd "$d"
+
+f=bin/domain.conf
+case "$JBOSS_TYPE" in
+  master) f_patch=$f.master;;
+  backup|slave) f_patch=$f.slave;;
+esac
+patch $f $f_patch
+
+echo "  Configuring JBOSS variables in $f ..."
+echo "    JBOSS_BIND_ADDRESS_MANAGEMENT=$JBOSS_BIND_ADDRESS_MANAGEMENT"
+echo "    JBOSS_BIND_ADDRESS=$JBOSS_BIND_ADDRESS"
+echo "    JBOSS_DOMAIN_MASTER_ADDRESS=$JBOSS_DOMAIN_MASTER_ADDRESS"
+[ "$JBOSS_DOMAIN_BACKUP_ADDRESS" ] && \
+echo "    JBOSS_DOMAIN_BACKUP_ADDRESS=$JBOSS_DOMAIN_BACKUP_ADDRESS"
+
+sed -i "
+  s/JBOSS_BIND_ADDRESS_MANAGEMENT/$JBOSS_BIND_ADDRESS_MANAGEMENT/g ;
+  s/JBOSS_BIND_ADDRESS/$JBOSS_BIND_ADDRESS/g ;
+  s/JBOSS_DOMAIN_MASTER_ADDRESS/$JBOSS_DOMAIN_MASTER_ADDRESS/g ;
+  s/JBOSS_DOMAIN_BACKUP_ADDRESS/$JBOSS_DOMAIN_BACKUP_ADDRESS/g
+" $f
+
+if [ "$JBOSS_TYPE" = master ]
+then
+  f=domain/configuration/domain.xml
+  patch $f $f
+fi
+
+# tag::host-slave[]
+f=domain/configuration/$JBOSS_HOST_CONFIG
+f_patch=$f
+if [ "$JBOSS_HOST_CONFIG" = "host-slave.xml" ]
+then
+  [ "$JBOSS_DOMAIN_BACKUP_ADDRESS" ] || f_patch=$f_patch.no-backup
+fi
+[ "$JBOSS_SERVER_CONFIG" ] && f_patch=$f_patch.$JBOSS_SERVER_CONFIG
+patch $f $f_patch
+# end::host-slave[]
+
+JBOSS_ADMIN_PASSWORD_BASE64=`echo -n $JBOSS_ADMIN_PASSWORD|base64`
+echo "  Configuring JBOSS variables in $f ..."
+echo "    JBOSS_HOST=$JBOSS_HOST"
+echo "    JBOSS_ADMIN_USER=$JBOSS_ADMIN_USER"
+echo "    JBOSS_ADMIN_PASSWORD_BASE64=$JBOSS_ADMIN_PASSWORD_BASE64"
+sed -i "
+  s/JBOSS_ADMIN_USER/$JBOSS_ADMIN_USER/g ;
+  s/JBOSS_ADMIN_PASSWORD_BASE64/$JBOSS_ADMIN_PASSWORD_BASE64/g ;
+  s/JBOSS_HOST/$JBOSS_HOST/g
+" $f
