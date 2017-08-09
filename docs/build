@@ -72,16 +72,22 @@ _publish() {
   cd "$PROJECT_DIR"
   rsync -am \
     --include='**/' \
-    --include='jboss-installer.create' \
-    --include='jboss-installer.install' \
-    --include='configurations/**' \
-    --include='docs/pt-br/*.html' \
-    --include='docs/pt-br/*.pdf' \
-    --include='demos/1/**' \
-    --include='demos/2/**' \
-    --include='demos/3/**' \
-    --include='demos/scripts/**' \
-    --include='scripts/**' \
+    --include='/jboss-installer.create' \
+    --include='/jboss-installer.install' \
+    --include='/configurations/**' \
+    --include='/docs/pt-br/*.html' \
+    --include='/docs/pt-br/*.pdf' \
+    --exclude='/docs/pt-br/scripts' \
+    --include='/demos/1/**' \
+    --include='/demos/2/*' \
+    --exclude='/demos/2/configurations' \
+    --exclude='/demos/2/scripts' \
+    --include='/demos/3/**' \
+    --include='/demos/scripts/**' \
+    --exclude='/demos/.backup/**' \
+    --exclude='/demos/.gitignore' \
+    --exclude='/demos/.vagrant/**' \
+    --include='/scripts/*' \
     --exclude='*' \
     . "$published_dir"/
   cd - &> /dev/null
