@@ -1,0 +1,41 @@
+#!/bin/bash
+# 
+# * Refs:
+# ** https://stackoverflow.com/questions/32255660/how-to-install-sshpass-on-mac
+set +x
+
+BASE_DIR=`cd "$(dirname "$0")/../.."; pwd`
+cd "$BASE_DIR"
+
+export SSHPASS=${SSHPASS:-vagrant}
+
+./jboss-installer.create
+
+cd demos
+echo "`date`" > 1/started
+
+# load functions
+source functions
+
+# copy Vagrantfile
+cp 1/Vagrantfile .
+
+# go up machines if they are not running
+{ isRunning dc1 && isRunning hc1; } || vagrant up
+
+cd ..
+
+# install dc1
+SSH_PORT=2222 SERVER=localhost ./jboss-installer.install
+sshpass -e ssh -p 2222 root@localhost /opt/rh/jboss-installer/scripts/install
+sshpass -e ssh -p 2222 root@localhost service jboss-as-domain start
+
+# install hc1
+SSH_PORT=2200 SERVER=localhost ./jboss-installer.install
+scripts=/opt/rh/jboss-installer/scripts
+hc1ssh() { sshpass -e ssh -p 2200 root@localhost "$@"; }
+hc1ssh $scripts/install
+hc1ssh $scripts/jboss-start
+
+cd demos
+echo "`date`" > 1/finished

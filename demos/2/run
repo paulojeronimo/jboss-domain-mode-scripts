@@ -1,0 +1,79 @@
+#!/bin/bash
+set +x
+
+BASE_DIR=`cd "$(dirname "$0")/../.."; pwd`
+cd "$BASE_DIR"
+
+export SSHPASS=${SSHPASS:-vagrant}
+
+cd demos
+echo "`date`" > 2/started
+
+# load functions
+source functions
+
+# run demo 1 or restart from the point where it exists
+if [ -r 1/finished ]
+then
+  cp 1/Vagrantfile .
+else
+  1/run
+fi
+
+# upgrade Vagrantfile
+patch Vagrantfile 2/Vagrantfile.patch
+
+# go up machines if they are not running
+{ isRunning dc1 && isRunning hc1 && isRunning hc2; } || vagrant up
+
+# scripts/config
+mkdir -p 2/scripts
+cp ../scripts/config.sample 2/scripts/config
+(cd 2/scripts; patch config < ../config.patch)
+
+# configurations/jboss-eap-6.4/domain/configurations/domain.xml.patch
+b=2/configurations
+o=/opt/rh/jboss-installer/installers
+d=jboss-eap-6.4/domain/configuration
+mkdir -p $b/$d && cd $_
+sshpass -e scp -P 2200 root@localhost:$o/$d/domain.xml .
+cp domain.xml{,.original}
+vim -c "source ../../../../domain.xml.vim" domain.xml
+diff -uNr domain.xml{.original,} > domain.xml.patch
+rm -f domain.xml{.original,}
+
+# configurations/jboss-eap-6.4/domain/configuration/host-slave.xml.no-backup.patch
+sshpass -e scp -P 2200 root@localhost:$o/$d/host-slave.xml .
+cp host-slave.xml{,.original}
+vim -c "source ../../../../host-slave.xml.vim" host-slave.xml
+diff -uNr host-slave.xml{.original,} > host-slave.xml.no-backup.srv1.patch
+rm -f host-slave.xml{.original,}
+
+# configure variables
+scripts=/opt/rh/jboss-installer/scripts
+export SERVER=localhost
+
+# stop dc1/hc1
+cd "$BASE_DIR"
+for p in 22{00,22}; do sshpass -e ssh -p $p root@$SERVER $scripts/jboss-stop; done
+
+# create installer
+DEMO=2 ./jboss-installer.create
+
+# update dc1
+dc1ssh() { sshpass -e ssh -p 2222 root@$SERVER "$@"; }
+SSH_PORT=2222 ./jboss-installer.install
+dc1ssh $scripts/jboss-install
+dc1ssh $scripts/jboss-start
+
+# update hc1/ install hc2
+for p in 220{0,1}; do SSH_PORT=$p ./jboss-installer.install; done
+hc1ssh() { sshpass -e ssh -p 2200 root@$SERVER "$@"; }
+hc2ssh() { sshpass -e ssh -p 2201 root@$SERVER "$@"; }
+hc1ssh $scripts/jboss-install
+hc1ssh $scripts/jboss-start
+hc2ssh $scripts/install
+hc2ssh $scripts/jboss-start
+
+cd demos
+echo "`date`" > 2/finished

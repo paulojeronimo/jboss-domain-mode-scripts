@@ -1,5 +1,7 @@
 /.backup
 /.vagrant
+/*/started
+/*/finished
 /Vagrantfile
 /2/scripts
 /2/configurations
