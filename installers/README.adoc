@@ -1,12 +1,13 @@
 = Diretório de instaladores
 
 Copie os binários de instalação para este diretório.
-Nele, a saída para a execução do comando `find . -maxdepth 1 -type f` poderia ser esta:
+Nele, a saída para a execução do comando `find . -maxdepth 1 -type f|sort` poderia ser esta:
 
 ----
+./README.adoc
+./create-links.sample
 ./jboss-eap-6.4.0.zip
 ./jboss-eap-6.4.16-patch.zip
 ./jboss-eap-6.4.9-patch.zip
 ./jdk-8u144-linux-x64.rpm
-./README.adoc
 ----

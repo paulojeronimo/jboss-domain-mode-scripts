@@ -1,0 +1,10 @@
+#!/bin/bash
+
+BASE_DIR=`cd "$(dirname "$0")"; pwd`
+cd "$BASE_DIR"
+d=~/Downloads/softwares
+
+ln $d/java/jboss-eap/jboss-eap-6.4.0.zip
+ln $d/java/jboss-eap/jboss-eap-6.4.9-patch.zip
+ln $d/java/jboss-eap/jboss-eap-6.4.16-patch.zip
+ln $d/linux/jdk/jdk-8u144-linux-x64.rpm

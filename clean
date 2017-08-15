@@ -15,5 +15,5 @@ then
   git clean -f -X -d
 else
   # remove all generated files (skip installers dir)
-  rm -f jboss-installer.tar.gz README.{html,pdf}
+  rm -f jboss-installer.*.tar.gz README.{html,pdf}
 fi

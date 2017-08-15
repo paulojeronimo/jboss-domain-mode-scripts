@@ -14,7 +14,8 @@ echo "`date`" > $THIS_DIR/started
 source functions
 
 # if the last demo that executes wasn't 2, run it
-[ "$(cat last)" = 2 ] || 2/run
+# (this execution must be in a subshell)
+{ [ -r last ] && [ "$(cat last)" = 2 ]; } || ( 2/run )
 
 # go up machines if they are not running
 { isRunning dc1 && isRunning hc1 && isRunning hc2; } || vagrant up

@@ -2,4 +2,5 @@
 /*.pdf
 /installers/*
 !/installers/README.adoc
+!/installers/create-links.sample
 /jboss-installer.*.tar.gz

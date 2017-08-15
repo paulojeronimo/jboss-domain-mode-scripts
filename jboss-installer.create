@@ -33,7 +33,7 @@ echo "Creating $INSTALLER ..."
 find . -type f \( \
   -path './installers/*' -o \
   -path './merged/*' \
-  \) \( ! -name README.adoc \) -print0 | \
+  \) ! \( -name README.adoc -o -name create-links.sample \) -print0 | \
 $tar cvfz "$INSTALLER" \
 --transform "s,^\./merged,.," \
 --transform "s,^\.,$PREFIX," \
