@@ -1,0 +1,13 @@
+--- config.sample	2017-07-27 16:14:40.000000000 -0300
++++ config	2017-07-27 16:23:40.000000000 -0300
+@@ -76,6 +76,10 @@
+     JBOSS_TYPE=master
+     ;;
+ 
++  # If host is hc1 or hc2, JBOSS_SERVER_CONFIG will be srv1
++  hc[1,2])
++    JBOSS_SERVER_CONFIG=app-1
++    ;;
+ esac
+ 
+ # Host config file is JBOSS_TYPE dependant

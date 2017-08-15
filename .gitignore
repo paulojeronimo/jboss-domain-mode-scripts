@@ -2,4 +2,4 @@
 /*.pdf
 /installers/*
 !/installers/README.adoc
-/jboss-installer.tar.gz
+/jboss-installer.*.tar.gz

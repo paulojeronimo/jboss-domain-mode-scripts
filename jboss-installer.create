@@ -3,9 +3,9 @@ set +x
 set -e
 
 BASE_DIR=`cd "$(dirname "$0")"; pwd`
-INSTALLER=${INSTALLER:-jboss-installer.tar.gz}
 PREFIX=${PREFIX:-/opt/rh/jboss-installer}
 DEMO=${DEMO:-1}
+INSTALLER=${INSTALLER:-jboss-installer.$DEMO.tar.gz}
 
 trap "{ rm -rf merged; }" EXIT
 trap "{ rm -f "$INSTALLER"; }" INT
@@ -13,6 +13,12 @@ trap "{ rm -f "$INSTALLER"; }" INT
 [[ $OSTYPE =~ darwin.* ]] && tar=gtar || tar=tar
 
 cd "$BASE_DIR"
+
+if [ -f "$INSTALLER" ]
+then
+  echo "Installer ($INSTALLER) already exists!"
+  exit 0
+fi
 
 [ -d "demos/$DEMO" ] || {
   echo "DEMO directory (demos/$DEMO) does not exists!"
@@ -27,8 +33,8 @@ echo "Creating $INSTALLER ..."
 find . -type f \( \
   -path './installers/*' -o \
   -path './merged/*' \
-  \) \( ! -name README.adoc -o -name "$config" \) -print0 | \
-$tar cvfz $INSTALLER \
+  \) \( ! -name README.adoc \) -print0 | \
+$tar cvfz "$INSTALLER" \
 --transform "s,^\./merged,.," \
 --transform "s,^\.,$PREFIX," \
 --null -T -

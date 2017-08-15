@@ -1,20 +1,18 @@
---- 1/Vagrantfile	2017-07-25 10:39:30.000000000 -0300
-+++ Vagrantfile	2017-07-26 08:11:11.000000000 -0300
-@@ -21,12 +21,14 @@
+--- 1/Vagrantfile	2017-08-14 18:15:21.000000000 -0300
++++ Vagrantfile	2017-08-14 18:22:49.000000000 -0300
+@@ -20,11 +20,13 @@
      end
    end
  
 -  config.vm.define "hc1" do |hc|
--    hc.vm.hostname="hc1"
 -    hc.vm.network "private_network", ip: "172.17.6.82"
--    hc.vm.provision "shell", path: "scripts/instalar-vm", privileged: false
+-    hc.vm.provision "shell", path: "scripts/install-vm", privileged: false
 -    hc.vm.provider "virtualbox" do |v|
 -      v.memory = 2048
 +  (1..2).each do |i|
 +    config.vm.define "hc#{i}" do |hc|
-+      hc.vm.hostname="hc#{i}"
-+      hc.vm.network "private_network", ip: "172.17.6.8#{i+2}"
-+      hc.vm.provision "shell", path: "scripts/instalar-vm", privileged: false
++      hc.vm.network "private_network", ip: "172.17.6.8#{i+1}"
++      hc.vm.provision "shell", path: "scripts/install-vm", privileged: false
 +      hc.vm.provider "virtualbox" do |v|
 +        v.memory = 2048
 +      end

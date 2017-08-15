@@ -1,9 +1,13 @@
 /.backup
 /.vagrant
-/*/started
+/last
+/*/env
 /*/finished
+/*/started
 /Vagrantfile
 /2/scripts
 /2/configurations
 /3/scripts
 /3/configurations
+/cluster/scripts
+/cluster/configurations

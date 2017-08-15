@@ -1,0 +1,2 @@
+/profile=full-ha/subsystem=messaging/hornetq-server=default:write-attribute(name=cluster-user,value=app-1)
+/profile=full-ha/subsystem=messaging/hornetq-server=default:write-attribute(name=cluster-password,value=app-1-hornetq-password)

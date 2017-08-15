@@ -7,6 +7,6 @@ VAR_CACHE=$BACKUP_DIR/var_cache.tar
 
 dir=/var/cache/yum
 
-echo "Salvando o cache de pacotes ($dir) ..."
+echo "Saving packages cache ($dir) to file ($VAR_CACHE) ..."
 mkdir -p "$BACKUP_DIR"
 sudo tar cvfP $VAR_CACHE $dir > /dev/null

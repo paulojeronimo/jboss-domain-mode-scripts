@@ -12,6 +12,8 @@ export SSHPASS=${SSHPASS:-vagrant}
 ./jboss-installer.create
 
 cd demos
+
+# mark the begin 
 echo "`date`" > 1/started
 
 # load functions
@@ -20,22 +22,29 @@ source functions
 # copy Vagrantfile
 cp 1/Vagrantfile .
 
-# go up machines if they are not running
-{ isRunning dc1 && isRunning hc1; } || vagrant up
-
-cd ..
+# go up dc1
+isRunning dc1 || vagrant up dc1
 
 # install dc1
-SSH_PORT=2222 SERVER=localhost ./jboss-installer.install
+SSH_PORT=2222 SERVER=localhost ../jboss-installer.install
 sshpass -e ssh -p 2222 root@localhost /opt/rh/jboss-installer/scripts/install
 sshpass -e ssh -p 2222 root@localhost service jboss-as-domain start
 
+# save dc1 downloaded packages
+vagrant ssh dc1 -c /vagrant/scripts/packages-save
+
+# go up hc1
+isRunning hc1 || vagrant up hc1
+
 # install hc1
-SSH_PORT=2200 SERVER=localhost ./jboss-installer.install
+SSH_PORT=2200 SERVER=localhost ../jboss-installer.install
 scripts=/opt/rh/jboss-installer/scripts
 hc1ssh() { sshpass -e ssh -p 2200 root@localhost "$@"; }
 hc1ssh $scripts/install
 hc1ssh $scripts/jboss-start
 
-cd demos
+# mark the end
 echo "`date`" > 1/finished
+
+# mark the last execution
+echo 1>last

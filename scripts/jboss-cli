@@ -1,0 +1,9 @@
+#!/bin/bash
+BASE_DIR=`cd "$(dirname "$0")"; pwd`
+source "$BASE_DIR"/common
+
+$JBOSS_HOME/bin/jboss-cli.sh \
+  --controller="$JBOSS_DOMAIN_MASTER_ADDRESS" \
+  --user="$JBOSS_ADMIN_USER" \
+  --password="$JBOSS_ADMIN_PASSWORD" \
+  "$@"

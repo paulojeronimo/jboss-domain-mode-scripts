@@ -3,7 +3,8 @@ set +x
 set -e
 
 BASE_DIR=`cd "$(dirname "$0")"; pwd`
-INSTALLER=${INSTALLER:-jboss-installer.tar.gz}
+DEMO=${DEMO:-1}
+INSTALLER=${INSTALLER:-jboss-installer.$DEMO.tar.gz}
 PREFIX=${PREFIX:-/opt/rh/jboss-installer}
 SSH_USER=${SSH_USER:-root}
 SSH_PORT=${SSH_PORT:-22}
@@ -14,6 +15,8 @@ ssh() {
 
   [ "$SSHPASS" ] && sshpass -e $ssh $params || $ssh $params
 }
+
+cd "$BASE_DIR"
 
 if ! [ "$SERVER" ]
 then
@@ -30,10 +33,9 @@ fi
 SCRIPT=$(cat << EOF
 echo "I'm at \$HOSTNAME ..." ;
 [ -d "$PREFIX" ] && { echo "Removing existing $PREFIX dir ..." ; rm -rf $PREFIX ; };
-echo "Extracting files from pipe to / ..." ;
+echo "Extracting $INSTALLER (from pipe) to / ..." ;
 tar xvfmPz - -C /
 EOF
 )
 
-cd "$BASE_DIR"
-cat $INSTALLER | ssh $SCRIPT
+ssh "$SCRIPT" < "$INSTALLER"

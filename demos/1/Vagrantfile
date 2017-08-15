@@ -13,18 +13,16 @@ Vagrant.configure(2) do |config|
   config.vbguest.auto_update = false
 
   config.vm.define "dc1" do |dc1|
-    dc1.vm.hostname="dc1"
     dc1.vm.network "private_network", ip: "172.17.6.81"
-    dc1.vm.provision "shell", path: "scripts/instalar-vm", privileged: false
+    dc1.vm.provision "shell", path: "scripts/install-vm", privileged: false
     dc1.vm.provider "virtualbox" do |v|
       v.memory = 1024
     end
   end
 
   config.vm.define "hc1" do |hc|
-    hc.vm.hostname="hc1"
     hc.vm.network "private_network", ip: "172.17.6.82"
-    hc.vm.provision "shell", path: "scripts/instalar-vm", privileged: false
+    hc.vm.provision "shell", path: "scripts/install-vm", privileged: false
     hc.vm.provider "virtualbox" do |v|
       v.memory = 2048
     end

@@ -1,0 +1,4 @@
+#!/bin/bash
+
+echo "Updating packages ..."
+sudo yum -y --exclude='kernel*' update

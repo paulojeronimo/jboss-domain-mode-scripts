@@ -8,8 +8,23 @@ grep -q $JBOSS_GROUP /etc/group || ./jboss-groupadd
 
 if ! grep -q $JBOSS_USER /etc/passwd
 then
-  useradd -r $JBOSS_USER -g $JBOSS_GROUP && echo "JBOSS_USER ($JBOSS_USER) created!"
-  passwd --stdin $JBOSS_USER <<< $JBOSS_USER_PASSWORD
+  if useradd $JBOSS_USER -m -s /bin/bash -g $JBOSS_GROUP
+  then
+    echo "JBOSS_USER ($JBOSS_USER) created!"
+    echo "JBOSS_USER HOME is `grep $JBOSS_USER /etc/passwd|cut -d: -f6`"
+    if passwd --stdin $JBOSS_USER <<< $JBOSS_USER_PASSWORD > /dev/null
+    then
+      echo "Password ($JBOSS_USER_PASSWORD) for JBOSS_USER configured!"
+    else
+      result=$?
+      echo "Fail on setting password for JBOSS_USER!"
+      exit $result
+    fi
+  else
+    result=$?
+    echo "Fail on creating JBOSS_USER ($JBOSS_USER)"
+    exit $result
+  fi
 else
   echo "JBOSS_USER ($JBOSS_USER) already created!"
 fi

@@ -1,0 +1,8 @@
+#!/bin/bash
+
+BASE_DIR=${BASE_DIR:-/vagrant}
+SCRIPTS=${SCRIPTS:-$BASE_DIR/scripts}
+
+$SCRIPTS/packages-restore
+$SCRIPTS/packages-install
+$SCRIPTS/configure-hosts

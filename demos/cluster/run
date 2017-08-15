@@ -13,19 +13,11 @@ echo "`date`" > $THIS_DIR/started
 # load functions
 source functions
 
-# run demo 1 or restart from the point where it exists
-if [ -r 1/finished ]
-then
-  cp 1/Vagrantfile .
-else
-  1/run
-fi
-
-# upgrade Vagrantfile
-patch Vagrantfile $THIS_DIR/Vagrantfile.patch
+# if the last demo that executes wasn't 2, run it
+[ "$(cat last)" = 2 ] || 2/run
 
 # go up machines if they are not running
-{ isRunning dc1 && isRunning hc1; } || vagrant up
+{ isRunning dc1 && isRunning hc1 && isRunning hc2; } || vagrant up
 
 # scripts/config
 mkdir -p $THIS_DIR/scripts
@@ -47,7 +39,7 @@ rm -f domain.xml{.original,}
 sshpass -e scp -P 2200 root@localhost:$o/$d/host-slave.xml .
 cp host-slave.xml{,.original}
 vim -c "source ../../../../host-slave.xml.vim" host-slave.xml
-diff -uNr host-slave.xml{.original,} > host-slave.xml.no-backup.srv1.patch
+diff -uNr host-slave.xml{.original,} > host-slave.xml.no-backup.app-1.patch
 rm -f host-slave.xml{.original,}
 
 cd "$BASE_DIR"
@@ -68,8 +60,8 @@ EOF
 source $env
 unset env
 
-# stop dc1/hc1
-for p in 22{22,00}
+# stop dc1/hc1/hc2
+for p in 22{22,00,01}
 do
   echo "Stopping server running at port $p ..."
   sshpass -e ssh -p $p root@$SERVER $scripts/jboss-stop
@@ -83,15 +75,16 @@ SSH_PORT=2222 ./jboss-installer.install
 dc1ssh $scripts/jboss-install
 dc1ssh $scripts/jboss-start
 
-# go up hc2
 cd demos
-isRunning hc2 || vagrant up hc2
+
+# configure HornetQ using jboss-cli
+dc1ssh $scripts/jboss-cli -c < $THIS_DIR/hornetq-configure.cli
 
 # update hc1/ install hc2
 for p in 220{0,1}; do SSH_PORT=$p ../jboss-installer.install; done
 hc1ssh $scripts/jboss-install
 hc1ssh $scripts/jboss-start
-hc2ssh $scripts/install
+hc2ssh $scripts/jboss-install
 hc2ssh $scripts/jboss-start
 
 echo "`date`" > $THIS_DIR/finished

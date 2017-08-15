@@ -1,10 +1,19 @@
 #!/bin/bash
 
 isRunning() {
-  local status=/tmp/vagrant-status.$$
+  local machine=$1
+  local status=/tmp/vagrant-status.$machine.$$
 
-  [ -f $status ] || {
-    vagrant status > $status
-  }
-  grep -q "^$1.*running" $status
+  if ! [ "$machine" ]
+  then
+    echo "Machine not specified!"
+    return 1
+  fi
+
+  if ! [ -f "$status" ]
+  then
+    vagrant status $machine > "$status"
+  fi
+
+  grep -q "^$machine.*running" "$status"
 }

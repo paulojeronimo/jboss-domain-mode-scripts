@@ -1,0 +1,32 @@
+#!/bin/bash
+set +x
+
+configure() {
+    local f=/etc/hosts
+
+    if ! grep -q "^$1.*$2" $f
+    then
+      echo -e "Adding $1\t$2 to $f ..."
+      echo -e "$1\t$2" | sudo tee -a $f > /dev/null
+    fi
+
+    case "$OSTYPE" in
+      linux*)
+        if grep -q $1 <(hostname -I)
+        then
+          echo "Setting hostname to $2 for ip $1"
+          sudo hostnamectl set-hostname $2
+        fi
+        ;;
+    esac
+}
+
+if [ "$1" -a "$2" ]
+then
+  configure $1 $2
+else
+  configure 172.17.6.81 dc1
+  configure 172.17.6.82 hc1
+  configure 172.17.6.83 hc2
+  configure 172.17.6.84 dc2
+fi
