@@ -1,0 +1,20 @@
+--- httpd.conf.orig	2017-04-12 13:50:43.000000000 +0000
++++ httpd.conf	2017-08-17 11:11:27.786443815 +0000
+@@ -39,7 +39,7 @@
+ # prevent Apache from glomming onto all bound IP addresses.
+ #
+ #Listen 12.34.56.78:80
+-Listen 80
++Listen 172.17.6.81:80
+ 
+ #
+ # Dynamic Shared Object (DSO) Support
+@@ -92,7 +92,7 @@
+ #
+ # If your host doesn't have a registered DNS name, enter its IP address here.
+ #
+-#ServerName www.example.com:80
++ServerName dc1:80
+ 
+ #
+ # Deny access to the entirety of your server's filesystem. You must

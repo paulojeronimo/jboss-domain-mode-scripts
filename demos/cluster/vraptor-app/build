@@ -1,0 +1,133 @@
+#!/bin/bash
+set +x
+
+BASE_DIR=`cd "$(dirname "$0")"; pwd`
+DEFAULT=build
+DOWNLOADS=~/Downloads
+vraptor=vraptor-blank-project-3.4.1.zip
+vraptor_url=https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/vraptor3/$vraptor
+ADJUST_WEB_FRAGMENT=${ADJUST_WEB_FRAGMENT:-true}
+export JBOSS_HOME=~/Tools/jboss-eap-6.4
+
+cd "$BASE_DIR"
+
+_download() {
+  if ! [ -f $vraptor ]
+  then
+    [ -d "$DOWNLOADS" ] || mkdir -p "$DOWNLOADS"
+    [ -f "$DOWNLOADS"/$vraptor ] || (cd "$DOWNLOADS" && curl -sSL $vraptor_url -O)
+    ln $DOWNLOADS/$vraptor || exit 1
+  fi
+}
+
+_adjust-web-fragment() {
+  $ADJUST_WEB_FRAGMENT || return 0
+  local jar=vraptor-3.4.1.jar
+  local dir=`basename $jar .jar`
+  local initial_dir=$PWD
+  
+  cd WebContent/WEB-INF/lib
+  echo "Adjusting $jar in $PWD ..."
+  rm -rf $dir
+  unzip -q -d $dir $jar
+  cd $dir
+  cp "$BASE_DIR"/patches/web-fragment.xml META-INF/
+  rm ../$jar
+  jar cf ../$jar .
+  cd "$initial_dir"
+}
+
+_structure() {
+  if [ -f $vraptor ]
+  then
+    if unzip -q $vraptor
+    then
+      rm -rf \
+        .settings \
+        .classpath \
+        .project \
+        LICENSE \
+        README \
+        nbbuild.xml \
+        nbproject \
+        vraptor-blank-project.iml \
+        WebContent/{META-INF,WEB-INF/classes}
+      _adjust-web-fragment
+      rsync -a patches/ .
+    else
+      echo "Fail on extract $vraptor!"
+      exit 1
+    fi
+  fi
+}
+
+_clean() {
+  local clean_all=false
+
+  [ "$1" = "--all" ] && clean_all=true
+
+  rm -rf \
+    WebContent \
+    src \
+    target
+
+  if $clean_all
+  then
+    rm -f $vraptor
+  fi
+}
+
+_build() {
+  if ! [ -d WebContent -a -d src ]
+  then
+    _clean --all
+    _download
+    _structure
+  fi
+
+  _ant "$@" && _update_patches
+}
+
+_update_patches() {
+  rsync -R WebContent/WEB-INF/jsp/index/index.jsp patches/
+  rsync -R WebContent/WEB-INF/web.xml patches/
+  rsync -R src/br/com/caelum/vraptor/blank/IndexController.java patches/
+  rsync -R src/cluster/teste/TesteServlet.java patches/
+}
+
+_ant() {
+  ant -f ant/build.xml "$@"
+}
+
+_deploy() {
+  local env=../env
+  local package_dir=target/war
+  local package=$package_dir/cluster-test.war
+
+  if [ -f "$env" ]
+  then
+    if [ -f "$package" ]
+    then
+      source "$env"
+
+      # TODO: improve the deployment
+      dc1ssh mkdir -p $package_dir
+      dc1scp $package root@$SERVER:$package_dir
+      dc1ssh $scripts/jboss-cli -c < deploy.cli
+    else
+      echo -e "I can't do the deploy!\nPackage $package does not exists!"
+      return 1
+    fi
+  else
+    echo -e "I can't do the deploy!\nFile $env does not exists!"
+    return 1
+  fi
+}
+
+target=${1:-$DEFAULT}
+shift
+type _$target &> /dev/null || {
+  echo "Usage: ./`basename $0` [build|<downloads|structure|clean>]"
+  exit 0
+}
+_$target "$@"

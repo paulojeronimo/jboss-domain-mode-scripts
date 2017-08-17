@@ -1,0 +1,3 @@
+undeploy cluster-test.war --all-relevant-server-groups
+deploy target/war/cluster-test.war --force
+deploy --name=cluster-test.war --server-groups=app-1-server-group

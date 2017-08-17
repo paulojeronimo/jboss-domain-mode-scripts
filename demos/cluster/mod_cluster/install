@@ -1,0 +1,39 @@
+#!/bin/bash
+set +x
+set -e
+
+BASE_DIR=`cd "$(dirname "$0")"; pwd`
+cd "$BASE_DIR"
+
+jboss_configure=${jboss_configure:-true}
+mod_cluster=http://downloads.jboss.org/mod_cluster//1.3.1.Final/linux-x86_64/mod_cluster-1.3.1.Final-linux2-x64-so.tar.gz
+
+if grep -q -w httpd <<< $(rpm -qa httpd)
+then
+  yum -y erase httpd > /dev/null
+  rm -rf /etc/httpd
+  echo "httpd old installations/configurations removed ..."
+fi
+
+yum -y install httpd > /dev/null && echo "httpd installed ..."
+
+wget -O /vagrant/.backup/${mod_cluster##*/} $mod_cluster 2> /dev/null
+tar xvofz /vagrant/.backup/${mod_cluster##*/} -C /etc/httpd/modules/ > /dev/null
+f=etc/httpd/conf/httpd.conf
+patch /$f < $BASE_DIR/httpd/$f.patch > /dev/null
+f=etc/httpd/conf.modules.d/00-proxy.conf
+patch /$f < $BASE_DIR/httpd/$f.patch > /dev/null
+f=etc/httpd/conf.d/mod_cluster.conf
+pushd $BASE_DIR/httpd &> /dev/null
+cp --parents $f /
+popd &> /dev/null
+echo "mod_cluster installed and configured ..."
+
+service httpd start 2> /dev/null && echo "httpd started ..."
+chkconfig httpd on 2> /dev/null && echo "httpd configured to automatically starts ..."
+
+if $jboss_configure
+then
+  /opt/rh/jboss-installer/scripts/jboss-cli -c < jboss-configure.cli > /dev/null
+  echo "mod_cluster configured on jboss ..."
+fi

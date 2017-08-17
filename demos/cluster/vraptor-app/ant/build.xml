@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<project name="cluster-test"
+         basedir=".."
+         default="all">
+    <property environment="env" />
+    <property file="ant/build.properties" />
+    <path id="libs.classpath">
+        <fileset dir="${libs.dir}"
+          includes="*.jar" />
+        <fileset dir="${jboss.home}/modules/system/layers/base">
+          <include name="javax/servlet/api/main/jboss-servlet-api*.jar"/>
+        </fileset>
+    </path>
+    <target name="clean">
+        <delete dir="${war.dir}" />
+    </target>
+    <target name="make"
+            depends="clean">
+        <mkdir dir="${war.dir}" />
+        <mkdir dir="${target.app.dir}" />
+    </target>
+    <target name="copy"
+            depends="make">
+        <copy todir="${target.app.dir}">
+            <fileset dir="${web.dir}" />
+        </copy>
+        <copy todir="${target.classes.dir}">
+            <fileset dir="${src.dir}"
+                     excludes="**/*.java" />
+        </copy>
+    </target>
+    <target name="vraptor-scanning"
+            depends="compile">
+        <java classpathref="libs.classpath"
+              classname="br.com.caelum.vraptor.scan.VRaptorStaticScanning"
+              fork="true">
+            <arg value="${target.app.dir}/WEB-INF/web.xml" />
+            <classpath refid="libs.classpath" />
+            <classpath path="${target.app.dir}/WEB-INF/classes" />
+        </java>
+    </target>
+    <target name="compile"
+            depends="copy">
+        <javac srcdir="${src.dir}"
+               destdir="${target.classes.dir}"
+               debug="true">
+            <classpath>
+                <path refid="libs.classpath" />
+            </classpath>
+        </javac>
+    </target>
+    <target name="war"
+            depends="vraptor-scanning">
+        <war destfile="${war.file}"
+             webxml="${target.webinf.dir}/web.xml">
+            <zipfileset dir="${target.app.dir}" />
+        </war>
+    </target>
+    <target name="all"
+            depends="war">
+        <delete dir="${target.app.dir}" />
+    </target>
+</project>

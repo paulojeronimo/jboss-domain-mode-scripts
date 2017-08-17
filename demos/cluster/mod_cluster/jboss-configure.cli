@@ -1,0 +1,4 @@
+batch
+/profile=full-ha/subsystem=web:write-attribute(name=instance-id,value="${jboss.node.name}")
+/profile=full-ha/subsystem=modcluster/mod-cluster-config=configuration:write-attribute(name=proxy-list,value="dc1:10001")
+run-batch

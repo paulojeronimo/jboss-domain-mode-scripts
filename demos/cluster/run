@@ -55,6 +55,7 @@ export DEMO=$THIS_DIR
 export SERVER=localhost
 export SSHPASS=$SSHPASS
 dc1ssh() { sshpass -e ssh -p 2222 root@\$SERVER "\$@"; }
+dc1scp() { sshpass -e scp -P 2222 "\$@"; }
 hc1ssh() { sshpass -e ssh -p 2200 root@\$SERVER "\$@"; }
 hc2ssh() { sshpass -e ssh -p 2201 root@\$SERVER "\$@"; }
 EOF
@@ -80,6 +81,9 @@ cd demos
 
 # configure HornetQ using jboss-cli
 dc1ssh $scripts/jboss-cli -c < $THIS_DIR/hornetq-configure.cli
+
+# mod_cluster install
+dc1ssh /vagrant/cluster/mod_cluster/install
 
 # update hc1/ install hc2
 for p in 220{0,1}; do SSH_PORT=$p ../jboss-installer.install; done
