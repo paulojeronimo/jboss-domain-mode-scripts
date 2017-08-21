@@ -37,19 +37,21 @@ public class IndexController {
 
 	@Path("/")
 	public void index() {
-    String poc = (String) session.getAttribute("poc");
-
-    if (poc == null) {
-      try {
-        poc = InetAddress.getLocalHost().toString();
-      } catch (Exception e) {
-        poc = "Could not get host/ip!. Check logs!";
-        e.printStackTrace();
-      }
-      result.include("variable", "created");
-      session.setAttribute("poc", poc);
-    } else {
-      result.include("variable", poc);
+    String host;
+    try {
+      host = InetAddress.getLocalHost().toString();
+    } catch (Exception e) {
+      host = "Could not get host/ip!. Check logs!";
+      e.printStackTrace();
     }
+    result.include("host", host);
+
+    Integer counter = (Integer) session.getAttribute("counter");
+    if (counter == null)
+      counter = 0;
+    else
+      counter += 1;
+    session.setAttribute("counter", counter);
+    result.include("counter", counter);
 	}
 }

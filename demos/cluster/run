@@ -5,7 +5,25 @@ BASE_DIR=`cd "$(dirname "$0")/../.."; pwd`
 THIS_DIR=`cd "$(dirname "$0")"; basename $PWD`
 cd "$BASE_DIR"
 
+PROXY=${PROXY:-nginx}
 export SSHPASS=${SSHPASS:-vagrant}
+
+# create environment variables and functions for this demo
+env=demos/$THIS_DIR/env
+cat > $env <<EOF
+#!/bin/bash
+
+scripts=/opt/rh/jboss-installer/scripts
+export DEMO=$THIS_DIR
+export SERVER=localhost
+export SSHPASS=$SSHPASS
+dc1ssh() { sshpass -e ssh -p 2222 root@\$SERVER "\$@"; }
+dc1scp() { sshpass -e scp -P 2222 "\$@"; }
+hc1ssh() { sshpass -e ssh -p 2200 root@\$SERVER "\$@"; }
+hc2ssh() { sshpass -e ssh -p 2201 root@\$SERVER "\$@"; }
+EOF
+source $env
+unset env
 
 cd demos
 echo "`date`" > $THIS_DIR/started
@@ -13,12 +31,14 @@ echo "`date`" > $THIS_DIR/started
 # load functions
 source functions
 
-# if the last demo that executes wasn't 2, run it
-# (this execution must be in a subshell)
-{ [ -r last ] && [ "$(cat last)" = 2 ]; } || ( 2/run )
-
 # go up machines if they are not running
 { isRunning dc1 && isRunning hc1 && isRunning hc2; } || vagrant up
+
+if ! [ $(dc1ssh cat last) = 2 ]
+then
+  echo "Your last execution wasn't demo 2."
+  exit 1
+fi
 
 # scripts/config
 mkdir -p $THIS_DIR/scripts
@@ -43,24 +63,8 @@ vim -c "source ../../../../host-slave.xml.vim" host-slave.xml
 diff -uNr host-slave.xml{.original,} > host-slave.xml.no-backup.app-1.patch
 rm -f host-slave.xml{.original,}
 
+# got to base dir
 cd "$BASE_DIR"
-
-# configure variables
-env=demos/$THIS_DIR/env
-cat > $env <<EOF
-#!/bin/bash
-
-scripts=/opt/rh/jboss-installer/scripts
-export DEMO=$THIS_DIR
-export SERVER=localhost
-export SSHPASS=$SSHPASS
-dc1ssh() { sshpass -e ssh -p 2222 root@\$SERVER "\$@"; }
-dc1scp() { sshpass -e scp -P 2222 "\$@"; }
-hc1ssh() { sshpass -e ssh -p 2200 root@\$SERVER "\$@"; }
-hc2ssh() { sshpass -e ssh -p 2201 root@\$SERVER "\$@"; }
-EOF
-source $env
-unset env
 
 # stop dc1/hc1/hc2
 for p in 22{22,00,01}
@@ -82,8 +86,11 @@ cd demos
 # configure HornetQ using jboss-cli
 dc1ssh $scripts/jboss-cli -c < $THIS_DIR/hornetq-configure.cli
 
-# mod_cluster install
-dc1ssh /vagrant/cluster/mod_cluster/install
+# proxy install
+case "$PROXY" in
+  nginx) dc1ssh /vagrant/cluster/nginx/install ;;
+  mod_cluster) dc1ssh /vagrant/cluster/mod_cluster/install ;;
+esac
 
 # update hc1/ install hc2
 for p in 220{0,1}; do SSH_PORT=$p ../jboss-installer.install; done

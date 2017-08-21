@@ -1,0 +1,39 @@
+#!/bin/bash
+set +x
+set -e
+
+generate_certificate() {
+  # https://stackoverflow.com/a/31984753/8410767
+  openssl genrsa -out ~/server.key 2048
+  openssl req -sha256 -new -key ~/server.key -out ~/server.csr -subj '/CN=dc1'
+  openssl x509 -req -sha256 -days 365 -in ~/server.csr -signkey ~/server.key -out ~/server.crt
+  cat ~/server.crt ~/server.key > ~/cert.pem
+
+  mkdir -p $1
+  cp ~/cert.pem ~/server.key $1
+}
+
+BASE_DIR=`cd "$(dirname "$0")"; pwd`
+cd "$BASE_DIR"
+
+yum -y install epel-release > /dev/null
+
+if grep -q -w nginx <<< $(rpm -qa nginx)
+then
+  yum -y erase nginx > /dev/null
+  rm -rf /etc/nginx
+  echo "ngnix old installations/configurations removed ..."
+fi
+
+yum -y install nginx > /dev/null && echo "nginx installed ..."
+
+generate_certificate /etc/nginx/ssl
+
+pushd $BASE_DIR/files &> /dev/null
+#cp --parents etc/nginx/nginx.conf /
+cp --parents etc/nginx/conf.d/jboss.conf /
+popd &> /dev/null
+echo "ngnix installed and configured ..."
+
+systemctl start nginx.service 2> /dev/null && echo "nginx started ..."
+systemctl enable nginx.service 2> /dev/null && echo "nginx configured to automatically starts ..."

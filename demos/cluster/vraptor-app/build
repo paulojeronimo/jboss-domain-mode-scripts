@@ -69,7 +69,8 @@ _clean() {
   rm -rf \
     WebContent \
     src \
-    target
+    target \
+    web-fragment.xml
 
   if $clean_all
   then
